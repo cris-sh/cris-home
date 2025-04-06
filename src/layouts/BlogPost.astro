@@ -1,85 +1,149 @@
 ---
-import type { CollectionEntry } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import FormattedDate from '../components/FormattedDate.astro';
+import type { CollectionEntry } from "astro:content";
+import BaseHead from "../components/BaseHead.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+import NavBar from "../components/navigation/NavBar.astro";
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<"blog">["data"] & {
+  lang?: string;
+};
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const {
+  title,
+  description,
+  date,
+  updatedDate,
+  heroImage,
+  lang = "en",
+} = Astro.props;
 ---
 
-<html lang="en">
-	<head>
-		<BaseHead title={title} description={description} />
-		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-			}
-			.hero-image {
-				width: 100%;
-			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
-			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
-			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-		</style>
-	</head>
+<html lang={lang}>
+  <head>
+    <BaseHead title={title} description={description} />
+    <style>
+      .prose {
+        max-width: 100%;
+        color: rgb(var(--gray-dark));
+      }
 
-	<body>
-		<Header />
-		<main>
-			<article>
-				<div class="hero-image">
-					{heroImage && <img width={1020} height={510} src={heroImage} alt="" />}
-				</div>
-				<div class="prose">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
-						<h1>{title}</h1>
-						<hr />
-					</div>
-					<slot />
-				</div>
-			</article>
-		</main>
-		<Footer />
-	</body>
+      .prose pre {
+        background-color: #1e1e1e;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        margin: 1.5rem 0;
+        overflow: auto;
+        position: relative;
+      }
+
+      .prose pre::before {
+        content: attr(data-language)
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+        background-color: rgba(255, 255, 2555, 0.1)
+        color: #e2e2e2;
+        border-bottom-left-radius: 0.25rem;
+        text-transform: uppercase;
+        font-family: monospace;
+      }
+
+      /* Estilos para código en línea */
+      .prose :not(pre) > code {
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 0.25rem;
+        padding: 0.1rem 0.3rem;
+        font-size: 0.9em;
+        color: #e2e2e2;
+      }
+
+      /* Animación sutil al desplazar el cursor sobre el código */
+      .prose pre:hover {
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+        transition: box-shadow 0.2s;
+      }
+
+      .prose img {
+        border-radius: 8px;
+        margin: 1.5rem auto;
+        box-shadow: var(--box-shadow);
+      }
+
+      .date {
+        color: rgb(var(--gray));
+      }
+
+      .last-updated-on {
+        font-style: italic;
+      }
+    </style>
+  </head>
+
+  <body>
+    <NavBar />
+    <main class="container mx-auto px-4 max-w-4xl">
+      <article class="mt-6 md:mt-10">
+        {
+          heroImage && (
+            <div class="mb-8">
+              <img
+                src={heroImage}
+                alt={title}
+                class="w-full h-auto rounded-xl object-cover shadow-lg"
+                style="max-height: 500px;"
+              />
+            </div>
+          )
+        }
+
+        <div class="mb-8 text-center">
+          <div class="date mb-2 text-white/60">
+            <FormattedDate date={date} lang={lang} />
+            {
+              updatedDate && (
+                <div class="last-updated-on mt-1 text-white/50 text-sm">
+                  {lang === "es" ? "Actualizado el " : "Last updated on "}
+                  <FormattedDate date={updatedDate} lang={lang} />
+                </div>
+              )
+            }
+          </div>
+
+          <h1 class="text-3xl md:text-4xl font-bold mb-4">{title}</h1>
+          <div class="border-t border-white/10 w-24 mx-auto pt-2"></div>
+        </div>
+
+        <div
+          class="prose mx-auto bg-black/10 p-6 md:p-8 rounded-xl border border-white/5"
+        >
+          <slot />
+        </div>
+
+        <div class="mt-8 mb-12">
+          <a
+            href={lang === "es" ? "/es/blog/" : "/blog/"}
+            class="inline-flex items-center text-white/70 hover:text-white transition-colors"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 mr-2"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z"
+                clip-rule="evenodd"></path>
+            </svg>
+            {
+              lang === "es"
+                ? "volver a todos los artículos"
+                : "back to all articles"
+            }
+          </a>
+        </div>
+      </article>
+    </main>
+  </body>
 </html>

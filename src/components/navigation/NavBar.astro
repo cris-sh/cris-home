@@ -1,0 +1,286 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { languages, defaultLang } from "../../i18n/pages";
+import { useTranslations, getLangFromUrl } from "../../i18n/utils";
+
+const currentPath = Astro.url.pathname;
+const currentLang = getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+const navItems = [
+  {
+    title: t("nav.home"),
+    path: getRelativeLocaleUrl(currentLang, "/"),
+    icon: "home",
+  },
+  {
+    title: t("nav.projects"),
+    path: getRelativeLocaleUrl(currentLang, "/projects"),
+    icon: "code-bracket",
+  },
+  {
+    title: t("nav.blog"),
+    path: getRelativeLocaleUrl(currentLang, "/blog"),
+    icon: "book",
+  },
+];
+
+function isActive(path: string) {
+  if (path === getRelativeLocaleUrl(currentLang, "")) {
+    return currentPath === path || currentPath === `/${currentLang}/`;
+  }
+  return currentPath.startsWith(path);
+}
+
+import enuxAvatar from "../../../public/img/avatar/enux.webp";
+import { Image } from "astro:assets";
+---
+
+<!-- Desktop Navigation -->
+<header
+  class="fixed w-full z-50 top-0 hidden md:flex justify-center px-4 py-3 transition-all duration-300 ease-in-out"
+>
+  <nav
+    class="backdrop-blur-xl bg-black/60 border border-white/20 rounded-2xl flex justify-between items-center px-4 py-2 md:py-3 text-white w-full max-w-3xl mx-auto"
+  >
+    <div class="font-bold text-xl">
+      <a href={getRelativeLocaleUrl(currentLang, "")}>
+        <Image
+          src={enuxAvatar}
+          alt="enux's avatar"
+          class="w-10 h-10 rounded-full"
+          draggable="false"
+          loading="lazy"
+        />
+      </a>
+    </div>
+
+    <div class="flex items-center space-x-6">
+      {
+        navItems.map(({ title, path }) => (
+          <a
+            href={path}
+            class={`transition-colors duration-300 hover:text-white/70 ${isActive(path) ? "text-white font-bold" : "text-white/80"}`}
+          >
+            {title}
+          </a>
+        ))
+      }
+    </div>
+
+    <!-- Language Selector for Desktop - Fixed dropdown issue -->
+    <div class="relative">
+      <button
+        id="langToggle"
+        class="flex items-center space-x-1 text-white hover:text-white/80 transition-colors duration-300"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          ></path>
+        </svg>
+        <span>{currentLang}</span>
+      </button>
+
+      <div
+        id="langDropdown"
+        class="absolute right-0 mt-2 py-2 w-32 bg-black/80 backdrop-blur-lg border border-white/10 rounded-lg hidden shadow-xl"
+      >
+        {
+          Object.entries(languages).map(([code, label]) => (
+            <a
+              href={code === defaultLang ? "/" : `/${code}/`}
+              class={`block px-4 py-2 hover:bg-white/10 ${currentLang === code ? "text-white font-semibold" : "text-white/80"}`}
+            >
+              {label}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- Mobile Navigation -->
+<div
+  class="fixed bottom-0 left-0 right-0 md:hidden z-50 px-4 py-3 flex justify-center"
+>
+  <div
+    class="backdrop-blur-xl bg-black/60 border border-white/20 rounded-2xl w-full max-w-md mx-auto px-4 py-2 flex justify-between items-center shadow-xl"
+  >
+    {
+      navItems.map(({ title, path, icon }) => (
+        <a
+          href={path}
+          class={`flex flex-col items-center py-1 ${isActive(path) ? "text-white font-semibold" : "text-white/70 hover:text-white"}`}
+          aria-label={title}
+        >
+          {icon === "home" && (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-6 h-6"
+            >
+              <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
+              <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75v4.5a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198c.03-.028.061-.056.091-.086L12 5.43z" />
+            </svg>
+          )}
+          {icon === "code-bracket" && (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M14.447 3.027a.75.75 0 01.527.92l-4.5 16.5a.75.75 0 01-1.448-.394l4.5-16.5a.75.75 0 01.921-.526zM16.72 6.22a.75.75 0 011.06 0l5.25 5.25a.75.75 0 010 1.06l-5.25 5.25a.75.75 0 11-1.06-1.06L21.44 12l-4.72-4.72a.75.75 0 010-1.06zm-9.44 0a.75.75 0 010 1.06L2.56 12l4.72 4.72a.75.75 0 11-1.06 1.06L.97 12.53a.75.75 0 010-1.06l5.25-5.25a.75.75 0 011.06 0z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          )}
+          {icon === "book" && (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-6 h-6"
+            >
+              <path d="M11.25 4.533A9.707 9.707 0 006 3a9.735 9.735 0 00-3.25.555.75.75 0 00-.5.707v14.25a.75.75 0 001 .707A8.237 8.237 0 016 18.75c1.995 0 3.823.707 5.25 1.886V4.533zM12.75 20.636A8.214 8.214 0 0118 18.75c.966 0 1.89.166 2.75.47a.75.75 0 001-.708V4.262a.75.75 0 00-.5-.707A9.735 9.735 0 0018 3a9.707 9.707 0 00-5.25 1.533v16.103z" />
+            </svg>
+          )}
+        </a>
+      ))
+    }
+
+    <!-- Mobile Language Selector -->
+    <div class="relative" id="mobileLangSelector">
+      <button
+        id="mobileLangToggle"
+        class="flex flex-col items-center text-white/70 hover:text-white py-1"
+        aria-label="Change language"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM6.262 6.072a8.25 8.25 0 1010.562-.766 4.5 4.5 0 01-1.318 1.357L14.25 7.5l.165.33a.809.809 0 01-1.086 1.085l-.604-.302a1.125 1.125 0 00-1.298.21l-.132.131c-.439.44-.439 1.152 0 1.591l.296.296c.256.257.622.374.98.314l1.17-.195c.323-.054.654.036.905.245l1.33 1.108c.32.267.46.694.358 1.1a8.7 8.7 0 01-2.288 4.04l-.723.724a1.125 1.125 0 01-1.298.21l-.153-.076a1.125 1.125 0 01-.622-1.006v-1.089c0-.298-.119-.585-.33-.796l-1.347-1.347a1.125 1.125 0 01-.21-1.298L9.75 12l-1.64-1.64a6 6 0 01-1.676-3.257l-.172-1.03z"
+            clip-rule="evenodd"></path>
+        </svg>
+      </button>
+
+      <div
+        id="mobileLangDropdown"
+        class="absolute bottom-full mb-2 right-0 py-2 w-32 bg-black/80 backdrop-blur-lg border border-white/10 rounded-lg hidden shadow-xl"
+      >
+        {
+          Object.entries(languages).map(([code, label]) => (
+            <a
+              href={code === defaultLang ? "/" : `/${code}/`}
+              class={`block px-4 py-2 hover:bg-white/10 ${
+                currentLang === code
+                  ? "text-white font-semibold"
+                  : "text-white/80"
+              }`}
+            >
+              {label}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- padding on mobile to account for fixed navbar -->
+<div class="pb-16 md:pb-0 hidden md:block"></div>
+
+<script>
+  // Script para manejar los dropdowns del selector de idiomas
+  document.addEventListener("DOMContentLoaded", () => {
+    // Desktop language toggle
+    const langToggle = document.getElementById("langToggle");
+    const langDropdown = document.getElementById("langDropdown");
+
+    if (langToggle && langDropdown) {
+      langToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        langDropdown.classList.toggle("hidden");
+      });
+    }
+
+    // Mobile language toggle
+    const mobileLangToggle = document.getElementById("mobileLangToggle");
+    const mobileLangDropdown = document.getElementById("mobileLangDropdown");
+
+    if (mobileLangToggle && mobileLangDropdown) {
+      mobileLangToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        mobileLangDropdown.classList.toggle("hidden");
+      });
+    }
+
+    // Close dropdowns when clicking outside
+    document.addEventListener("click", (e) => {
+      if (
+        langDropdown &&
+        !langDropdown.contains(e.target as Node) &&
+        e.target !== langToggle
+      ) {
+        langDropdown.classList.add("hidden");
+      }
+
+      if (
+        mobileLangDropdown &&
+        !mobileLangDropdown.contains(e.target as Node) &&
+        e.target !== mobileLangToggle
+      ) {
+        mobileLangDropdown.classList.add("hidden");
+      }
+    });
+
+    // Prevent dropdown from closing when clicking inside it
+    if (langDropdown) {
+      langDropdown.addEventListener("click", (e) => {
+        e.stopPropagation();
+      });
+    }
+
+    if (mobileLangDropdown) {
+      mobileLangDropdown.addEventListener("click", (e) => {
+        e.stopPropagation();
+      });
+    }
+  });
+</script>
+
+<style>
+  header {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

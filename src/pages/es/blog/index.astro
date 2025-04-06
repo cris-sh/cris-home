@@ -1,14 +1,14 @@
 ---
-import BaseHead from "../../components/BaseHead.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+import BaseHead from "../../../components/BaseHead.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../../consts";
 import { getCollection } from "astro:content";
-import FormattedDate from "../../components/FormattedDate.astro";
-import NavBar from "../../components/navigation/NavBar.astro";
+import FormattedDate from "../../../components/FormattedDate.astro";
+import NavBar from "../../../components/navigation/NavBar.astro";
 
 const posts = (
   await getCollection("blog", (post) => {
     const matches =
-      post.id.startsWith("en/") || !post.data.lang || post.data.lang === "en";
+      post.id.startsWith("es/") || !post.data.lang || post.data.lang === "es";
     return matches;
   })
 ).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
@@ -20,7 +20,7 @@ const getSlug = (id: any) => {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
     <style>
@@ -35,8 +35,8 @@ const getSlug = (id: any) => {
       {
         posts.length < 1 ? (
           <div class="text-center py-16">
-            <h2 class="text-xl mb-2">no blog posts found</h2>
-            <p class="text-white/60">check back soon for new content</p>
+            <h2 class="text-xl mb-2">no se encontraron articulos</h2>
+            <p class="text-white/60">vuelve pronto</p>
           </div>
         ) : (
           <div class="space-y-8">
@@ -44,7 +44,7 @@ const getSlug = (id: any) => {
             {posts.length > 0 && (
               <div class="bg-black/20 border border-white/10 rounded-xl overflow-hidden hover:border-white/30 transition-all duration-300">
                 <a
-                  href={`/blog/${getSlug(posts[0].id)}/`}
+                  href={`/es/blog/${getSlug(posts[0].id)}/`}
                   class="block md:flex"
                 >
                   <div class="md:w-1/2">
@@ -54,7 +54,6 @@ const getSlug = (id: any) => {
                       class="w-full h-full object-cover"
                       height={360}
                       width={720}
-                      draggable="false"
                     />
                   </div>
                   <div class="p-5 md:w-1/2 flex flex-col justify-between">
@@ -78,14 +77,13 @@ const getSlug = (id: any) => {
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
               {posts.slice(1).map((post) => (
                 <div class="bg-black/20 border border-white/10 rounded-xl overflow-hidden hover:border-white/30 transition-all duration-300">
-                  <a href={`/blog/${getSlug(post.id)}/`} class="block">
+                  <a href={`/es/blog/${getSlug(post.id)}/`} class="block">
                     <img
                       src={post.data.heroImage}
                       alt=""
                       class="w-full object-cover h-48"
                       height={360}
                       width={720}
-                      draggable="false"
                     />
                     <div class="p-5">
                       <div class="flex justify-between items-start mb-2">
@@ -97,7 +95,7 @@ const getSlug = (id: any) => {
                       </p>
 
                       <div class="text-sm text-white/60">
-                        <FormattedDate date={post.data.date} lang="en" />
+                        <FormattedDate date={post.data.date} lang="es" />
                       </div>
                     </div>
                   </a>

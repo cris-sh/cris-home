@@ -1,0 +1,552 @@
+---
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { getCollection } from "astro:content";
+import BaseHead from "../../components/BaseHead.astro";
+import FormattedDate from "../../components/FormattedDate.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const projects = (
+  await getCollection(
+    "projects",
+    (project: { id: string; data: { lang: string } }) => {
+      const matches =
+        project.id.startsWith("es/") || project.data.lang === "es";
+      return matches;
+    }
+  )
+).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const getSlug = (id: string) => {
+  const parts = id.split("/");
+  return parts.length > 1 ? parts[1] : id;
+};
+
+const resume = {
+  name: t("resume.name"),
+  title: t("resume.description"),
+  description:
+    "Ingeniero de software apasionado por el desarrollo web full-stack, especializado en JavaScript/TypeScript y frameworks modernos.",
+  website: "enux.dev",
+  location: "Bogotá, Colombia",
+  timezone: "GMT-5",
+  email: "contact@enux.dev",
+  github: "github.com/cris-sh",
+  linkedin: "linkedin.com/in/enux",
+  photoUrl: "/img/avatar/enux.webp",
+
+  about: t("resume.about"),
+
+  experience: t("resume.experience"),
+
+  education: t("resume.education"),
+};
+
+function getTagColor(tag: string) {
+  const colors: { [key: string]: string } = {
+    css: "bg-blue-300",
+    html: "bg-orange-300",
+    javascript: "bg-yellow-300",
+    typescript: "bg-blue-400",
+    python: "bg-green-300",
+    dart: "bg-blue-500",
+    java: "bg-red-500",
+    csharp: "bg-purple-500",
+    "c++": "bg-blue-600",
+    go: "bg-green-400",
+    rust: "bg-orange-400",
+    php: "bg-blue-200",
+    kotlin: "bg-green-200",
+  };
+
+  return colors[tag.toLowerCase()] || "bg-gray-300";
+}
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{resume.name} - CV</title>
+    <link rel="icon" type="image/svg+xml" href={resume.photoUrl} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <BaseHead title={`${resume.name} - CV`} description={resume.description} />
+    <style>
+      @font-face {
+        font-family: "Geist";
+        src: url("/fonts/Geist-Regular.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Geist";
+        src: url("/fonts/Geist-Bold.ttf") format("truetype");
+        font-weight: bold;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      /* Añadir GeistMono variable */
+      @font-face {
+        font-family: "GeistMono";
+        src: url("/fonts/GeistMono-Variable.ttf") format("truetype-variations");
+        font-weight: 100 900;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      body {
+        font-family:
+          Geist,
+          ui-sans-serif,
+          system-ui,
+          sans-serif,
+          "Apple Color Emoji",
+          "Segoe UI Emoji",
+          Segoe UI Symbol,
+          "Noto Color Emoji";
+        background-color: #fffef5;
+        color: #333;
+        line-height: 1.5;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family:
+          Geist,
+          ui-sans-serif,
+          system-ui,
+          sans-serif,
+          "Apple Color Emoji",
+          "Segoe UI Emoji",
+          Segoe UI Symbol,
+          "Noto Color Emoji";
+      }
+
+      /* Clase para texto monoespaciado */
+      .mono {
+        font-family: GeistMono, ui-monospace, SFMono-Regular, Menlo, Monaco,
+          Consolas, "Liberation Mono", "Courier New", monospace;
+      }
+
+      .page-container {
+        max-width: 210mm; /* A4 width */
+        margin: 0 auto;
+        padding: 2rem;
+        background-color: #fffff8;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e0e0d4;
+      }
+
+      .section-title {
+        border-bottom: 2px solid #e0e0d4;
+        padding-bottom: 0.5rem;
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      @media print {
+        body {
+          background-color: white;
+        }
+
+        .page-container {
+          box-shadow: none;
+          border: none;
+          padding: 1rem;
+          max-width: 100%;
+        }
+
+        .languages-elector {
+          margin-bottom: 1rem !important;
+        }
+
+        .contact-buttons {
+          margin-top: 1rem !important;
+        }
+
+        svg {
+          print-color-adjust: exact;
+          -webkit-print-color-adjust: exact;
+        }
+
+        #print-button {
+          display: none !important;
+        }
+
+        .no-print {
+          display: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-container">
+      <div class="flex justify-between mb-8">
+        <div class="language-selector flex space-x-4">
+          <a href="/cv" aria-label="Switch to English">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 60 30"
+              class="w-10 h-5"
+              aria-hidden="true"
+            >
+              <clipPath id="t">
+                <path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"
+                ></path>
+              </clipPath>
+              <path d="M0,0 v30 h60 v-30 z" fill="#012169"></path>
+              <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"
+              ></path>
+              <path
+                d="M0,0 L60,30 M60,0 L0,30"
+                clip-path="url(#t)"
+                stroke="#C8102E"
+                stroke-width="4"></path>
+              <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"
+              ></path>
+              <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"
+              ></path>
+            </svg>
+          </a>
+          <a href="/es/cv" aria-label="Cambiar a Español">
+            <!-- Bandera de España inline SVG -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 60 30"
+              class="w-10 h-5"
+              aria-hidden="true"
+            >
+              <rect width="60" height="30" fill="#AA151B"></rect>
+              <rect width="60" height="15" y="7.5" fill="#F1BF00"></rect>
+              <path
+                d="M15,15 c0,-2.5 2.5,-5 5,-5 s5,2.5 5,5 s-2.5,5 -5,5 s-5,-2.5 -5,-5"
+                fill="#AA151B"></path>
+              <path
+                d="M18,12 h4 M17.5,14 h5 M18,16 h4"
+                stroke="#F1BF00"
+                stroke-width="0.5"></path>
+              <path
+                d="M21,12 v-2 h2 M23,12 v-2 h-2"
+                fill="none"
+                stroke="#AA151B"
+                stroke-width="0.5"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Información principal y foto -->
+      <div class="flex flex-col md:flex-row justify-between items-start mb-8">
+        <div class="flex-1">
+          <h1 class="text-3xl font-bold mb-2">{resume.name}</h1>
+          <p class="text-lg mb-4 mono">{resume.title}</p>
+
+          <div class="flex flex-col space-y-2 mb-4">
+            <div class="flex items-center">
+              <svg
+                class="w-4 h-4 mr-2 text-gray-600"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"
+                ></path>
+                <path
+                  d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"
+                ></path>
+              </svg>
+              <a
+                href={`https://${resume.website}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-indigo-800 hover:underline mono"
+              >
+                {resume.website}
+              </a>
+            </div>
+            <div class="flex items-center">
+              <svg
+                class="w-4 h-4 mr-2 text-gray-600"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <span class="mono">
+                {resume.location} · {resume.timezone}
+                <span id="current-time" class="ml-2"></span>
+              </span>
+            </div>
+          </div>
+
+          <div class="flex space-x-2 contact-buttons no-print">
+            <a
+              href={`mailto:${resume.email}`}
+              class="inline-flex items-center px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded text-sm"
+            >
+              <svg
+                class="w-4 h-4 mr-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                ></path>
+              </svg>
+            </a>
+            <a
+              href={resume.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded text-sm"
+            >
+              <svg
+                class="w-4 h-4 mr-1"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.268 2.75 1.026A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.026 2.747-1.026.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.138 20.161 22 16.416 22 12c0-5.523-4.477-10-10-10z"
+                ></path>
+              </svg>
+            </a>
+            <a
+              href={resume.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded text-sm"
+            >
+              <svg
+                class="w-4 h-4 mr-1"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.454C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"
+                ></path>
+              </svg>
+            </a>
+            <button
+              id="print-button"
+              class="inline-flex items-center px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded text-sm"
+            >
+              <svg
+                class="w-4 h-4 mr-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="mt-4 md:mt-0 md:ml-8">
+          <img
+            src={resume.photoUrl}
+            alt={resume.name}
+            class="w-32 h-32 md:w-40 md:h-40 object-cover rounded-2xl border-2 border-gray-300 shadow-sm"
+          />
+        </div>
+      </div>
+
+      <div>
+        <h2 class="section-title text-xl font-bold">Sobre Mí</h2>
+        <div class="space-y-4">
+          <p class="mono">{resume.description}</p>
+        </div>
+      </div>
+
+      <!-- Work Experience -->
+      <div>
+        <h2 class="section-title text-xl font-bold">Experiencia Laboral</h2>
+        <div class="space-y-6">
+          {
+            resume.experience.map((job: any) => (
+              <div>
+                <div class="flex justify-between mb-1">
+                  <div class="font-bold">{job.company}</div>
+                  <div class="text-gray-600">{job.period}</div>
+                </div>
+                <div class="mb-1 mono">{job.position}</div>
+                <p class="text-sm mono text-gray-700 leading-relaxed">
+                  {job.description}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div>
+        <h2 class="section-title text-xl font-bold">Educación</h2>
+        <div class="space-y-4">
+          {
+            resume.education.map(
+              (edu: {
+                institution: unknown;
+                period: unknown;
+                degree: unknown;
+              }) => (
+                <div>
+                  <div class="flex justify-between">
+                    <div class="font-bold">{edu.institution}</div>
+                    <div class="text-gray-600 mono">{edu.period}</div>
+                  </div>
+                  <div class="mono">{edu.degree}</div>
+                </div>
+              )
+            )
+          }
+        </div>
+      </div>
+
+      {
+        projects.length > 0 && (
+          <div>
+            <h2 class="section-title text-xl font-bold">Proyectos</h2>
+            <div class="space-y-4">
+              {projects.slice(0, 3).map((project) => (
+                <div class="bg-gray-50 p-4 rounded-md border border-gray-200">
+                  <div class="flex justify-between mb-2">
+                    <h3 class="font-bold">
+                      <a
+                        href={`/es/projects/${getSlug(project.id)}/`}
+                        target="_blank"
+                        class="text-indigo-800 hover:underline"
+                      >
+                        {project.data.title}
+                      </a>
+                    </h3>
+                    <div class="text-sm text-gray-600 mono">
+                      <FormattedDate date={project.data.date} lang={lang} />
+                    </div>
+                  </div>
+
+                  <p class="mb-2 text-sm mono">{project.data.description}</p>
+
+                  <div class="flex flex-wrap gap-1 mb-2">
+                    {project.data.tags.map((tag) => (
+                      <span class="inline-flex items-center">
+                        <span
+                          class={`w-2 h-2 rounded-full mr-1 ${getTagColor(tag)}`}
+                        />
+                        <span class="text-xs mono">{tag}</span>
+                      </span>
+                    ))}
+                  </div>
+
+                  {project.data.demoUrl && (
+                    <div>
+                      <a
+                        href={project.data.demoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-xs text-indigo-800 hover:underline inline-flex items-center mongo"
+                      >
+                        <svg
+                          class="w-3 h-3 mr-1"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                          />
+                        </svg>
+                        Ver demostración
+                      </a>
+                    </div>
+                  )}
+                </div>
+              ))}
+
+              <div class="mt-4 text-center">
+                <a
+                  href={`/${lang === "es" ? "es/" : ""}projects/`}
+                  class="inline-block py-2 px-4 bg-gray-200 hover:bg-gray-300 rounded text-sm"
+                >
+                  Ver todos los proyectos
+                </a>
+              </div>
+            </div>
+          </div>
+        )
+      }
+    </div>
+
+    <script define:vars={{ lang }}>
+      // Actualizar hora actual
+      function updateTime() {
+        // Usar Intl.DateTimeFormat con la zona horaria explícita
+        const bogotaTime = new Intl.DateTimeFormat(
+          lang === "es" ? "es-CO" : "en-US",
+          {
+            timeZone: "America/Bogota",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+          }
+        ).format(new Date());
+
+        document.getElementById("current-time").textContent = bogotaTime;
+      }
+
+      updateTime();
+      setInterval(updateTime, 60000); // Actualizar cada minuto
+
+      // Botón de imprimir
+      document
+        .getElementById("print-button")
+        .addEventListener("click", function () {
+          window.print();
+        });
+    </script>
+  </body>
+</html>

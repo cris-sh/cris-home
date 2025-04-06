@@ -1,0 +1,29 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import { render } from "astro:content";
+import Projects from "../../layouts/Projects.astro";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects", (project) => {
+    return project.id.startsWith("en/") || project.data.lang === "en";
+  });
+  return projects.map((project) => {
+    const slugParts = project.id.split("/");
+    const slug =
+      slugParts.length > 1 ? slugParts.slice(1).join("/") : project.id;
+
+    return {
+      params: { slug },
+      props: project,
+    };
+  });
+}
+type Props = CollectionEntry<"projects">;
+
+const project = Astro.props;
+const { Content } = await render(project);
+---
+
+<Projects {...project.data}>
+  <Content />
+</Projects>

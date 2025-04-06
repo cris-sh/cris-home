@@ -1,15 +1,15 @@
 ---
-import BaseHead from "../components/BaseHead.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
-import NavBar from "../components/navigation/NavBar.astro";
+import BaseHead from "../../components/BaseHead.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+import NavBar from "../../components/navigation/NavBar.astro";
 
-import { useTranslations } from "../i18n/utils";
+import { useTranslations } from "../../i18n/utils";
 
-const t = useTranslations("en");
+const t = useTranslations("es");
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
@@ -55,7 +55,7 @@ const t = useTranslations("en");
           <h2 class="text-xl font-bold mb-4">{t("home.learnMore")}</h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
             <a
-              href="/cv"
+              href="/es/cv"
               class="flex items-center justify-between bg-zinc-900/30 backdrop-blur-md p-3 rounded-md hover:bg-zinc-800/40 transition-colors border border-zinc-700/40 shadow-md"
             >
               <div class="flex items-center gap-2">
