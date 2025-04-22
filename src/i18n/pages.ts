@@ -33,7 +33,7 @@ export const ui = {
         position: "Full Stack Developer",
         period: "2025 - Present",
         description:
-          "Developed and maintained web applications using React and Next.js, focusing on performance optimization and user experience.",
+          "Developing backend systems with Go/Fiber for monitoring applications and business tools. Building APIs for Remix frontends, implementing real-time metrics, and managing Stripe payment integrations for client subscriptions.",
       },
     ],
     "resume.education": [
@@ -68,7 +68,7 @@ export const ui = {
         position: "Full Stack Developer",
         period: "2025 - Presente",
         description:
-          "Desarrollé y mantuve aplicaciones web utilizando React y Next.js, enfocándome en la optimización del rendimiento y la experiencia del usuario.",
+          "Desarrollo de sistemas backend con Go/Fiber para aplicaciones de monitoreo y herramientas de negocio. Construcción de APIs para frontends en Remix, implementación de métricas en tiempo real e integración de pagos con Stripe para suscripciones de clientes.",
       },
     ],
     "resume.education": [
