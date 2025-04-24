@@ -15,7 +15,7 @@ export const ui = {
     "home.name": "cristian",
     "home.title": "software developer & student",
     "home.about": [
-      "i'm currently a software analysis and development student. i work with JavaScript, TypeScript, Dart, Go, React, NextJS, Vite, and Flutter. you can find me online as @enux.",
+      "i'm currently a software analysis and development student. i work with JavaScript, TypeScript, Dart, Go, React, NextJS, Remix, Vite, Fiber and Flutter. you can find me online as @enux.",
       "as a full-stack developer, i don't limit myself to just frontend or backend. i enjoy experimenting extensively with the backend, creating apis and exploring various functionalities and add-ons. my primary areas of interest are web development and building robust applications.",
       "i'm passionate about learning new technologies and implementing innovative solutions.",
     ],
@@ -51,7 +51,7 @@ export const ui = {
 
     "home.title": "desarrollador de software & estudiante",
     "home.about": [
-      "actualmente soy estudiante de análisis y desarrollo de software. trabajo con JavaScript, TypeScript, Dart, Go, React, NextJS, Vite, and Flutter. Puedes encontrarme en línea como @enux.",
+      "actualmente soy estudiante de análisis y desarrollo de software. trabajo con JavaScript, TypeScript, Dart, Go, React, NextJS, Remix, Vite, Fiber and Flutter. Puedes encontrarme en línea como @enux.",
       "como desarrollador full-stack, no me limito solo al frontend o backend. disfruto experimentando extensamente con el backend, creando APIs y explorando varias funcionalidades y complementos. mis áreas principales de interés son el desarrollo web y la construcción de aplicaciones robustas.",
       "me apasiona aprender nuevas tecnologías e implementar soluciones innovadoras.",
     ],
