@@ -15,7 +15,7 @@ export const ui = {
     "home.name": "cristian",
     "home.title": "software engineer",
     "home.about": [
-      "i'm a software engineering with expertise in modern development technologies. proficient in JavaScript, TypeScript, Python, Go, Dart and frameworks like React, NextJS, Remix, Vite, Fiber and Flutter. you can find me online as @enux.",
+      "i'm a software engineer with expertise in modern development technologies. proficient in JavaScript, TypeScript, Python, Go, Dart and frameworks like React, NextJS, Remix, Vite, Fiber and Flutter. you can find me online as @enux.",
       "as a software engineer, i work across the entire development stack. i design and implement backend systems, create efficient APIs, and build intuitive user interfaces. my core strengths include system architecture, application development, and technical problem-solving.",
       "i'm passionate about engineering scalable solutions, optimizing performance, and exploring emerging technologies to solve complex problems.",
     ],
