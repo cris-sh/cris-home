@@ -13,27 +13,27 @@ export const ui = {
     "nav.twitter": "twitter",
 
     "home.name": "cristian",
-    "home.title": "software developer & student",
+    "home.title": "software engineer",
     "home.about": [
-      "i'm currently a software analysis and development student. i work with JavaScript, TypeScript, Dart, Go, React, NextJS, Remix, Vite, Fiber and Flutter. you can find me online as @enux.",
-      "as a full-stack developer, i don't limit myself to just frontend or backend. i enjoy experimenting extensively with the backend, creating apis and exploring various functionalities and add-ons. my primary areas of interest are web development and building robust applications.",
-      "i'm passionate about learning new technologies and implementing innovative solutions.",
+      "i'm a software engineering with expertise in modern development technologies. proficient in JavaScript, TypeScript, Python, Go, Dart and frameworks like React, NextJS, Remix, Vite, Fiber and Flutter. you can find me online as @enux.",
+      "as a software engineer, i work across the entire development stack. i design and implement backend systems, create efficient APIs, and build intuitive user interfaces. my core strengths include system architecture, application development, and technical problem-solving.",
+      "i'm passionate about engineering scalable solutions, optimizing performance, and exploring emerging technologies to solve complex problems.",
     ],
     "home.learnMore": "want to learn more?",
 
     "resume.name": "Cristian Duarte Hidalgo",
-    "resume.description": "Software Development and Analysis Student",
+    "resume.description": "Software Engineer",
     "resume.about": [
-      "Versatile Full-Stack Developer with a strong foundation in modern web technologies and a formal background in Software Analysis and Development. Proficient in multiple programming languages and frameworks including JavaScript, TypeScript, React, NextJS, and Flutter, enabling me to deliver comprehensive solutions across diverse platforms. ",
-      "I excel in both frontend and backend development with a particular talent for API architecture and system integration. My approach combines technical precision with creative problem-solving, consistently delivering robust, scalable applications that exceed client expectations. I actively stay at the forefront of emerging technologies, allowing me to implement innovative solutions that drive business value and enhance user experience.",
+      "Versatile Software Engineer with strong technical foundations and formal education in Software Analysis and Development. Experienced in multiple programming languages and frameworks including JavaScript, TypeScript, Go, React, NextJS, and Flutter, enabling me to architect and deliver high-quality solutions across various platforms.",
+      "I excel in system design and implementation with particular strengths in API architecture, backend development, and frontend engineering. My approach combines systematic problem-solving with technical expertise, consistently delivering robust, scalable applications that meet business requirements. I continuously expand my technical knowledge to implement efficient solutions that optimize performance and enhance user experience.",
     ],
     "resume.experience": [
       {
         company: "Papyrus",
-        position: "Full Stack Developer",
+        position: "Software Engineer",
         period: "2025 - Present",
         description:
-          "Developing backend systems with Go/Fiber for monitoring applications and business tools. Building APIs for Remix frontends, implementing real-time metrics, and managing Stripe payment integrations for client subscriptions.",
+          "Engineering backend systems with Go/Fiber for monitoring applications and business tools. Designing and implementing APIs, developing frontend solutions with Remix, implementing real-time data processing, and integrating payment systems through Stripe for client subscriptions."
       },
     ],
     "resume.education": [
@@ -49,26 +49,26 @@ export const ui = {
     "nav.projects": "proyectos",
     "nav.blog": "blog",
 
-    "home.title": "desarrollador de software & estudiante",
+    "home.title": "ingeniero de software",
     "home.about": [
-      "actualmente soy estudiante de análisis y desarrollo de software. trabajo con JavaScript, TypeScript, Dart, Go, React, NextJS, Remix, Vite, Fiber and Flutter. Puedes encontrarme en línea como @enux.",
-      "como desarrollador full-stack, no me limito solo al frontend o backend. disfruto experimentando extensamente con el backend, creando APIs y explorando varias funcionalidades y complementos. mis áreas principales de interés son el desarrollo web y la construcción de aplicaciones robustas.",
-      "me apasiona aprender nuevas tecnologías e implementar soluciones innovadoras.",
+      "soy estudiante de ingeniería de software con experiencia en tecnologías modernas de desarrollo. competente en JavaScript, TypeScript, Python, Go, Dart, y frameworks como React, NextJS, Remix, Vite, Fiber y Flutter.",
+      "como ingeniero de software, trabajo en todos los niveles del stack de desarrollo. diseño e implemento sistemas backend, creo APIs eficientes, y construyo interfaces de usuario intuitivas. mis fortalezas principales incluyen arquitectura de sistemas, desarrollo de aplicaciones y resolución de problemas técnicos.",
+      "me apasiona la ingeniería de soluciones escalables, la optimización del rendimiento y la exploración de tecnologías emergentes para resolver problemas complejos.",
     ],
     "home.learnMore": "quieres saber más?",
 
-    "resume.description": "Estudiante de Análisis y Desarrollo de Software",
+    "resume.description": "Ingeniero de Software",
     "resume.about": [
-      "Desarrollador Full-Stack versátil con sólida formación en tecnologías web modernas y una base académica en Análisis y Desarrollo de Software. Competente en múltiples lenguajes de programación y frameworks incluyendo JavaScript, TypeScript, React, NextJS y Flutter, lo que me permite entregar soluciones integrales en diversas plataformas.",
-      "Destaco tanto en desarrollo frontend como backend con un talento particular para la arquitectura de APIs e integración de sistemas. Mi enfoque combina precisión técnica con resolución creativa de problemas, entregando consistentemente aplicaciones robustas y escalables que superan las expectativas del cliente. Me mantengo activamente a la vanguardia de las tecnologías emergentes, lo que me permite implementar soluciones innovadoras que impulsan valor empresarial y mejoran la experiencia del usuario.",
+      "Ingeniero de Software versátil con sólidas bases técnicas y formación en Análisis y Desarrollo de Software. Experimentado en múltiples lenguajes de programación y frameworks incluyendo JavaScript, TypeScript, Go, React, NextJS y Flutter, lo que me permite arquitectar y entregar soluciones de alta calidad en diversas plataformas.",
+      "Destaco en diseño e implementación de sistemas con particular fortaleza en arquitectura de APIs, ingenieria backend y frontend. Mi enfoque combina resolución sistemática de problemas con experiencia técnica, entregando consistentemente aplicaciones robustas y escalables que cumplen con los requisitos del negocio. Continuamente amplío mis conocimientos técnicos para implementar soluciones eficientes que optimizan el rendimiento y mejoran la experiencia del usuario.",
     ],
     "resume.experience": [
       {
         company: "Papyrus",
-        position: "Full Stack Developer",
+        position: "Ingeniero de Software",
         period: "2025 - Presente",
         description:
-          "Desarrollo de sistemas backend con Go/Fiber para aplicaciones de monitoreo y herramientas de negocio. Construcción de APIs para frontends en Remix, implementación de métricas en tiempo real e integración de pagos con Stripe para suscripciones de clientes.",
+           "Ingeniería de sistemas backend con Go/Fiber para aplicaciones de monitoreo y herramientas de negocio. Diseño e implementación de APIs, desarrollo de soluciones frontend con Remix, implementación de procesamiento de datos en tiempo real e integración de sistemas de pago mediante Stripe para suscripciones de clientes.",
       },
     ],
     "resume.education": [
