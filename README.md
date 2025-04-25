@@ -1,68 +1,56 @@
-# Astro Starter Kit: Blog
+# cris-home 🏚️
 
-```sh
-pnpm create astro@latest -- --template blog
-```
+Welcome to my repository! This project contains the source code for my personal website, designed to showcase information about me, my projects, and more.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/blog)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/blog)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/blog/devcontainer.json)
+## 🚀 Technologies Used
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+This project was developed using the following technologies:
 
-![blog](https://github.com/withastro/astro/assets/2244813/ff10799f-a816-4703-b967-c78997e8323d)
+- **[Astro](https://astro.build/)**: A modern framework for building fast, optimized websites.
+- **React**: For creating dynamic and resuable UI components.
+- **TailwindCSS**: A utility-first CSS framework for styling.
+- **TypeScript**: A super set of JavaScript that adds static typing for better development experience.
 
-Features:
+## 🌟 Features
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+- **Optimization and Performance**: Built with Astro for fast loading times.
+- **Responsive**: Fully adaptable to different screen sizes.
+- **Projects Section**: Showcases my highlighted projects.
+- **Blog Section**: Includes a dedicated blog area where I share posts, tutorials, and insights on various topics.
 
-## 🚀 Project Structure
+## 🛠️ How to Run the Project
 
-Inside of your Astro project, you'll see the following folders and files:
+1. Clone this repository:
 
-```text
-├── public/
-├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
-```
+   ```bash
+   git clone https://github.com/cris-sh/cris-home.git
+   cd cris-home
+   ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+2. Install the dependencies:
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+   ```bash
+   npm install
+   ```
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+3. Start the development server:
 
-Any static assets, like images, can be placed in the `public/` directory.
+   ```bash
+   npm run dev
+   ```
 
-## 🧞 Commands
+## ⚙️ Configuration
 
-All commands are run from the root of the project, from a terminal:
+you can configure the project by modifying the following files:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+- **`src/i18n/`**: This folder contains files for managing translations and internationalization. you can add or update translations to support multiple languages.
+- **`src/consts.ts`**: this file contains centralized constants used throughout the project. you can update values like site metadata.
 
-## 👀 Want to learn more?
+after making changes to these files, restart the development server to see the updates.
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## 📬 Contact
 
-## Credit
+If you have questions, suggestions, or just want to say hello, feel free to contact me:
 
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+- **Email**: [contact@enux.dev](mailto:contact@enux.com)
+- **GitHub**: [cris-sh](https://github.com/cris-sh)
