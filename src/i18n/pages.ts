@@ -51,7 +51,7 @@ export const ui = {
 
     "home.title": "ingeniero de software",
     "home.about": [
-      "soy estudiante de ingeniería de software con experiencia en tecnologías modernas de desarrollo. competente en JavaScript, TypeScript, Python, Go, Dart, y frameworks como React, NextJS, Remix, Vite, Fiber y Flutter.",
+      "soy un ingeniero de software con experiencia en tecnologías modernas de desarrollo. competente en JavaScript, TypeScript, Python, Go, Dart, y frameworks como React, NextJS, Remix, Vite, Fiber y Flutter.",
       "como ingeniero de software, trabajo en todos los niveles del stack de desarrollo. diseño e implemento sistemas backend, creo APIs eficientes, y construyo interfaces de usuario intuitivas. mis fortalezas principales incluyen arquitectura de sistemas, desarrollo de aplicaciones y resolución de problemas técnicos.",
       "me apasiona la ingeniería de soluciones escalables, la optimización del rendimiento y la exploración de tecnologías emergentes para resolver problemas complejos.",
     ],
