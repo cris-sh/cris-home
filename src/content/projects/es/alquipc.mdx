@@ -1,0 +1,106 @@
+---
+title: "AlquiPC"
+description: "Un sistema moderno de facturación para alquiler de equipos informáticos con cálculo automático de precios basado en múltiples variables."
+date: 2025-04-27
+tags: ["TypeScript", "Vite", "TailwindCSS", "jsPDF", "Testing", "Bun"]
+image: "https://i.imgur.com/e94RzcX.png"
+demoUrl: "https://alquipc.enux.dev"
+github: "https://github.com/cris-sh/alquipc-billing"
+lang: "es"
+---
+
+import { Image } from "astro:assets";
+
+# AlquiPC - Sistema de Facturación
+
+## Visión general del proyecto
+
+AlquiPC es un sistema de facturación moderno diseñado específicamente para el alquiler de equipos informáticos. Desarrollado siguiendo los estándares de calidad ISO/IEC 25010, el sistema calcula precios de alquiler considerando diversas variables como ubicación, duración y cantidad de dispositivos, ofreciendo una solución integral para negocios en el sector de alquiler tecnológico.
+
+## Características principales
+
+- **Generación automática de ID para clientes**: Cada orden recibe un identificador único
+- **Cálculo dinámico de precios** basado en múltiples factores:
+  - Número de dispositivos (mínimo 2)
+  - Días iniciales de alquiler
+  - Días adicionales (con 2% de descuento)
+  - Ubicación (dentro de la ciudad, fuera con recargo del 5%, o en las instalaciones con 5% de descuento)
+- **Facturación digital** con resumen detallado
+- **Exportación a PDF** de facturas
+- **Simulación de envío de correos electrónicos**
+- **Modo oscuro/claro** para mejorar la experiencia de usuario
+- **Diseño responsivo** adaptable a dispositivos móviles y de escritorio
+
+## Tecnologías utilizadas
+
+El proyecto utiliza un stack tecnológico moderno enfocado en rendimiento y experiencia de desarrollo:
+
+- **TypeScript**: Para tipado estático y mayor robustez del código
+- **Vite**: Como herramienta de construcción y servidor de desarrollo rápido
+- **TailwindCSS**: Framework CSS para un diseño eficiente y consistente
+- **jsPDF + html2canvas-pro**: Para la generación de documentos PDF
+- **Bun**: Entorno de pruebas y gestor de paquetes ultrarrápido
+
+## Implementación y arquitectura
+
+El sistema está estructurado siguiendo principios de diseño modular y mantenibilidad:
+
+```
+src/
+├── models/      # Definiciones de tipos e interfaces
+├── services/    # Servicios para cálculos y API
+├── main.ts      # Punto de entrada de la aplicación
+└── style.css    # Estilos globales
+```
+
+Los cálculos de precios implementan lógica de negocio específica que abarca diferentes escenarios de alquiler, aplicando descuentos o recargos según las condiciones específicas de cada orden.
+
+## Capturas de pantalla
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+  <div>
+    <Image 
+      src="https://i.imgur.com/e94RzcX.png" 
+      alt="Formulario de Facturación" 
+      width={600} 
+      height={375} 
+      class="rounded-lg shadow-md" 
+    />
+    <p class="text-center text-sm mt-2">Formulario de Facturación</p>
+  </div>
+  <div>
+    <Image 
+      src="https://i.imgur.com/kgawDWR.png" 
+      alt="Factura Generada" 
+      width={600} 
+      height={375} 
+      class="rounded-lg shadow-md" 
+    />
+    <p class="text-center text-sm mt-2">Factura Generada</p>
+  </div>
+</div>
+
+## Casos de uso
+
+El sistema de facturación maneja varios escenarios de alquiler:
+
+1. **Alquiler dentro de la ciudad**: Sin cargos adicionales
+2. **Alquiler fuera de la ciudad**: Recargo del 5%
+3. **Alquiler en instalaciones**: Descuento del 5%
+4. **Días adicionales**: Descuento del 2% por cada día extra
+
+## Aprendizajes y desafíos
+
+Durante el desarrollo de AlquiPC, me enfrenté a desafíos específicos como:
+
+- **Precisión en cálculos financieros**: Implementar algoritmos que manejen correctamente los cálculos decimales en TypeScript
+- **Integración de PDF**: Convertir componentes HTML dinámicos a documentos PDF manteniendo la fidelidad visual
+- **Experiencia de usuario fluida**: Balancear la validación de datos y feedback instantáneo para crear una experiencia de uso intuitiva
+
+## Pruebas y calidad
+
+El proyecto incluye pruebas unitarias para verificar la funcionalidad correcta de cálculo de precios, garantizando que los resultados sean precisos en todos los escenarios posibles.
+
+## Conclusión
+
+AlquiPC representa una solución escalable y moderna para empresas de alquiler de equipos informáticos, combinando facilidad de uso con funcionalidades avanzadas de facturación y gestión de pedidos.

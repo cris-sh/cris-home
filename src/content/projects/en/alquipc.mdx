@@ -1,0 +1,105 @@
+---
+title: "AlquiPC"
+description: "A modern billing system for computer equipment rental with automatic price calculation based on multiple variables."
+date: 2025-04-27
+tags: ["TypeScript", "Vite", "TailwindCSS", "jsPDF", "Testing", "Bun"]
+image: "https://i.imgur.com/e94RzcX.png"
+demoUrl: "https://alquipc.enux.dev"
+github: "https://github.com/cris-sh/alquipc-billing"
+---
+
+import { Image } from "astro:assets";
+
+# AlquiPC - Billing System
+
+## Project Overview
+
+AlquiPC is a modern billing system specifically designed for computer equipment rental. Developed following ISO/IEC 25010 quality standards, the system calculates rental prices considering various variables such as location, duration, and number of devices, offering a comprehensive solution for businesses in the technology rental sector.
+
+## Main Features
+
+- **Automatic ID generation for clients**: Each order receives a unique identifier
+- **Dynamic price calculation** based on multiple factors:
+  - Number of devices (minimum 2)
+  - Initial rental days
+  - Additional days (with 2% discount)
+  - Location (within the city, outside with a 5% surcharge, or on-premise with a 5% discount)
+- **Digital billing** with detailed summary
+- **PDF export** of invoices
+- **Email sending simulation**
+- **Dark/light mode** to improve user experience
+- **Responsive design** adaptable to mobile and desktop devices
+
+## Technologies Used
+
+The project uses a modern technology stack focused on performance and development experience:
+
+- **TypeScript**: For static typing and more robust code
+- **Vite**: As a fast build tool and development server
+- **TailwindCSS**: CSS framework for efficient and consistent design
+- **jsPDF + html2canvas-pro**: For PDF document generation
+- **Bun**: Ultra-fast testing environment and package manager
+
+## Implementation and Architecture
+
+The system is structured following principles of modular design and maintainability:
+
+```
+src/
+├── models/      # Type definitions and interfaces
+├── services/    # Services for calculations and API
+├── main.ts      # Application entry point
+└── style.css    # Global styles
+```
+
+Price calculations implement specific business logic that covers different rental scenarios, applying discounts or surcharges according to the specific conditions of each order.
+
+## Screenshots
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+  <div>
+    <Image 
+      src="https://i.imgur.com/e94RzcX.png" 
+      alt="Billing Form" 
+      width={600} 
+      height={375} 
+      class="rounded-lg shadow-md" 
+    />
+    <p class="text-center text-sm mt-2">Billing Form</p>
+  </div>
+  <div>
+    <Image 
+      src="https://i.imgur.com/kgawDWR.png"
+      alt="Generated Invoice"
+      width={600}
+      height={375}
+      class="rounded-lg shadow-md"
+    />
+    <p class="text-center text-sm mt-2">Generated Invoice</p>
+  </div>
+</div>
+
+## Use Cases
+
+The billing system handles various rental scenarios:
+
+1. **Rental within the city**: No additional charges
+2. **Rental outside the city**: 5% surcharge
+3. **On-premise rental**: 5% discount
+4. **Additional days**: 2% discount for each extra day
+
+## Learnings and Challenges
+
+During the development of AlquiPC, I faced specific challenges such as:
+
+- **Precision in financial calculations**: Implementing algorithms that correctly handle decimal calculations in JavaScript
+- **PDF integration**: Converting dynamic HTML components to PDF documents while maintaining visual fidelity
+- **Smooth user experience**: Balancing data validation and instant feedback to create an intuitive user experience
+
+## Testing and Quality
+
+The project includes unit tests to verify the correct functionality of price calculations, ensuring that the results are accurate in all possible scenarios.
+
+## Conclusion
+
+AlquiPC represents a scalable and modern solution for computer equipment rental companies, combining ease of use with advanced billing and order management functionalities.

@@ -1,0 +1,141 @@
+---
+const { content } = Astro.props;
+---
+
+<div class="mdx-content">
+  <slot />
+</div>
+
+<style>
+  .mdx-content :global(h1) {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    margin-top: 2rem;
+    color: #c4b5fd;
+  }
+
+  .mdx-content :global(h2) {
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-top: 2.5rem;
+    margin-bottom: 1.25rem;
+    color: #c4b5fd;
+    border-bottom: 1px solid rgba(196, 181, 253, 0.2);
+    padding-bottom: 0.5rem;
+  }
+
+  .mdx-content :global(h3) {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #93c5fd;
+  }
+
+  .mdx-content :global(p) {
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+  }
+
+  .mdx-content :global(ul),
+  .mdx-content :global(ol) {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+  }
+
+  .mdx-content :global(li) {
+    margin-bottom: 0.5rem;
+    padding-left: 0.5rem;
+  }
+
+  .mdx-content :global(ul > li) {
+    list-style-type: disc;
+  }
+
+  .mdx-content :global(ol > li) {
+    list-style-type: decimal;
+  }
+
+  .mdx-content :global(li > ul),
+  .mdx-content :global(li > ol) {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .mdx-content :global(code) {
+    font-family: "GeistMono", monospace;
+    background-color: rgba(15, 23, 42, 0.8);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-size: 0.875em;
+    color: #e2e8f0;
+  }
+
+  .mdx-content :global(pre) {
+    background-color: #1e293b;
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+  }
+
+  .mdx-content :global(pre code) {
+    background-color: transparent;
+    padding: 0;
+    color: #e2e8f0;
+    font-size: 0.875rem;
+  }
+
+  .mdx-content :global(blockquote) {
+    border-left: 4px solid #4f46e5;
+    padding-left: 1rem;
+    margin-left: 0;
+    margin-right: 0;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 1.5rem 0;
+  }
+
+  .mdx-content :global(a) {
+    color: #60a5fa;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .mdx-content :global(a:hover) {
+    color: #93c5fd;
+  }
+
+  .mdx-content :global(hr) {
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 2rem 0;
+  }
+
+  .mdx-content :global(img) {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .mdx-content :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+  }
+
+  .mdx-content :global(th),
+  .mdx-content :global(td) {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.75rem;
+    text-align: left;
+  }
+
+  .mdx-content :global(th) {
+    background-color: rgba(15, 23, 42, 0.8);
+    font-weight: 600;
+  }
+</style>

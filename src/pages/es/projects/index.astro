@@ -89,7 +89,7 @@ function getTagColor(tag: string) {
                 <div class="flex justify-between items-start mb-2">
                   <h3 class="text-xl font-semibold">
                     <a
-                      href={`/projects/${getSlug(project.id)}/`}
+                      href={`/es/projects/${getSlug(project.id)}/`}
                       class="hover:text-white/80 transition-colors"
                     >
                       {project.data.title}
@@ -131,7 +131,7 @@ function getTagColor(tag: string) {
                           clip-rule="evenodd"
                         />
                       </svg>
-                      demo.enux.dev
+                      {project.data.demoUrl}
                     </a>
                   </div>
                 )}

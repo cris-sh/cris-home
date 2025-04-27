@@ -8,7 +8,24 @@ import tailwindcss from "@tailwindcss/vite";
 // https://astro.build/config
 export default defineConfig({
   site: "http://localhost:3000",
-  integrations: [mdx(), sitemap()],
+  integrations: [
+    mdx({
+      syntaxHighlight: "shiki",
+      remarkPlugins: [],
+      rehypePlugins: [],
+      remarkRehype: {
+        allowDangerousHtml: true,
+      },
+      gfm: true,
+    }),
+    sitemap(),
+  ],
+  markdown: {
+    shikiConfig: {
+      theme: "one-dark-pro",
+      wrap: true,
+    },
+  },
 
   vite: {
     plugins: [tailwindcss()],
