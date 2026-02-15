@@ -4,6 +4,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../../../consts";
 import { getCollection } from "astro:content";
 import FormattedDate from "../../../components/FormattedDate.astro";
 import NavBar from "../../../components/navigation/NavBar.astro";
+import { Image } from "astro:assets";
 
 const projects = (
   await getCollection("projects", (project) => {
@@ -41,209 +42,182 @@ function getTagColor(tag: string) {
 <!doctype html>
 <html lang="es">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-    <style>
-      .hidden {
-        display: none;
-      }
-    </style>
+    <BaseHead title={`${SITE_TITLE} | Proyectos`} description={SITE_DESCRIPTION} />
   </head>
   <body>
     <NavBar />
-    <main class="container mx-auto px-4 max-w-4xl">
-      <div class="mb-8 flex flex-col items-center">
-        <div class="w-full max-w-xl mb-4">
-          <input
-            type="text"
-            id="project-search"
-            placeholder="buscar proyectos por nombre, descripción o etiquetas"
-            aria-label="buscar proyectos"
-            class="w-full px-4 py-2 rounded-lg bg-black/20 border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-white/50"
-          />
-        </div>
 
-        <div class="flex items-center space-x-2">
-          <input
-            type="checkbox"
-            id="sort-newest"
-            checked,
-            class="w-4 h-4 accent-white/80"
-          />
+    <main class="max-w-5xl mx-auto px-6 pt-24 pb-24">
+      <div class="mb-16 flex flex-col items-center">
+        <h1 class="text-5xl font-bold mb-6 tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-zinc-500">
+          Proyectos
+        </h1>
+        <p class="text-zinc-400 mb-10 max-w-2xl text-center text-lg leading-relaxed">
+          Una selección de proyectos en los que he trabajado, desde aplicaciones web hasta herramientas especializadas y experimentos digitales.
+        </p>
+        
+        <div class="w-full max-w-2xl flex flex-col md:flex-row gap-4 items-center">
+          <div class="relative w-full group">
+            <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none text-zinc-500 group-focus-within:text-zinc-300 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </div>
+            <input
+              type="text"
+              id="project-search"
+              placeholder="Buscar proyectos..."
+              aria-label="Buscar proyectos"
+              class="w-full pl-12 pr-4 py-4 rounded-full bg-zinc-900/40 border border-zinc-700/40 text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500/20 focus:border-zinc-500/40 transition-all backdrop-blur-md shadow-2xl"
+            />
+          </div>
+
+          <div class="flex items-center gap-3 px-6 py-4 rounded-full bg-zinc-900/40 border border-zinc-700/40 backdrop-blur-md whitespace-nowrap">
+            <input
+              type="checkbox"
+              id="sort-newest"
+              checked
+              class="w-5 h-5 rounded-full border-zinc-700 bg-zinc-950 text-white checked:bg-white focus:ring-0 focus:ring-offset-0 transition-all cursor-pointer appearance-none checked:border-transparent relative after:content-[''] after:hidden checked:after:block after:absolute after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:w-2 after:h-2 after:bg-black after:rounded-full"
+            />
+            <label for="sort-newest" class="text-sm font-medium text-zinc-400 cursor-pointer select-none">Ordenar por más reciente</label>
+          </div>
         </div>
       </div>
 
       <div
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        class="grid grid-cols-1 md:grid-cols-2 gap-8"
         id="projects-list"
       >
         {
           projects.map((project) => (
             <div
-              class="project-item bg-black/20 border border-white/10 rounded-xl overflow-hidden hover:border-white/30 transition-all duration-300"
+              class="project-item group relative bg-zinc-900/40 border border-zinc-700/40 rounded-3xl overflow-hidden backdrop-blur-md hover:border-zinc-500/50 transition-all duration-500 flex flex-col"
               data-title={project.data.title.toLowerCase()}
               data-description={project.data.description.toLowerCase()}
               data-tags={project.data.tags.join(", ")}
               data-date={project.data.date.valueOf().toString()}
             >
-              <div class="p-5">
-                <div class="flex justify-between items-start mb-2">
-                  <h3 class="text-xl font-semibold">
-                    <a
-                      href={`/es/projects/${getSlug(project.id)}/`}
-                      class="hover:text-white/80 transition-colors"
-                    >
-                      {project.data.title}
-                    </a>
-                  </h3>
-
-                  <div class="text-sm text-white/60">
-                    <FormattedDate date={project.data.date} lang="en" />
-                    {project.data.updatedDate && (
-                      <span>
-                        {" "}
-                        -{" "}
-                        <FormattedDate
-                          date={project.data.updatedDate}
-                          lang="es"
-                        />
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                {project.data.demoUrl && (
-                  <div class="mb-2">
-                    <a
-                      href={project.data.demoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="text-sm text-blue-400 hover:underline inline-flex items-center"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-4 w-4 mr-1"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z"
-                          clip-rule="evenodd"
-                        />
-                      </svg>
-                      {project.data.demoUrl}
-                    </a>
+              <a href={`/es/projects/${getSlug(project.id)}/`} class="block aspect-[16/10] overflow-hidden">
+                {project.data.heroImage ? (
+                  <Image
+                    src={project.data.heroImage}
+                    alt={project.data.title}
+                    width={1024}
+                    height={640}
+                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                ) : (
+                  <div class="w-full h-full bg-zinc-800 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-zinc-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
                   </div>
                 )}
+              </a>
+              
+              <div class="p-8 flex flex-col flex-grow">
+                <div class="flex justify-between items-start mb-4">
+                  <div>
+                    <h3 class="text-2xl font-bold mb-2">
+                      <a
+                        href={`/es/projects/${getSlug(project.id)}/`}
+                        class="hover:text-zinc-300 transition-colors"
+                      >
+                        {project.data.title}
+                      </a>
+                    </h3>
+                    <div class="text-sm font-medium text-zinc-500">
+                      Publicado el <FormattedDate date={project.data.date} lang="es" />
+                    </div>
+                  </div>
+                  
+                  {project.data.archived && (
+                    <span class="px-3 py-1 text-[10px] font-bold uppercase tracking-wider bg-red-500/10 text-red-500 border border-red-500/20 rounded-full">
+                      Archivado
+                    </span>
+                  )}
+                </div>
 
-                <p class="text-white/70 mb-3 line-clamp-2">
+                <p class="text-zinc-400 mb-8 line-clamp-2 text-base leading-relaxed flex-grow">
                   {project.data.description}
                 </p>
 
-                <div class="flex flex-wrap gap-2">
+                <div class="flex flex-wrap gap-2 mt-auto">
                   {project.data.tags.map((tag) => (
-                    <div class="flex items-center">
-                      <span
-                        class={`w-2 h-2 rounded-full mr-1 ${getTagColor(tag)}`}
-                      />
-                      <span class="text-xs text-white/60">{tag}</span>
-                    </div>
+                    <span class="px-3 py-1 text-xs font-medium bg-zinc-800/50 text-zinc-300 border border-zinc-700/50 rounded-full backdrop-blur-sm">
+                      {tag}
+                    </span>
                   ))}
                 </div>
-
-                {project.data.archived && (
-                  <div class="mt-3 inline-block px-2 py-4 text-xs bg-red-500/20 text-red-300 rounded">
-                    archivado
-                  </div>
-                )}
               </div>
             </div>
           ))
         }
       </div>
 
-      <div id="empty-state" class="hidden py-16 text-center text-white/60">
-        <h3 class="text-xl mb-2">no se encontraron proyectos</h3>
-        <p>intenta ajustar tu búsqueda</p>
+      <div id="empty-state" class="hidden py-32 text-center">
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-zinc-900/50 border border-zinc-800 mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-zinc-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </div>
+        <h3 class="text-2xl font-bold text-white mb-2">No se encontraron proyectos</h3>
+        <p class="text-zinc-500">Intenta ajustando tu búsqueda o filtros</p>
       </div>
     </main>
 
     <script is:inline>
       function debounce(func, wait) {
-        let timeout = null;
-        return function (...args) {
-          if (timeout !== null) {
-            clearTimeout(timeout);
-          }
+        let timeout;
+        return (...args) => {
+          clearTimeout(timeout);
           timeout = setTimeout(() => func(...args), wait);
         };
       }
 
-      document.addEventListener("DOMContentLoaded", () => {
+      function init() {
         const projectsList = document.getElementById("projects-list");
-        const projectItems = document.querySelectorAll(".project-item");
+        const projectItems = Array.from(document.querySelectorAll(".project-item"));
         const searchInput = document.getElementById("project-search");
         const sortNewestCheckbox = document.getElementById("sort-newest");
         const emptyState = document.getElementById("empty-state");
 
-        function filterProjects() {
-          const searchTerm = searchInput.value.toLowerCase();
-          let visibleCount = 0;
+        if (!projectsList || !searchInput || !sortNewestCheckbox) return;
 
-          projectItems.forEach((item) => {
+        function refresh() {
+          const query = searchInput.value.toLowerCase().trim();
+          const sortByNewest = sortNewestCheckbox.checked;
+
+          const filtered = projectItems.filter(item => {
             const title = item.dataset.title || "";
             const description = item.dataset.description || "";
-            const tags = (item.dataset.tags || "")
-              .split(",")
-              .map((tag) => tag.trim());
-
-            const matchesSearch =
-              title.includes(searchTerm) ||
-              description.includes(searchTerm) ||
-              tags.some((tag) => tag.toLowerCase().includes(searchTerm));
-
-            if (matchesSearch) {
-              item.style.display = "";
-              visibleCount++;
-            } else {
-              item.style.display = "none";
-            }
+            const tags = item.dataset.tags || "";
+            return title.includes(query) || description.includes(query) || tags.includes(query);
           });
 
-          // Mostrar u ocultar el estado vacío
-          if (visibleCount === 0) {
-            emptyState.classList.remove("hidden");
-            projectsList.classList.add("hidden");
-          } else {
-            emptyState.classList.add("hidden");
-            projectsList.classList.remove("hidden");
-          }
-        }
-
-        function sortProjects() {
-          const sortByNewest = sortNewestCheckbox.checked;
-          const items = Array.from(projectItems);
-
-          items.sort((a, b) => {
+          filtered.sort((a, b) => {
             const dateA = parseInt(a.dataset.date || "0");
             const dateB = parseInt(b.dataset.date || "0");
-
             return sortByNewest ? dateB - dateA : dateA - dateB;
           });
 
-          items.forEach((item) => {
-            projectsList.appendChild(item);
-          });
+          projectItems.forEach(item => item.style.display = "none");
+
+          if (filtered.length > 0) {
+            emptyState.classList.add("hidden");
+            projectsList.classList.remove("hidden");
+            filtered.forEach(item => {
+              item.style.display = "flex";
+              projectsList.appendChild(item);
+            });
+          } else {
+            emptyState.classList.remove("hidden");
+            projectsList.classList.add("hidden");
+          }
         }
 
-        searchInput.addEventListener("input", debounce(filterProjects, 300));
-        sortNewestCheckbox.addEventListener("change", () => {
-          sortProjects();
-        });
+        searchInput.addEventListener("input", debounce(refresh, 250));
+        sortNewestCheckbox.addEventListener("change", refresh);
+        
+        refresh();
+      }
 
-        sortProjects();
-        filterProjects();
-      });
+      document.addEventListener("DOMContentLoaded", init);
+      document.addEventListener("astro:after-swap", init);
     </script>
   </body>
 </html>

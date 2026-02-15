@@ -15,17 +15,15 @@ export const ui = {
     "home.name": "cristian",
     "home.title": "software engineer",
     "home.about": [
-      "i'm a software engineer with expertise in modern development technologies. proficient in JavaScript, TypeScript, Python, Go, Dart and frameworks like React, NextJS, Remix, Vite, Fiber and Flutter. you can find me online as @enux.",
-      "as a software engineer, i work across the entire development stack. i design and implement backend systems, create efficient APIs, and build intuitive user interfaces. my core strengths include system architecture, application development, and technical problem-solving.",
-      "i'm passionate about engineering scalable solutions, optimizing performance, and exploring emerging technologies to solve complex problems.",
+      "I am a Software Engineer focused on building high-performance applications and scalable systems. My expertise covers the full development lifecycle, from system architecture and backend APIs to intuitive user interfaces.",
+      "I specialize in modern technologies like TypeScript, Go, and React, always striving for technical excellence and efficient problem-solving.",
     ],
     "home.learnMore": "want to learn more?",
 
-    "resume.name": "Cristian Duarte Hidalgo",
+    "resume.name": "Cristian Duarte",
     "resume.description": "Software Engineer",
     "resume.about": [
-      "Versatile Software Engineer with strong technical foundations and formal education in Software Analysis and Development. Experienced in multiple programming languages and frameworks including JavaScript, TypeScript, Go, React, NextJS, and Flutter, enabling me to architect and deliver high-quality solutions across various platforms.",
-      "I excel in system design and implementation with particular strengths in API architecture, backend development, and frontend engineering. My approach combines systematic problem-solving with technical expertise, consistently delivering robust, scalable applications that meet business requirements. I continuously expand my technical knowledge to implement efficient solutions that optimize performance and enhance user experience.",
+      "Pragmatic Software Engineer with a focus on building robust, scalable applications. Expertise in TypeScript, Go, and React, with a strong foundation in system architecture and API design.",
     ],
     "resume.experience": [
       {
@@ -51,16 +49,14 @@ export const ui = {
 
     "home.title": "ingeniero de software",
     "home.about": [
-      "soy un ingeniero de software con experiencia en tecnologías modernas de desarrollo. competente en JavaScript, TypeScript, Python, Go, Dart, y frameworks como React, NextJS, Remix, Vite, Fiber y Flutter.",
-      "como ingeniero de software, trabajo en todos los niveles del stack de desarrollo. diseño e implemento sistemas backend, creo APIs eficientes, y construyo interfaces de usuario intuitivas. mis fortalezas principales incluyen arquitectura de sistemas, desarrollo de aplicaciones y resolución de problemas técnicos.",
-      "me apasiona la ingeniería de soluciones escalables, la optimización del rendimiento y la exploración de tecnologías emergentes para resolver problemas complejos.",
+      "Soy Ingeniero de Software enfocado en construir aplicaciones de alto rendimiento y sistemas escalables. Mi experiencia cubre todo el ciclo de desarrollo, desde la arquitectura de sistemas y APIs backend hasta interfaces de usuario intuitivas.",
+      "Me especializo en tecnologías modernas como TypeScript, Go y React, siempre buscando la excelencia técnica y la resolución eficiente de problemas.",
     ],
-    "home.learnMore": "quieres saber más?",
+    "home.learnMore": "¿quieres saber más?",
 
     "resume.description": "Ingeniero de Software",
     "resume.about": [
-      "Ingeniero de Software versátil con sólidas bases técnicas y formación en Análisis y Desarrollo de Software. Experimentado en múltiples lenguajes de programación y frameworks incluyendo JavaScript, TypeScript, Go, React, NextJS y Flutter, lo que me permite arquitectar y entregar soluciones de alta calidad en diversas plataformas.",
-      "Destaco en diseño e implementación de sistemas con particular fortaleza en arquitectura de APIs, ingenieria backend y frontend. Mi enfoque combina resolución sistemática de problemas con experiencia técnica, entregando consistentemente aplicaciones robustas y escalables que cumplen con los requisitos del negocio. Continuamente amplío mis conocimientos técnicos para implementar soluciones eficientes que optimizan el rendimiento y mejoran la experiencia del usuario.",
+      "Ingeniero de Software pragmático enfocado en construir aplicaciones robustas y escalables. Experto en TypeScript, Go y React, con una sólida base en arquitectura de sistemas y diseño de APIs.",
     ],
     "resume.experience": [
       {

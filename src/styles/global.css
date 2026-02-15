@@ -6,10 +6,16 @@
 
 @import "tailwindcss";
 
+@theme {
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --color-background: oklch(0.1 0 0);
+  --color-foreground: oklch(0.98 0 0);
+  --color-primary: oklch(0.6 0.18 250);
+}
+
 @font-face {
   font-family: "Geist";
-  src: url("/fonts/Geist-Regular.woff2") format("woff2"),
-    url("/fonts/Geist-Regular.woff") format("woff");
+  src: url("/fonts/Geist-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -17,66 +23,40 @@
 
 @font-face {
   font-family: "Geist";
-  src: url("/fonts/Geist-Bold.woff2") format("woff2"),
-    url("/fonts/Geist-Bold.woff") format("woff");
+  src: url("/fonts/Geist-Bold.ttf") format("truetype");
   font-weight: bold;
   font-style: normal;
   font-display: swap;
 }
 
-:root {
-  --background: 0 0% 0%;
-  --foreground: 0 0% 100%;
-  --card: 240 10% 3.9%;
-  --card-foreground: 0 0% 98%;
-  --popover: 240 10% 3.9%;
-  --popover-foreground: 0 0% 98%;
-  --primary: 217.2 91.2% 59.8%;
-  --primary-foreground: 222.2 47.4% 11.2%;
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 240 3.7% 15.9%;
-  --muted-foreground: 240 5% 64.9%;
-  --accent: 240 3.7% 15.9%;
-  --accent-foreground: 0 0% 98%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 240 3.7% 15.9%;
-  --input: 240 3.7% 15.9%;
-  --ring: 240 4.9% 83.9%;
-}
-
-:root {
-  --background: 0 0% 0%;
-  --foreground: 0 0% 100%;
-  --card: 240 10% 3.9%;
-  --card-foreground: 0 0% 98%;
-  --popover: 240 10% 3.9%;
-  --popover-foreground: 0 0% 98%;
-  --primary: 217.2 91.2% 59.8%;
-  --primary-foreground: 222.2 47.4% 11.2%;
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 240 3.7% 15.9%;
-  --muted-foreground: 240 5% 64.9%;
-  --accent: 240 3.7% 15.9%;
-  --accent-foreground: 0 0% 98%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 240 3.7% 15.9%;
-  --input: 240 3.7% 15.9%;
-  --ring: 240 4.9% 83.9%;
-}
-
+html,
 body {
-  font-family: "Atkinson", sans-serif;
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
+  height: 100%;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+}
+
+/* Base Ambient Background */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 10% 10%, rgba(100, 100, 255, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 90% 90%, rgba(200, 50, 255, 0.05) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: -1;
 }
 
 .container {
   width: 100%;
-  max-width: 768px; /* options: 640px, 768px, 1024px, etc. */
+  max-width: 768px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1rem;
@@ -104,9 +84,10 @@ main {
 
 @media (max-width: 768px) {
   main {
-    padding-top: 1rem;
+    padding-top: 2rem;
   }
   body {
     padding-bottom: 6rem;
   }
 }
+

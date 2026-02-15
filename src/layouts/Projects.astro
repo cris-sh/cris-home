@@ -4,6 +4,7 @@ import BaseHead from "../components/BaseHead.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import NavBar from "../components/navigation/NavBar.astro";
 import MDXContent from "../components/MDXContent.astro";
+import { Image } from "astro:assets";
 
 type Props = CollectionEntry<"projects">["data"] & {
   lang?: string;
@@ -21,577 +22,146 @@ const {
   archived,
   lang = "en",
 } = Astro.props;
-
-function getTagColor(tag: string) {
-  const colors: { [key: string]: string } = {
-    css: "bg-blue-300",
-    html: "bg-orange-300",
-    javascript: "bg-yellow-300",
-    typescript: "bg-blue-400",
-    python: "bg-green-300",
-    dart: "bg-blue-500",
-    java: "bg-red-500",
-    csharp: "bg-purple-500",
-    "c++": "bg-blue-600",
-    go: "bg-green-400",
-    rust: "bg-orange-400",
-    php: "bg-blue-200",
-    kotlin: "bg-green-200",
-    vite: "bg-purple-300",
-    tailwindcss: "bg-teal-400",
-    jspdf: "bg-red-400",
-    testing: "bg-yellow-500",
-    bun: "bg-pink-300",
-  };
-
-  return colors[tag.toLowerCase()] || "bg-gray-300";
-}
 ---
 
 <html lang={lang}>
   <head>
     <BaseHead title={title} description={description} />
-    <style>
-      /* Hero section with gradient */
-      .project-hero {
-        position: relative;
-        padding: 3rem 0;
-        margin-bottom: 2rem;
-        background: linear-gradient(
-          135deg,
-          rgba(30, 41, 59, 0.7) 0%,
-          rgba(15, 23, 42, 0.8) 100%
-        );
-        border-radius: 1rem;
-        overflow: hidden;
-      }
-
-      .project-hero::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: radial-gradient(
-          circle at 30% 20%,
-          rgba(79, 70, 229, 0.15) 0%,
-          transparent 50%
-        );
-        z-index: 0;
-      }
-
-      .project-hero-content {
-        position: relative;
-        z-index: 1;
-      }
-
-      .project-title {
-        font-size: 2.75rem;
-        font-weight: 700;
-        background: linear-gradient(90deg, #fff, #94a3b8);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        line-height: 1.2;
-        margin-bottom: 1rem;
-      }
-
-      .project-description {
-        font-size: 1.2rem;
-        color: rgba(255, 255, 255, 0.8);
-        max-width: 650px;
-        margin-bottom: 2rem;
-      }
-
-      /* Tags design */
-      .tag-pill {
-        display: inline-flex;
-        align-items: center;
-        padding: 0.35rem 0.75rem;
-        border-radius: 2rem;
-        background-color: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        margin: 0.25rem;
-        transition: all 0.2s ease;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      .tag-pill:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-      }
-
-      .tag-indicator {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        margin-right: 8px;
-      }
-
-      /* Content section */
-      .project-content {
-        background-color: rgba(15, 23, 42, 0.6);
-        border-radius: 1rem;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        padding: 2rem;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-      }
-
-      /* Improved typography for content */
-      .prose {
-        max-width: 100%;
-        color: rgba(255, 255, 255, 0.85);
-      }
-
-      .prose h2 {
-        font-size: 1.75rem;
-        font-weight: 700;
-        margin-top: 2.5rem;
-        margin-bottom: 1rem;
-        color: #c4b5fd;
-      }
-
-      .prose h3 {
-        font-size: 1.35rem;
-        font-weight: 600;
-        margin-top: 2rem;
-        margin-bottom: 0.75rem;
-        color: #93c5fd;
-      }
-
-      .prose p {
-        margin-bottom: 1.25rem;
-        line-height: 1.8;
-      }
-
-      .prose img {
-        border-radius: 0.5rem;
-        margin: 1.5rem auto;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        transition: transform 0.3s ease;
-      }
-
-      .prose img:hover {
-        transform: scale(1.02);
-      }
-
-      .prose code {
-        font-family: "GeistMono", monospace;
-        background-color: rgba(255, 255, 255, 0.1);
-        padding: 0.2rem 0.4rem;
-        border-radius: 0.25rem;
-      }
-
-      .prose pre {
-        background-color: #1e293b;
-        border-radius: 0.5rem;
-        padding: 1rem;
-        overflow-x: auto;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      /* Action buttons */
-      .action-button {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.75rem 1.25rem;
-        border-radius: 0.5rem;
-        font-weight: 500;
-        transition: all 0.2s ease;
-        margin: 0.5rem;
-      }
-
-      .primary-button {
-        background-color: #4f46e5;
-        color: white;
-        box-shadow: 0 4px 6px rgba(79, 70, 229, 0.25);
-      }
-
-      .primary-button:hover {
-        background-color: #4338ca;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 10px rgba(79, 70, 229, 0.3);
-      }
-
-      .secondary-button {
-        background-color: rgba(255, 255, 255, 0.1);
-        color: white;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-      }
-
-      .secondary-button:hover {
-        background-color: rgba(255, 255, 255, 0.15);
-        transform: translateY(-2px);
-      }
-
-      /* Archive badge */
-      .archive-badge {
-        background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
-        color: white;
-        padding: 0.35rem 1rem;
-        border-radius: 2rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-        display: inline-flex;
-        align-items: center;
-        box-shadow: 0 4px 6px rgba(239, 68, 68, 0.25);
-      }
-
-      /* Responsive image grid */
-      .image-grid {
-        display: grid;
-        gap: 1.5rem;
-        margin: 2rem 0;
-      }
-
-      @media (min-width: 768px) {
-        .image-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-
-        .project-title {
-          font-size: 3.5rem;
-        }
-      }
-
-      .image-caption {
-        text-align: center;
-        font-size: 0.875rem;
-        color: rgba(255, 255, 255, 0.6);
-        margin-top: 0.5rem;
-      }
-
-      .hero-image-container {
-        border-radius: 0.75rem;
-        overflow: hidden;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
-        transform: perspective(1000px) rotateX(5deg);
-        transition: transform 0.3s ease;
-      }
-
-      .hero-image-container:hover {
-        transform: perspective(1000px) rotateX(0deg);
-      }
-
-      /* Estilos específicos para el contenido MDX */
-      .prose {
-        color: rgba(255, 255, 255, 0.85);
-        line-height: 1.8;
-      }
-
-      .prose h1 {
-        font-size: 2.5rem;
-        font-weight: 800;
-        margin-bottom: 1.5rem;
-        background: linear-gradient(90deg, #fff, #94a3b8);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        display: none; /* Ocultar el H1 porque ya tenemos el título en el hero */
-      }
-
-      .prose h2 {
-        font-size: 1.875rem;
-        font-weight: 700;
-        margin-top: 2.5rem;
-        margin-bottom: 1.25rem;
-        color: #c4b5fd;
-        border-bottom: 1px solid rgba(196, 181, 253, 0.2);
-        padding-bottom: 0.5rem;
-      }
-
-      .prose h3 {
-        font-size: 1.5rem;
-        font-weight: 600;
-        margin-top: 2rem;
-        margin-bottom: 1rem;
-        color: #93c5fd;
-      }
-
-      .prose p {
-        margin-bottom: 1.5rem;
-      }
-
-      .prose strong {
-        color: #fff;
-        font-weight: 600;
-      }
-
-      .prose ul,
-      .prose ol {
-        margin-top: 1rem;
-        margin-bottom: 1rem;
-        padding-left: 1.5rem;
-      }
-
-      .prose li {
-        margin-bottom: 0.5rem;
-      }
-
-      .prose ul > li {
-        list-style-type: disc;
-      }
-
-      .prose ol > li {
-        list-style-type: decimal;
-      }
-
-      .prose ul > li::marker {
-        color: #94a3b8;
-      }
-
-      .prose a {
-        color: #60a5fa;
-        text-decoration: underline;
-        text-underline-offset: 2px;
-        transition: color 0.2s;
-      }
-
-      .prose a:hover {
-        color: #93c5fd;
-      }
-
-      .prose .image-grid {
-        border-radius: 0.75rem;
-        overflow: hidden;
-        margin: 2rem 0;
-        background: rgba(15, 23, 42, 0.5);
-        padding: 1.5rem;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      .prose .image-grid img {
-        border-radius: 0.5rem;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        width: 100%;
-        height: auto;
-      }
-
-      .prose code {
-        font-family: "GeistMono", monospace;
-        background-color: rgba(15, 23, 42, 0.8);
-        padding: 0.2rem 0.4rem;
-        border-radius: 0.25rem;
-        font-size: 0.875em;
-        color: #e2e8f0;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      .prose pre {
-        background-color: #0f172a;
-        border-radius: 0.5rem;
-        padding: 1.25rem;
-        margin: 1.5rem 0;
-        overflow-x: auto;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      .prose pre code {
-        background-color: transparent;
-        padding: 0;
-        border: none;
-        font-size: 0.875rem;
-        color: #e2e8f0;
-        display: block;
-      }
-
-      .prose blockquote {
-        border-left: 4px solid #4f46e5;
-        padding-left: 1rem;
-        margin-left: 0;
-        margin-right: 0;
-        font-style: italic;
-        color: rgba(255, 255, 255, 0.7);
-      }
-
-      /* Imágenes específicas */
-      .grid-cols-1 img {
-        margin-bottom: 0 !important;
-      }
-
-      .text-center {
-        text-align: center;
-      }
-
-      /* Responsive mejorado */
-      @media (max-width: 640px) {
-        .prose h2 {
-          font-size: 1.5rem;
-        }
-
-        .prose h3 {
-          font-size: 1.25rem;
-        }
-
-        .prose p {
-          font-size: 0.95rem;
-        }
-      }
-    </style>
   </head>
-  <body>
+  <body class="bg-zinc-950 text-zinc-300 selection:bg-zinc-800 selection:text-zinc-100">
     <NavBar />
 
-    <!-- Estructura principal centrada con clases de Tailwind -->
-    <main class="container mx-auto px-4 max-w-5xl">
-      <article class="mt-6 md:mt-10">
-        <!-- Sección hero mejorada -->
-        <div class="project-hero">
-          <div class="project-hero-content text-center px-6">
-            <!-- Fecha y actualización -->
-            <div class="mb-3 text-white/60">
+    <main class="container mx-auto px-4 max-w-4xl">
+      <article class="mt-12 md:mt-20">
+        <!-- Hero section -->
+        <header class="text-center mb-12">
+          {
+            archived && (
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-medium mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+                </svg>
+                {lang === "es" ? "Proyecto Archivado" : "Archived Project"}
+              </div>
+            )
+          }
+
+          <div class="flex flex-wrap items-center justify-center gap-3 mb-6">
+            <div class="px-3 py-1 rounded-full bg-zinc-800/40 backdrop-blur-md border border-zinc-700/50 text-zinc-400 text-sm">
               <FormattedDate date={date} lang={lang} />
-              {
-                updatedDate && (
-                  <div class="mt-1 text-white/50 text-sm italic">
-                    {lang === "es" ? "Actualizado el " : "Last updated on "}
-                    <FormattedDate date={updatedDate} lang={lang} />
-                  </div>
-                )
-              }
             </div>
-
-            <h1 class="project-title">{title}</h1>
-            <p class="project-description mx-auto">{description}</p>
-
-            <!-- Etiquetas del proyecto con nuevo estilo -->
-            <div class="flex flex-wrap gap-1 justify-center mb-6">
-              {
-                tags.map((tag) => (
-                  <span class="tag-pill">
-                    <span class={`tag-indicator ${getTagColor(tag)}`} />
-                    <span class="text-sm">{tag}</span>
-                  </span>
-                ))
-              }
-            </div>
-
-            <!-- Botones de acción mejorados -->
-            <div class="flex flex-wrap justify-center mt-6 mb-4">
-              {
-                demoUrl && (
-                  <a
-                    href={demoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="action-button primary-button"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                    {lang === "es" ? "Ver demostración" : "View Demo"}
-                  </a>
-                )
-              }
-
-              {
-                github && (
-                  <a
-                    href={github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="action-button secondary-button"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                    >
-                      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                    </svg>
-                    {lang === "es" ? "Ver código" : "View Code"}
-                  </a>
-                )
-              }
-            </div>
-
             {
-              archived && (
-                <div class="my-4">
-                  <span class="archive-badge">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-4 w-4 mr-1"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
-                      />
-                    </svg>
-                    {lang === "es" ? "Proyecto Archivado" : "Archived Project"}
-                  </span>
+              updatedDate && (
+                <div class="px-3 py-1 rounded-full bg-zinc-800/40 backdrop-blur-md border border-zinc-700/50 text-zinc-400 text-sm italic">
+                  {lang === "es" ? "Actualizado el " : "Updated: "}
+                  <FormattedDate date={updatedDate} lang={lang} />
                 </div>
               )
             }
           </div>
-        </div>
 
-        <!-- Imagen principal del proyecto con efecto 3D -->
+          <h1 class="text-5xl md:text-7xl font-bold tracking-tighter text-zinc-100 mb-6 balance">
+            {title}
+          </h1>
+          
+          <p class="text-xl text-zinc-400 max-w-2xl mx-auto mb-8 leading-relaxed">
+            {description}
+          </p>
+
+          <div class="flex flex-wrap gap-2 justify-center mb-10">
+            {
+              tags.map((tag) => (
+                <span class="px-2.5 py-0.5 rounded-md bg-zinc-800/50 border border-zinc-700/50 text-zinc-400 text-xs font-medium">
+                  {tag}
+                </span>
+              ))
+            }
+          </div>
+
+          <!-- Action buttons -->
+          <div class="flex flex-wrap justify-center gap-4">
+            {
+              demoUrl && (
+                <a
+                  href={demoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-zinc-100 text-zinc-950 font-semibold hover:bg-zinc-200 transition-all duration-200 shadow-lg shadow-zinc-100/10"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+                  </svg>
+                  {lang === "es" ? "Ver demostración" : "View Demo"}
+                </a>
+              )
+            }
+
+            {
+              github && (
+                <a
+                  href={github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-zinc-800 border border-zinc-700 text-zinc-100 font-semibold hover:bg-zinc-700/80 transition-all duration-200"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                  </svg>
+                  {lang === "es" ? "Ver código" : "View Code"}
+                </a>
+              )
+            }
+          </div>
+        </header>
+
+        <!-- Hero image -->
         {
           heroImage && (
-            <div class="mb-12 -mt-10 px-4 relative z-10">
-              <div class="hero-image-container">
-                <img
+            <div class="mb-16 relative group">
+              <div class="absolute -inset-1 bg-gradient-to-r from-zinc-800 to-zinc-700 rounded-[2rem] blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+              <div class="relative">
+                <Image
                   src={heroImage}
                   alt={title}
-                  class="w-full h-auto object-cover"
-                  style="max-height: 600px;"
+                  class="w-full h-auto object-cover rounded-3xl shadow-2xl border border-zinc-800/50"
+                  loading="eager"
+                  inferSize={true}
                 />
               </div>
             </div>
           )
         }
 
-        <!-- Contenido del proyecto -->
-        <div class="project-content prose mx-auto">
-          <MDXContent>
-            <slot />
-          </MDXContent>
+        <!-- Content Area -->
+        <div class="bg-zinc-900/40 backdrop-blur-xl border border-zinc-800/50 p-8 md:p-12 rounded-3xl shadow-xl">
+          <div class="prose prose-zinc prose-invert max-w-none 
+            prose-h2:text-3xl prose-h2:tracking-tight prose-h2:text-zinc-100 prose-h2:font-bold prose-h2:border-b prose-h2:border-zinc-800/50 prose-h2:pb-2
+            prose-h3:text-2xl prose-h3:tracking-tight prose-h3:text-zinc-200 prose-h3:font-semibold
+            prose-p:text-zinc-400 prose-p:leading-relaxed
+            prose-a:text-zinc-200 prose-a:underline-offset-4 prose-a:decoration-zinc-700 hover:prose-a:decoration-zinc-400 transition-all
+            prose-code:text-zinc-200 prose-code:bg-zinc-800/50 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none
+            prose-pre:bg-zinc-950 prose-pre:border prose-pre:border-zinc-800 prose-pre:rounded-2xl
+            prose-img:rounded-2xl prose-img:shadow-lg">
+            <MDXContent>
+              <slot />
+            </MDXContent>
+          </div>
         </div>
 
-        <!-- Enlace para volver atrás -->
-        <div class="mt-8 mb-12 text-center">
+        <!-- Navigation back -->
+        <footer class="mt-12 mb-20 text-center">
           <a
             href={lang === "es" ? "/es/projects/" : "/projects/"}
-            class="inline-flex items-center text-white/70 hover:text-white transition-colors px-4 py-2 rounded-lg hover:bg-white/5"
+            class="inline-flex items-center gap-2 text-zinc-500 hover:text-zinc-200 transition-colors px-4 py-2 rounded-xl hover:bg-zinc-900/50 border border-transparent hover:border-zinc-800"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5 mr-2"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z"
-                clip-rule="evenodd"></path>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
             </svg>
-            {
-              lang === "es"
-                ? "Volver a todos los proyectos"
-                : "Back to all projects"
-            }
+            {lang === "es" ? "Volver a todos los proyectos" : "Back to all projects"}
           </a>
-        </div>
+        </footer>
       </article>
     </main>
   </body>
 </html>
+

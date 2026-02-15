@@ -8,6 +8,7 @@ import tailwindcss from "@tailwindcss/vite";
 // https://astro.build/config
 export default defineConfig({
   site: "http://localhost:3000",
+  prefetch: true,
   integrations: [
     mdx({
       syntaxHighlight: "shiki",

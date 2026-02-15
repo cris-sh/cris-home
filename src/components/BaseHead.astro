@@ -2,17 +2,36 @@
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
 import "../styles/global.css";
-import { SITE_TITLE } from "../consts";
+import { SITE_TITLE, SITE_DESCRIPTION, SITE_AUTHOR } from "../consts";
+import { ClientRouter } from "astro:transitions";
 
 interface Props {
   title: string;
   description: string;
   image?: string;
+  articleDate?: Date;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = "/blog-placeholder-1.jpg" } = Astro.props;
+const { title, description, image = "/blog-placeholder-1.jpg", articleDate } = Astro.props;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": articleDate ? "BlogPosting" : "WebSite",
+  "name": title,
+  "description": description,
+  "url": canonicalURL,
+  "author": {
+    "@type": "Person",
+    "name": SITE_AUTHOR,
+    "url": Astro.site
+  },
+  ...(articleDate && {
+    "datePublished": articleDate.toISOString(),
+    "image": new URL(image, Astro.url).toString()
+  })
+};
 ---
 
 <!-- Global Metadata -->
@@ -27,25 +46,31 @@ const { title, description, image = "/blog-placeholder-1.jpg" } = Astro.props;
   href={new URL("rss.xml", Astro.site)}
 />
 <meta name="generator" content={Astro.generator} />
+<meta name="author" content={SITE_AUTHOR} />
+<meta name="keywords" content="Software Engineer, Developer, Cristian Duarte, TypeScript, Go, Portfolio, Blog" />
+<meta name="robots" content="index, follow" />
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalURL} />
 
 <!-- Font preloads -->
 <link
   rel="preload"
-  href="/fonts/atkinson-regular.woff"
+  href="/fonts/Geist-Regular.ttf"
   as="font"
-  type="font/woff"
+  type="font/ttf"
   crossorigin
 />
 <link
   rel="preload"
-  href="/fonts/atkinson-bold.woff"
+  href="/fonts/Geist-Bold.ttf"
   as="font"
-  type="font/woff"
+  type="font/ttf"
   crossorigin
 />
 
-<!-- Canonical URL -->
-<link rel="canonical" href={canonicalURL} />
+<!-- JSON-LD -->
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>
@@ -65,3 +90,39 @@ const { title, description, image = "/blog-placeholder-1.jpg" } = Astro.props;
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+<script>
+  function setupImageLightbox() {
+    const images = document.querySelectorAll('article img');
+    images.forEach(img => {
+      if (img.closest('a')) return;
+      
+      (img as HTMLElement).style.cursor = 'zoom-in';
+      img.addEventListener('click', () => {
+        const modal = document.createElement('div');
+        modal.className = 'fixed inset-0 z-[100] flex items-center justify-center bg-black/90 cursor-zoom-out transition-opacity duration-300';
+        
+        const fullImg = document.createElement('img');
+        fullImg.src = (img as HTMLImageElement).src;
+        fullImg.className = 'max-w-[95%] max-h-[95%] object-contain rounded-lg shadow-2xl transition-transform duration-300 scale-95';
+        
+        modal.appendChild(fullImg);
+        document.body.appendChild(modal);
+
+        // Simple animation
+        requestAnimationFrame(() => {
+          fullImg.className = 'max-w-[95%] max-h-[95%] object-contain rounded-lg shadow-2xl transition-transform duration-300 scale-100';
+        });
+        
+        modal.addEventListener('click', () => {
+          modal.style.opacity = '0';
+          setTimeout(() => modal.remove(), 300);
+        });
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', setupImageLightbox);
+</script>
+
+<ClientRouter />

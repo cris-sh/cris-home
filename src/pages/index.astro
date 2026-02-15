@@ -2,6 +2,8 @@
 import BaseHead from "../components/BaseHead.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import NavBar from "../components/navigation/NavBar.astro";
+import { Image } from "astro:assets";
+import enuxAvatar from "../../public/img/avatar/enux.webp";
 
 import { useTranslations } from "../i18n/utils";
 
@@ -15,218 +17,83 @@ const t = useTranslations("en");
   </head>
   <body>
     <NavBar />
-    <main class="container mx-auto max-w-3xl px-4 pt-16 pb-8">
-      <div class="flex flex-col items-center mb-8">
-        <div class="relative w-32 h-32 mb-4">
-          <img
-            src="/img/avatar/enux.webp"
-            alt="enux's avatar"
-            width="128"
-            height="128"
-            class="h-full select-none rounded-[100px] shadow transition-all max-md:size-[100px] max-[510px]:size-[60px] hover:rounded-[30px] hover:shadow-lg"
-          />
+    <main class="max-w-4xl mx-auto px-4 pt-24 pb-8">
+      <!-- Hero Section with Bento Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[120px]">
+        
+        <!-- Profile Tile -->
+        <div class="md:col-span-2 md:row-span-2 flex flex-col justify-end p-6 rounded-3xl bg-zinc-900/40 border border-zinc-700/40 backdrop-blur-xl group overflow-hidden relative shadow-2xl">
+          <div class="absolute top-0 right-0 p-6 opacity-20 group-hover:opacity-100 transition-opacity duration-500">
+             <Image
+              src={enuxAvatar}
+              alt="Cristian's avatar"
+              width="100"
+              height="100"
+              class="rounded-2xl rotate-12 group-hover:rotate-0 transition-transform duration-500 shadow-lg"
+              loading="eager"
+            />
+          </div>
+          <div class="relative z-10">
+            <h1 class="text-3xl font-bold mb-1">{t("home.name")}</h1>
+            <p class="text-lg text-indigo-300 font-medium">{t("home.title")}</p>
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-tr from-indigo-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-0"></div>
         </div>
-        <h1 class="text-3xl font-bold mb-1">{t("home.name")}</h1>
-        <p class="text-lg text-gray-300 mb-4">{t("home.title")}</p>
-      </div>
 
-      <div class="space-y-6">
-        {
-          t("home.about").map((paragraph: any, index: any) => (
-            <p class="text-gray-300">
-              {paragraph.includes("@enux") ? (
-                <>
-                  {paragraph.split("@enux")[0]}
-                  <span class="text-indigo-400">@enux</span>
-                  {paragraph.split("@enux")[1]}
-                </>
-              ) : (
-                paragraph
-              )}
-            </p>
-          ))
-        }
-
-        <div class="border-t border-zinc-800 my-6"></div>
-
-        <div
-          class="mt-8 p-6 rounded-xl bg-zinc-900/20 backdrop-blur-md border border-zinc-700/40 shadow-xl"
-        >
-          <h2 class="text-xl font-bold mb-4">{t("home.learnMore")}</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <a
-              href="/cv"
-              class="flex items-center justify-between bg-zinc-900/30 backdrop-blur-md p-3 rounded-md hover:bg-zinc-800/40 transition-colors border border-zinc-700/40 shadow-md"
-            >
-              <div class="flex items-center gap-2">
-                <svg
-                  viewBox="0 0 24 24"
-                  width="20"
-                  height="20"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path
-                    d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-                  ></path>
-                  <polyline points="14 2 14 8 20 8"></polyline>
-                  <line x1="16" y1="13" x2="8" y2="13"></line>
-                  <line x1="16" y1="17" x2="8" y2="17"></line>
-                  <polyline points="10 9 9 9 8 9"></polyline>
-                </svg>
-                <span>cv</span>
-              </div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="w-4 h-4 text-gray-500"
-              >
-                <path
-                  d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
-                ></path>
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <line x1="10" y1="14" x2="21" y2="3"></line>
-              </svg>
-            </a>
-
-            <!-- Email Link -->
-            <a
-              href="mailto:contact@enux.dev"
-              class="flex items-center justify-between bg-zinc-900/30 backdrop-blur-md p-3 rounded-md hover:bg-zinc-800/40 transition-colors border border-zinc-700/40 shadow-md"
-            >
-              <div class="flex items-center gap-2">
-                <svg
-                  viewBox="0 0 24 24"
-                  width="20"
-                  height="20"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path
-                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-                  ></path>
-                  <polyline points="22,6 12,13 2,6"></polyline>
-                </svg>
-                <span>contact@enux.dev</span>
-              </div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="w-4 h-4 text-gray-500"
-              >
-                <path
-                  d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
-                ></path>
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <line x1="10" y1="14" x2="21" y2="3"></line>
-              </svg>
-            </a>
-
-            <!-- GitHub Link -->
-            <a
-              href="https://github.com/cris-sh"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="flex items-center justify-between bg-zinc-900/30 backdrop-blur-md p-3 rounded-md hover:bg-zinc-800/40 transition-colors border border-zinc-700/40 shadow-md"
-            >
-              <div class="flex items-center gap-2">
-                <svg
-                  viewBox="0 0 24 24"
-                  width="20"
-                  height="20"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path
-                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-                  ></path>
-                </svg>
-                <span>github</span>
-              </div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="w-4 h-4 text-gray-500"
-              >
-                <path
-                  d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
-                ></path>
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <line x1="10" y1="14" x2="21" y2="3"></line>
-              </svg>
-            </a>
-
-            <!-- Discord Link -->
-            <a
-              href="https://discord.com/users/1014943324131561492"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="flex items-center justify-between bg-zinc-900/30 backdrop-blur-md p-3 rounded-md hover:bg-zinc-800/40 transition-colors border border-zinc-700/40 shadow-md"
-            >
-              <div class="flex items-center gap-2">
-                <svg
-                  viewBox="0 0 256 199"
-                  width="16"
-                  height="16"
-                  xmlns="http://www.w3.org/2000/svg"
-                  preserveAspectRatio="xMidYMid"
-                  ><path
-                    d="M216.856 16.597A208.502 208.502 0 0 0 164.042 0c-2.275 4.113-4.933 9.645-6.766 14.046-19.692-2.961-39.203-2.961-58.533 0-1.832-4.4-4.55-9.933-6.846-14.046a207.809 207.809 0 0 0-52.855 16.638C5.618 67.147-3.443 116.4 1.087 164.956c22.169 16.555 43.653 26.612 64.775 33.193A161.094 161.094 0 0 0 79.735 175.3a136.413 136.413 0 0 1-21.846-10.632 108.636 108.636 0 0 0 5.356-4.237c42.122 19.702 87.89 19.702 129.51 0a131.66 131.66 0 0 0 5.355 4.237 136.07 136.07 0 0 1-21.886 10.653c4.006 8.02 8.638 15.67 13.873 22.848 21.142-6.58 42.646-16.637 64.815-33.213 5.316-56.288-9.08-105.09-38.056-148.36ZM85.474 135.095c-12.645 0-23.015-11.805-23.015-26.18s10.149-26.2 23.015-26.2c12.867 0 23.236 11.804 23.015 26.2.02 14.375-10.148 26.18-23.015 26.18Zm85.051 0c-12.645 0-23.014-11.805-23.014-26.18s10.148-26.2 23.014-26.2c12.867 0 23.236 11.804 23.015 26.2 0 14.375-10.148 26.18-23.015 26.18Z"
-                    fill="#FFFF"></path></svg
-                >
-                <span>discord</span>
-              </div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="w-4 h-4 text-gray-500"
-              >
-                <path
-                  d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
-                ></path>
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <line x1="10" y1="14" x2="21" y2="3"></line>
-              </svg>
-            </a>
+        <!-- About List Tile (Large) -->
+        <div class="md:col-span-2 md:row-span-3 p-6 rounded-3xl bg-zinc-900/20 border border-zinc-700/40 backdrop-blur-md shadow-lg overflow-y-auto">
+          <h2 class="text-sm font-bold uppercase tracking-widest text-zinc-500 mb-4">About</h2>
+          <div class="space-y-4">
+            {
+              t("home.about").map((paragraph: string) => (
+                <p class="text-zinc-300 text-[15px] leading-relaxed">
+                  {paragraph}
+                </p>
+              ))
+            }
           </div>
         </div>
+
+        <!-- CV Link Tile -->
+        <a href="/cv" class="md:col-span-1 md:row-span-1 flex items-center gap-3 p-4 rounded-3xl bg-zinc-900/60 border border-zinc-700/40 hover:bg-zinc-800/60 hover:-translate-y-1 transition-all duration-300 shadow-md group">
+          <div class="p-3 bg-zinc-800 rounded-2xl group-hover:bg-indigo-500/20 transition-colors">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" class="text-indigo-400"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          </div>
+          <span class="font-bold">curriculum</span>
+        </a>
+
+        <!-- GitHub Tile -->
+        <a href="https://github.com/cris-sh" target="_blank" class="md:col-span-1 md:row-span-1 flex items-center gap-3 p-4 rounded-3xl bg-zinc-900/60 border border-zinc-700/40 hover:bg-zinc-800/60 hover:-translate-y-1 transition-all duration-300 shadow-md group">
+          <div class="p-3 bg-zinc-800 rounded-2xl group-hover:bg-white/10 transition-colors">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" class="text-zinc-100"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          </div>
+          <span class="font-bold">github</span>
+        </a>
+
+         <!-- Email Tile -->
+         <a href="mailto:contact@enux.dev" class="md:col-span-2 md:row-span-1 flex items-center justify-between p-4 rounded-3xl bg-zinc-900/60 border border-zinc-700/40 hover:bg-zinc-800/60 hover:-translate-y-1 transition-all duration-300 shadow-md group">
+          <div class="flex items-center gap-3">
+            <div class="p-3 bg-zinc-800 rounded-2xl group-hover:bg-emerald-500/20 transition-colors">
+              <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" class="text-emerald-400"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            </div>
+            <span class="font-bold truncate max-w-[150px] md:max-w-none">contact@enux.dev</span>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="opacity-0 group-hover:opacity-100 transition-opacity"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+        </a>
+
+        <!-- Discord Tile -->
+        <a href="https://discord.com/users/1014943324131561492" target="_blank" rel="noopener noreferrer" class="md:col-start-1 md:col-span-2 md:row-span-1 flex items-center justify-between p-4 rounded-3xl bg-zinc-900/60 border border-zinc-700/40 hover:bg-zinc-800/60 hover:-translate-y-1 transition-all duration-300 shadow-md group">
+          <div class="flex items-center gap-3">
+            <div class="p-3 bg-[#5865F2]/20 rounded-2xl group-hover:bg-[#5865F2]/40 transition-colors">
+               <svg viewBox="0 0 256 199" width="20" height="20" fill="#5865F2"><path d="M216.856 16.597A208.502 208.502 0 0 0 164.042 0c-2.275 4.113-4.933 9.645-6.766 14.046-19.692-2.961-39.203-2.961-58.533 0-1.832-4.4-4.55-9.933-6.846-14.046a207.809 207.809 0 0 0-52.855 16.638C5.618 67.147-3.443 116.4 1.087 164.956c22.169 16.555 43.653 26.612 64.775 33.193A161.094 161.094 0 0 0 79.735 175.3a136.413 136.413 0 0 1-21.846-10.632 108.636 108.636 0 0 0 5.356-4.237c42.122 19.702 87.89 19.702 129.51 0a131.66 131.66 0 0 0 5.355 4.237 136.07 136.07 0 0 1-21.886 10.653c4.006 8.02 8.638 15.67 13.873 22.848 21.142-6.58 42.646-16.637 64.815-33.213 5.316-56.288-9.08-105.09-38.056-148.36ZM85.474 135.095c-12.645 0-23.015-11.805-23.015-26.18s10.149-26.2 23.015-26.2c12.867 0 23.236 11.804 23.015 26.2.02 14.375-10.148 26.18-23.015 26.18Zm85.051 0c-12.645 0-23.014-11.805-23.014-26.18s10.148-26.2 23.014-26.2c12.867 0 23.236 11.804 23.015 26.2 0 14.375-10.148 26.18-23.015 26.18Z"/></svg>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-xs uppercase tracking-tighter text-zinc-500 font-bold">Discord</span>
+              <span class="font-mono text-sm group-hover:text-[#5865F2] transition-colors">cr.tkd</span>
+            </div>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="opacity-0 group-hover:opacity-100 transition-opacity"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+        </a>
       </div>
     </main>
   </body>

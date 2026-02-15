@@ -38,45 +38,49 @@ import { Image } from "astro:assets";
 
 <!-- Desktop Navigation -->
 <header
-  class="fixed w-full z-50 top-0 hidden md:flex justify-center px-4 py-3 transition-all duration-300 ease-in-out"
+  class="fixed w-full z-50 top-6 hidden md:flex justify-center px-4"
+  transition:persist
 >
   <nav
-    class="backdrop-blur-xl bg-black/60 border border-white/20 rounded-2xl flex justify-between items-center px-4 py-2 md:py-3 text-white w-full max-w-3xl mx-auto"
+    class="backdrop-blur-xl bg-zinc-900/40 border border-zinc-700/40 rounded-full flex justify-between items-center px-6 py-3 text-white w-full max-w-2xl mx-auto shadow-2xl"
   >
-    <div class="font-bold text-xl">
-      <a href={getRelativeLocaleUrl(currentLang, "")}>
-        <Image
-          src={enuxAvatar}
-          alt="enux's avatar"
-          class="w-10 h-10 rounded-full"
-          draggable="false"
-          loading="lazy"
-        />
-      </a>
+    <div class="flex items-center gap-8">
+      <div class="font-bold text-xl">
+        <a href={getRelativeLocaleUrl(currentLang, "")} class="block hover:scale-105 transition-transform">
+          <Image
+            src={enuxAvatar}
+            alt="Cristian's avatar"
+            class="w-9 h-9 rounded-full border border-zinc-700/50"
+            draggable="false"
+            loading="eager"
+          />
+        </a>
+      </div>
+
+      <div class="flex items-center space-x-8" id="desktop-nav">
+        {
+          navItems.map(({ title, path }) => (
+            <a
+              href={path}
+              data-path={path}
+              class={`text-sm tracking-wide transition-all duration-300 hover:text-white nav-link ${isActive(path) ? "text-white font-bold" : "text-zinc-400"}`}
+            >
+              {title}
+            </a>
+          ))
+        }
+      </div>
     </div>
 
-    <div class="flex items-center space-x-6">
-      {
-        navItems.map(({ title, path }) => (
-          <a
-            href={path}
-            class={`transition-colors duration-300 hover:text-white/70 ${isActive(path) ? "text-white font-bold" : "text-white/80"}`}
-          >
-            {title}
-          </a>
-        ))
-      }
-    </div>
-
-    <!-- Language Selector for Desktop - Fixed dropdown issue -->
+    <!-- Language Selector for Desktop -->
     <div class="relative">
       <button
         id="langToggle"
-        class="flex items-center space-x-1 text-white hover:text-white/80 transition-colors duration-300"
+        class="flex items-center space-x-2 text-zinc-400 hover:text-white transition-colors duration-300 text-sm font-medium"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5"
+          class="h-4 w-4"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -88,18 +92,18 @@ import { Image } from "astro:assets";
             d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
           ></path>
         </svg>
-        <span>{currentLang}</span>
+        <span class="uppercase">{currentLang}</span>
       </button>
 
       <div
         id="langDropdown"
-        class="absolute right-0 mt-2 py-2 w-32 bg-black/80 backdrop-blur-lg border border-white/10 rounded-lg hidden shadow-xl"
+        class="absolute right-0 mt-4 py-2 w-32 bg-zinc-900/90 backdrop-blur-xl border border-zinc-700/40 rounded-2xl hidden shadow-2xl z-50 animate-in fade-in slide-in-from-top-2 duration-200"
       >
         {
           Object.entries(languages).map(([code, label]) => (
             <a
               href={code === defaultLang ? "/" : `/${code}/`}
-              class={`block px-4 py-2 hover:bg-white/10 ${currentLang === code ? "text-white font-semibold" : "text-white/80"}`}
+              class={`block px-4 py-2 text-sm hover:bg-white/5 transition-colors ${currentLang === code ? "text-indigo-400 font-semibold" : "text-zinc-300"}`}
             >
               {label}
             </a>
@@ -112,16 +116,19 @@ import { Image } from "astro:assets";
 
 <!-- Mobile Navigation -->
 <div
-  class="fixed bottom-0 left-0 right-0 md:hidden z-50 px-4 py-3 flex justify-center"
+  class="fixed bottom-6 left-0 right-0 md:hidden z-50 px-6 flex justify-center"
+  transition:persist
 >
   <div
-    class="backdrop-blur-xl bg-black/60 border border-white/20 rounded-2xl w-full max-w-md mx-auto px-4 py-2 flex justify-between items-center shadow-xl"
+    class="backdrop-blur-xl bg-zinc-900/60 border border-zinc-700/40 rounded-full w-full max-w-md mx-auto px-6 py-3 flex justify-between items-center shadow-2xl"
+    id="mobile-nav"
   >
     {
       navItems.map(({ title, path, icon }) => (
         <a
           href={path}
-          class={`flex flex-col items-center py-1 ${isActive(path) ? "text-white font-semibold" : "text-white/70 hover:text-white"}`}
+          data-path={path}
+          class={`flex flex-col items-center p-2 rounded-xl transition-all nav-link-mobile ${isActive(path) ? "text-white bg-white/5" : "text-zinc-500 hover:text-zinc-300"}`}
           aria-label={title}
         >
           {icon === "home" && (
@@ -167,7 +174,7 @@ import { Image } from "astro:assets";
     <div class="relative" id="mobileLangSelector">
       <button
         id="mobileLangToggle"
-        class="flex flex-col items-center text-white/70 hover:text-white py-1"
+        class="flex flex-col items-center text-zinc-500 hover:text-white p-2"
         aria-label="Change language"
       >
         <svg
@@ -185,16 +192,16 @@ import { Image } from "astro:assets";
 
       <div
         id="mobileLangDropdown"
-        class="absolute bottom-full mb-2 right-0 py-2 w-32 bg-black/80 backdrop-blur-lg border border-white/10 rounded-lg hidden shadow-xl"
+        class="absolute bottom-full mb-4 right-0 py-2 w-32 bg-zinc-900/95 backdrop-blur-xl border border-zinc-700/40 rounded-2xl hidden shadow-2xl z-50 animate-in fade-in slide-in-from-bottom-2 duration-200"
       >
         {
           Object.entries(languages).map(([code, label]) => (
             <a
               href={code === defaultLang ? "/" : `/${code}/`}
-              class={`block px-4 py-2 hover:bg-white/10 ${
+              class={`block px-4 py-2 text-sm hover:bg-white/5 transition-colors ${
                 currentLang === code
-                  ? "text-white font-semibold"
-                  : "text-white/80"
+                  ? "text-indigo-400 font-semibold"
+                  : "text-zinc-300"
               }`}
             >
               {label}
@@ -206,81 +213,80 @@ import { Image } from "astro:assets";
   </div>
 </div>
 
-<!-- padding on mobile to account for fixed navbar -->
-<div class="pb-16 md:pb-0 hidden md:block"></div>
+<!-- spacer for layout -->
+<div class="h-16 md:hidden"></div>
 
 <script>
-  // Script para manejar los dropdowns del selector de idiomas
-  document.addEventListener("DOMContentLoaded", () => {
-    // Desktop language toggle
+  function setupNav() {
+    // Dropdown Logic
     const langToggle = document.getElementById("langToggle");
     const langDropdown = document.getElementById("langDropdown");
-
-    if (langToggle && langDropdown) {
-      langToggle.addEventListener("click", (e) => {
-        e.stopPropagation();
-        langDropdown.classList.toggle("hidden");
-      });
-    }
-
-    // Mobile language toggle
     const mobileLangToggle = document.getElementById("mobileLangToggle");
     const mobileLangDropdown = document.getElementById("mobileLangDropdown");
 
-    if (mobileLangToggle && mobileLangDropdown) {
-      mobileLangToggle.addEventListener("click", (e) => {
+    if (langToggle && langDropdown) {
+      langToggle.onclick = (e) => {
         e.stopPropagation();
-        mobileLangDropdown.classList.toggle("hidden");
-      });
+        langDropdown.classList.toggle("hidden");
+      };
     }
 
-    // Close dropdowns when clicking outside
-    document.addEventListener("click", (e) => {
-      if (
-        langDropdown &&
-        !langDropdown.contains(e.target as Node) &&
-        e.target !== langToggle
-      ) {
-        langDropdown.classList.add("hidden");
-      }
+    if (mobileLangToggle && mobileLangDropdown) {
+      mobileLangToggle.onclick = (e) => {
+        e.stopPropagation();
+        mobileLangDropdown.classList.toggle("hidden");
+      };
+    }
 
-      if (
-        mobileLangDropdown &&
-        !mobileLangDropdown.contains(e.target as Node) &&
-        e.target !== mobileLangToggle
-      ) {
-        mobileLangDropdown.classList.add("hidden");
+    // Active State Logic for Persisted Navbar
+    const currentPath = window.location.pathname;
+    
+    // Update Desktop Links
+    document.querySelectorAll('.nav-link').forEach(link => {
+      const path = link.getAttribute('data-path');
+      const isHome = path === '/' || path === '/es/' || path === '/en/';
+      const isActive = isHome ? (currentPath === path) : currentPath.startsWith(path);
+      
+      if (isActive) {
+        link.classList.remove('text-zinc-400');
+        link.classList.add('text-white', 'font-bold');
+      } else {
+        link.classList.remove('text-white', 'font-bold');
+        link.classList.add('text-zinc-400');
       }
     });
 
-    // Prevent dropdown from closing when clicking inside it
-    if (langDropdown) {
-      langDropdown.addEventListener("click", (e) => {
-        e.stopPropagation();
-      });
-    }
+    // Update Mobile Links
+    document.querySelectorAll('.nav-link-mobile').forEach(link => {
+      const path = link.getAttribute('data-path');
+      const isHome = path === '/' || path === '/es/' || path === '/en/';
+      const isActive = isHome ? (currentPath === path) : currentPath.startsWith(path);
+      
+      if (isActive) {
+        link.classList.remove('text-zinc-500');
+        link.classList.add('text-white', 'bg-white/5');
+      } else {
+        link.classList.remove('text-white', 'bg-white/5');
+        link.classList.add('text-zinc-500');
+      }
+    });
 
-    if (mobileLangDropdown) {
-      mobileLangDropdown.addEventListener("click", (e) => {
-        e.stopPropagation();
-      });
-    }
-  });
+    // Close on click outside
+    document.addEventListener("click", (e) => {
+      if (langDropdown && !langDropdown.contains(e.target as Node) && e.target !== langToggle) {
+        langDropdown.classList.add("hidden");
+      }
+      if (mobileLangDropdown && !mobileLangDropdown.contains(e.target as Node) && !mobileLangToggle?.contains(e.target as Node)) {
+        mobileLangDropdown.classList.add("hidden");
+      }
+    });
+  }
+
+  // Initialize on load and on page navigation
+  setupNav();
+  document.addEventListener("astro:after-swap", setupNav);
 </script>
 
 <style>
-  header {
-    animation: fadeIn 0.5s ease-in-out;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+  /* Removed fadeIn animation to prevent navbar jumping during transitions */
 </style>
