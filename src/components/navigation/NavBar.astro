@@ -5,22 +5,25 @@ import { useTranslations, getLangFromUrl } from "../../i18n/utils";
 
 const currentPath = Astro.url.pathname;
 const currentLang = getLangFromUrl(Astro.url);
-const t = useTranslations(currentLang);
+const t = useTranslations(currentLang as any);
 
 const navItems = [
   {
     title: t("nav.home"),
-    path: getRelativeLocaleUrl(currentLang, "/"),
+    path: `/${currentLang}/`,
+    id: "home",
     icon: "home",
   },
   {
     title: t("nav.projects"),
-    path: getRelativeLocaleUrl(currentLang, "/projects"),
+    path: `/${currentLang}/projects/`,
+    id: "projects",
     icon: "code-bracket",
   },
   {
     title: t("nav.blog"),
-    path: getRelativeLocaleUrl(currentLang, "/blog"),
+    path: `/${currentLang}/blog/`,
+    id: "blog",
     icon: "book",
   },
 ];
@@ -59,10 +62,11 @@ import { Image } from "astro:assets";
 
       <div class="flex items-center space-x-8" id="desktop-nav">
         {
-          navItems.map(({ title, path }) => (
+          navItems.map(({ title, path, id }) => (
             <a
               href={path}
               data-path={path}
+              data-nav-id={id}
               class={`text-sm tracking-wide transition-all duration-300 hover:text-white nav-link ${isActive(path) ? "text-white font-bold" : "text-zinc-400"}`}
             >
               {title}
@@ -92,7 +96,7 @@ import { Image } from "astro:assets";
             d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
           ></path>
         </svg>
-        <span class="uppercase">{currentLang}</span>
+        <span class="uppercase font-bold text-indigo-400">{currentLang}</span>
       </button>
 
       <div
@@ -102,8 +106,9 @@ import { Image } from "astro:assets";
         {
           Object.entries(languages).map(([code, label]) => (
             <a
-              href={code === defaultLang ? "/" : `/${code}/`}
-              class={`block px-4 py-2 text-sm hover:bg-white/5 transition-colors ${currentLang === code ? "text-indigo-400 font-semibold" : "text-zinc-300"}`}
+              href="#"
+              data-lang-code={code}
+              class={`block px-4 py-2 text-sm hover:bg-white/5 transition-colors lang-select-item ${currentLang === code ? "text-indigo-400 font-bold" : "text-zinc-300"}`}
             >
               {label}
             </a>
@@ -116,18 +121,19 @@ import { Image } from "astro:assets";
 
 <!-- Mobile Navigation -->
 <div
-  class="fixed bottom-6 left-0 right-0 md:hidden z-50 px-6 flex justify-center"
+  class="fixed bottom-0 left-0 right-0 md:hidden z-50 px-6 pb-8 pt-4 pointer-events-none"
   transition:persist
 >
   <div
-    class="backdrop-blur-xl bg-zinc-900/60 border border-zinc-700/40 rounded-full w-full max-w-md mx-auto px-6 py-3 flex justify-between items-center shadow-2xl"
+    class="backdrop-blur-xl bg-zinc-900/80 border border-zinc-700/40 rounded-full w-full max-w-md mx-auto px-6 py-3 flex justify-between items-center shadow-2xl pointer-events-auto"
     id="mobile-nav"
   >
     {
-      navItems.map(({ title, path, icon }) => (
+      navItems.map(({ title, path, icon, id }) => (
         <a
           href={path}
           data-path={path}
+          data-nav-id={id}
           class={`flex flex-col items-center p-2 rounded-xl transition-all nav-link-mobile ${isActive(path) ? "text-white bg-white/5" : "text-zinc-500 hover:text-zinc-300"}`}
           aria-label={title}
         >
@@ -188,6 +194,7 @@ import { Image } from "astro:assets";
             d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM6.262 6.072a8.25 8.25 0 1010.562-.766 4.5 4.5 0 01-1.318 1.357L14.25 7.5l.165.33a.809.809 0 01-1.086 1.085l-.604-.302a1.125 1.125 0 00-1.298.21l-.132.131c-.439.44-.439 1.152 0 1.591l.296.296c.256.257.622.374.98.314l1.17-.195c.323-.054.654.036.905.245l1.33 1.108c.32.267.46.694.358 1.1a8.7 8.7 0 01-2.288 4.04l-.723.724a1.125 1.125 0 01-1.298.21l-.153-.076a1.125 1.125 0 01-.622-1.006v-1.089c0-.298-.119-.585-.33-.796l-1.347-1.347a1.125 1.125 0 01-.21-1.298L9.75 12l-1.64-1.64a6 6 0 01-1.676-3.257l-.172-1.03z"
             clip-rule="evenodd"></path>
         </svg>
+        <span class="text-[10px] font-bold uppercase text-indigo-400 mt-0.5">{currentLang}</span>
       </button>
 
       <div
@@ -197,10 +204,11 @@ import { Image } from "astro:assets";
         {
           Object.entries(languages).map(([code, label]) => (
             <a
-              href={code === defaultLang ? "/" : `/${code}/`}
-              class={`block px-4 py-2 text-sm hover:bg-white/5 transition-colors ${
+              href="#"
+              data-lang-code={code}
+              class={`block px-4 py-2 text-sm hover:bg-white/5 transition-colors lang-select-item ${
                 currentLang === code
-                  ? "text-indigo-400 font-semibold"
+                  ? "text-indigo-400 font-bold"
                   : "text-zinc-300"
               }`}
             >
@@ -212,9 +220,6 @@ import { Image } from "astro:assets";
     </div>
   </div>
 </div>
-
-<!-- spacer for layout -->
-<div class="h-16 md:hidden"></div>
 
 <script>
   function setupNav() {
@@ -238,9 +243,62 @@ import { Image } from "astro:assets";
       };
     }
 
+    // Language Selection Logic
+    document.querySelectorAll('.lang-select-item').forEach(item => {
+      item.onclick = (e) => {
+        e.preventDefault();
+        const code = item.getAttribute('data-lang-code');
+        if (!code) return;
+
+        const path = window.location.pathname;
+        const parts = path.split('/').filter(Boolean);
+        const langCodes = ['en', 'es'];
+
+        if (parts.length > 0 && langCodes.includes(parts[0])) {
+          parts[0] = code;
+        } else {
+          parts.unshift(code);
+        }
+
+        window.location.href = '/' + parts.join('/') + (path.endsWith('/') ? '/' : '');
+      };
+    });
+
     // Active State Logic for Persisted Navbar
     const currentPath = window.location.pathname;
-    
+    const pathParts = currentPath.split('/').filter(Boolean);
+    const discoveredLang = (pathParts.length > 0 && ['en', 'es'].includes(pathParts[0])) ? pathParts[0] : 'en';
+
+    // Translations object for client-side updates (simplified)
+    const translations: Record<string, any> = {
+      en: { home: 'Home', projects: 'Projects', blog: 'Blog' },
+      es: { home: 'Inicio', projects: 'Proyectos', blog: 'Blog' }
+    };
+
+    // Update Language Toggle Text
+    const langDisplay = langToggle?.querySelector('span');
+    if (langDisplay) {
+      langDisplay.textContent = discoveredLang.toUpperCase();
+    }
+
+    const mobileLangToggleText = mobileLangToggle?.querySelector('span');
+    if (mobileLangToggleText) {
+      mobileLangToggleText.textContent = discoveredLang.toUpperCase();
+    }
+
+    // Update Nav Link Texts based on language
+    document.querySelectorAll('.nav-link, .nav-link-mobile').forEach(link => {
+      const navId = link.getAttribute('data-nav-id');
+      if (navId && translations[discoveredLang] && translations[discoveredLang][navId]) {
+        // Find text node or set textContent if simple
+        if (link.classList.contains('nav-link')) {
+          link.textContent = translations[discoveredLang][navId];
+        } else {
+          link.setAttribute('aria-label', translations[discoveredLang][navId]);
+        }
+      }
+    });
+
     // Update Desktop Links
     document.querySelectorAll('.nav-link').forEach(link => {
       const path = link.getAttribute('data-path');

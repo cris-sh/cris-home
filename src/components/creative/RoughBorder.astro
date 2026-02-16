@@ -1,0 +1,37 @@
+---
+interface Props {
+  className?: string;
+}
+
+const { className = "" } = Astro.props;
+---
+
+<svg class="absolute w-0 h-0 invisible">
+  <defs>
+    <filter id="rough-filter">
+      <feTurbulence
+        type="fractalNoise"
+        baseFrequency="0.015"
+        numOctaves="2"
+        result="noise"></feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3"
+      ></feDisplacementMap>
+    </filter>
+  </defs>
+</svg>
+
+<div class={`rough-container relative group ${className}`}>
+  <slot />
+</div>
+
+<style>
+  .rough-container {
+    /* Apply a slight filter to give an organic feel */
+    filter: url(#rough-filter);
+    transition: filter 0.3s ease;
+  }
+
+  .rough-container:hover {
+    filter: none;
+  }
+</style>

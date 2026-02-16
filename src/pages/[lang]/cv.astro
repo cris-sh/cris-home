@@ -1,10 +1,15 @@
 ---
-import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { useTranslations } from "../../i18n/utils";
+import { languages } from "../../i18n/pages";
 import { getCollection } from "astro:content";
-import BaseHead from "../components/BaseHead.astro";
+import BaseHead from "../../components/BaseHead.astro";
 
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
+export async function getStaticPaths() {
+  return Object.keys(languages).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const t = useTranslations(lang as keyof typeof languages);
 
 const projects = (
   await getCollection(
@@ -20,11 +25,6 @@ const projects = (
     }
   )
 ).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-
-const getSlug = (id: string) => {
-  const parts = id.split("/");
-  return parts.length > 1 ? parts[1] : id;
-};
 
 const resume = {
   name: t("resume.name"),
@@ -204,7 +204,7 @@ const resume = {
                 <div class="group p-4 -mx-4 rounded-xl hover:bg-zinc-50 transition-colors border border-transparent hover:border-zinc-100">
                   <div class="flex justify-between items-start mb-2">
                     <h3 class="font-bold text-zinc-900">
-                      <a href={`/projects/${getSlug(project.id)}/`} class="flex items-center gap-1 hover:underline underline-offset-4 decoration-zinc-300">
+                      <a href={`/${lang}/projects/${project.id.split('/').pop()}/`} class="flex items-center gap-1 hover:underline underline-offset-4 decoration-zinc-300">
                         {project.data.title}
                         <svg class="size-3 text-zinc-300 group-hover:text-zinc-400 transition-colors" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg>
                       </a>
@@ -224,7 +224,7 @@ const resume = {
               ))}
             </div>
             <div class="mt-8 flex justify-center no-print">
-               <a href={`/projects/`} class="text-xs font-bold uppercase tracking-tighter text-zinc-400 hover:text-black transition-colors border-b border-zinc-100 pb-1">
+               <a href={`/${lang}/projects/`} class="text-xs font-bold uppercase tracking-tighter text-zinc-400 hover:text-black transition-colors border-b border-zinc-100 pb-1">
                   View full archive
                 </a>
             </div>

@@ -2,21 +2,25 @@
 import { type CollectionEntry, getCollection } from "astro:content";
 import BlogPost from "../../../layouts/BlogPost.astro";
 import { render } from "astro:content";
+import { languages } from "../../../i18n/pages";
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog", (post) => {
-    return post.id.startsWith("es/") || post.data.lang === "es";
-  });
-  return posts.map((post) => {
-    const slugParts = post.id.split("/");
-    const slug = slugParts.length > 1 ? slugParts.slice(1).join("/") : post.id;
+  const posts = await getCollection("blog");
+  
+  return posts.flatMap((post) => {
+    const lang = post.id.split("/")[0];
+    const slug = post.id.split("/").slice(1).join("/");
+    
+    // Fallback if no lang prefix (though collection seems to have them)
+    if (!Object.keys(languages).includes(lang)) return [];
 
     return {
-      params: { slug },
+      params: { lang, slug },
       props: post,
     };
   });
 }
+
 type Props = CollectionEntry<"blog">;
 
 const post = Astro.props;

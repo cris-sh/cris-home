@@ -36,7 +36,7 @@ body {
   color: var(--color-foreground);
   font-family: var(--font-sans);
   scroll-behavior: smooth;
-  scrollbar-gutter: stable;
+  overflow-x: hidden;
 }
 
 /* Base Ambient Background */
@@ -85,9 +85,10 @@ main {
 @media (max-width: 768px) {
   main {
     padding-top: 2rem;
+    padding-bottom: 8rem;
   }
   body {
-    padding-bottom: 6rem;
+    padding-bottom: 0;
   }
 }
 

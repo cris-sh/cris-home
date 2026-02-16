@@ -1,0 +1,56 @@
+---
+interface Props {
+  type?: "plus" | "circle" | "squiggles" | "stars";
+  color?: string;
+  className?: string;
+  size?: string;
+}
+
+const {
+  type = "plus",
+  color = "currentColor",
+  className = "",
+  size = "24px",
+} = Astro.props;
+---
+
+<div class={`pointer-events-none opacity-20 ${className}`} style={`width: ${size}; height: ${size};`}>
+  <svg viewBox="0 0 100 100" fill="none" class="w-full h-full">
+    {type === "plus" && (
+      <path
+        d="M 50,20 L 50,80 M 20,50 L 80,50"
+        stroke={color}
+        stroke-width="12"
+        stroke-linecap="round"
+      />
+    )}
+    {type === "circle" && (
+      <circle
+        cx="50"
+        cy="50"
+        r="30"
+        stroke={color}
+        stroke-width="8"
+        fill="none"
+      />
+    )}
+    {type === "squiggles" && (
+      <path
+        d="M 10,50 Q 30,20 50,50 T 90,50"
+        stroke={color}
+        stroke-width="8"
+        stroke-linecap="round"
+        fill="none"
+      />
+    )}
+    {type === "stars" && (
+        <path
+            d="M 50,10 L 60,40 L 90,50 L 60,60 L 50,90 L 40,60 L 10,50 L 40,40 Z"
+            stroke={color}
+            stroke-width="6"
+            stroke-linecap="round"
+            fill="none"
+        />
+    )}
+  </svg>
+</div>

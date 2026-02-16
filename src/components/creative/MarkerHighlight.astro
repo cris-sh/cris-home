@@ -1,0 +1,63 @@
+---
+interface Props {
+  color?: string;
+  className?: string;
+  type?: "underline" | "circle" | "box";
+}
+
+const { color = "currentColor", className = "", type = "underline" } = Astro.props;
+---
+
+<span class={`relative inline-block ${className}`}>
+  <slot />
+  <svg
+    class="absolute -z-10 w-[104%] h-[110%] -left-[2%] -top-[5%] pointer-events-none"
+    viewBox="0 0 100 100"
+    preserveAspectRatio="none"
+  >
+    {type === "underline" && (
+      <path
+        d="M 5,90 Q 50,85 95,92 Q 50,95 5,88"
+        stroke={color}
+        stroke-width="3"
+        fill="none"
+        stroke-linecap="round"
+        class="marker-path"
+      />
+    )}
+    {type === "circle" && (
+      <path
+        d="M 50,5 C 80,5 95,25 95,50 C 95,75 75,95 50,95 C 25,95 5,75 5,50 C 5,25 20,5 55,8"
+        stroke={color}
+        stroke-width="2"
+        fill="none"
+        stroke-linecap="round"
+        class="marker-path"
+      />
+    )}
+    {type === "box" && (
+      <path
+        d="M 5,5 Q 50,2 95,8 Q 98,50 92,95 Q 50,98 8,92 Q 2,50 5,5"
+        stroke={color}
+        stroke-width="2"
+        fill="none"
+        stroke-linecap="round"
+        class="marker-path"
+      />
+    )}
+  </svg>
+</span>
+
+<style>
+  .marker-path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: draw 1.5s ease-out forwards;
+  }
+
+  @keyframes draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+</style>

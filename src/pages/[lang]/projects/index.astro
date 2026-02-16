@@ -1,0 +1,190 @@
+---
+import BaseHead from "../../../components/BaseHead.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../../consts";
+import { getCollection } from "astro:content";
+import FormattedDate from "../../../components/FormattedDate.astro";
+import NavBar from "../../../components/navigation/NavBar.astro";
+import { Image } from "astro:assets";
+import { languages } from "../../../i18n/pages";
+import { useTranslations } from "../../../i18n/utils";
+
+export async function getStaticPaths() {
+  return Object.keys(languages).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const t = useTranslations(lang as keyof typeof languages);
+
+const projects = (
+  await getCollection("projects", (project) => {
+    const matches =
+      lang === "es"
+        ? project.id.startsWith("es/") || project.data.lang === "es"
+        : project.id.startsWith("en/") ||
+          !project.data.lang ||
+          project.data.lang === "en";
+    return matches;
+  })
+).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const getSlug = (id: any) => {
+  const parts = id.split("/");
+  return parts.length > 1 ? parts[1] : id;
+};
+
+function getTagColor(tag: string) {
+  const colors: { [key: string]: string } = {
+    css: "bg-blue-300",
+    html: "bg-orange-300",
+    javascript: "bg-yellow-300",
+    typescript: "bg-blue-400",
+    python: "bg-green-300",
+    dart: "bg-blue-500",
+    java: "bg-red-500",
+    csharp: "bg-purple-500",
+    "c++": "bg-blue-600",
+    go: "bg-green-400",
+    rust: "bg-orange-400",
+    php: "bg-blue-200",
+    kotlin: "bg-green-200",
+  };
+
+  return colors[tag.toLowerCase()] || "bg-gray-300";
+}
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <BaseHead title={`${SITE_TITLE} | ${lang === 'es' ? 'Proyectos' : 'Projects'}`} description={SITE_DESCRIPTION} />
+  </head>
+  <body class="bg-[#050505] text-white">
+    <NavBar />
+
+    <main class="max-w-5xl mx-auto px-6 pt-24 pb-24">
+      <div class="mb-16 flex flex-col items-center text-center">
+        <h1 class="text-5xl font-bold mb-6 tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-zinc-500">
+          {lang === 'es' ? 'Proyectos' : 'Projects'}
+        </h1>
+        <p class="text-zinc-400 mb-10 max-w-2xl text-lg leading-relaxed">
+          {lang === 'es' ? 'Una selección de proyectos en los que he trabajado, que van desde aplicaciones web hasta herramientas especializadas y experimentos digitales.' : 'A selection of projects I\'ve worked on, ranging from web applications to specialized tooling and digital experiments.'}
+        </p>
+        
+        <div class="w-full max-w-2xl flex flex-col md:flex-row gap-4 items-center">
+          <div class="relative w-full group">
+            <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none text-zinc-500 group-focus-within:text-zinc-300 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </div>
+            <input
+              type="text"
+              id="project-search"
+              placeholder={lang === 'es' ? "Buscar proyectos..." : "Search projects..."}
+              aria-label="Search projects"
+              class="w-full pl-12 pr-4 py-4 rounded-full bg-zinc-900/40 border border-zinc-700/40 text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500/20 focus:border-zinc-500/40 transition-all backdrop-blur-md shadow-2xl"
+            />
+          </div>
+
+          <div class="flex items-center gap-3 px-6 py-4 rounded-full bg-zinc-900/40 border border-zinc-700/40 backdrop-blur-md whitespace-nowrap">
+            <input
+              type="checkbox"
+              id="sort-newest"
+              checked
+              class="w-5 h-5 rounded-full border-zinc-700 bg-zinc-950 text-white checked:bg-white focus:ring-0 focus:ring-offset-0 transition-all cursor-pointer appearance-none checked:border-transparent relative after:content-[''] after:hidden checked:after:block after:absolute after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:w-2 after:h-2 after:bg-black after:rounded-full"
+            />
+            <label for="sort-newest" class="text-sm font-medium text-zinc-400 cursor-pointer select-none">
+                {lang === 'es' ? 'Ordenar por más reciente' : 'Sort by newest'}
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 gap-8"
+        id="projects-list"
+      >
+        {
+          projects.map((project) => (
+            <div
+              class="project-item group relative bg-zinc-900/40 border border-zinc-700/40 rounded-3xl overflow-hidden backdrop-blur-md hover:border-zinc-500/50 transition-all duration-500 flex flex-col"
+              data-title={project.data.title.toLowerCase()}
+              data-description={project.data.description.toLowerCase()}
+              data-tags={project.data.tags.join(", ")}
+              data-date={project.data.date.valueOf().toString()}
+            >
+                <a href={`/${lang}/projects/${getSlug(project.id)}/`} class="flex flex-col h-full">
+                    {project.data.heroImage && (
+                        <div class="h-64 overflow-hidden relative">
+                            <Image
+                            src={project.data.heroImage}
+                            alt={project.data.title}
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                            width={800}
+                            height={450}
+                            />
+                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/80 to-transparent"></div>
+                        </div>
+                    )}
+                    <div class="p-8 flex flex-col flex-1">
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            {project.data.tags.map((tag: string) => (
+                                <span class={`px-2 py-1 rounded-md text-[10px] uppercase font-bold tracking-widest ${getTagColor(tag)} text-black`}>
+                                    {tag}
+                                </span>
+                            ))}
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3 group-hover:text-indigo-400 transition-colors">
+                            {project.data.title}
+                        </h3>
+                        <p class="text-zinc-500 text-sm leading-relaxed mb-6 flex-1">
+                            {project.data.description}
+                        </p>
+                        <div class="flex items-center justify-between mt-auto">
+                            <div class="text-zinc-600 text-[10px] uppercase tracking-widest font-bold">
+                                <FormattedDate date={project.data.date} lang={lang} />
+                            </div>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-zinc-600 group-hover:text-white transition-all transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+            </div>
+          ))
+        }
+      </div>
+    </main>
+
+    <script define:vars={{ lang }}>
+        const searchInput = document.getElementById('project-search');
+        const projectsList = document.getElementById('projects-list');
+        const projectItems = document.querySelectorAll('.project-item');
+        const sortCheckbox = document.getElementById('sort-newest');
+
+        searchInput?.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            projectItems.forEach(item => {
+                const title = item.getAttribute('data-title');
+                const description = item.getAttribute('data-description');
+                const tags = item.getAttribute('data-tags');
+                
+                if (title.includes(query) || description.includes(query) || tags.includes(query)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        sortCheckbox?.addEventListener('change', (e) => {
+            const items = Array.from(projectItems);
+            items.sort((a, b) => {
+                const dateA = parseInt(a.getAttribute('data-date'));
+                const dateB = parseInt(b.getAttribute('data-date'));
+                return e.target.checked ? dateB - dateA : dateA - dateB;
+            });
+            
+            items.forEach(item => projectsList?.appendChild(item));
+        });
+    </script>
+  </body>
+</html>
