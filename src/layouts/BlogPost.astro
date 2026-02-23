@@ -27,7 +27,7 @@ const {
     <BaseHead title={title} description={description} />
   </head>
 
-  <body class="bg-zinc-950 text-zinc-300 selection:bg-zinc-800 selection:text-zinc-100">
+  <body class="theme-page">
     <NavBar />
     
     <main class="container mx-auto px-4 max-w-4xl pb-40 md:pb-8">
@@ -42,12 +42,12 @@ const {
           </div>
 
           <div class="flex flex-wrap items-center justify-center gap-3 mb-6">
-            <div class="px-3 py-1 rounded-full bg-zinc-800/40 backdrop-blur-md border border-zinc-700/50 text-zinc-400 text-sm">
+            <div class="px-3 py-1 rounded-full theme-pill text-sm">
               <FormattedDate date={date} lang={lang} />
             </div>
             {
               updatedDate && (
-                <div class="px-3 py-1 rounded-full bg-zinc-800/40 backdrop-blur-md border border-zinc-700/50 text-zinc-400 text-sm italic">
+                <div class="px-3 py-1 rounded-full theme-pill text-sm italic">
                   {lang === "es" ? "Actualizado el " : "Updated: "}
                   <FormattedDate date={updatedDate} lang={lang} />
                 </div>
@@ -55,12 +55,12 @@ const {
             }
           </div>
 
-          <h1 class="text-5xl md:text-7xl font-bold tracking-tighter text-zinc-100 mb-6 balance">
+          <h1 class="text-5xl md:text-7xl font-bold tracking-tighter theme-heading mb-6 balance">
             {title}
           </h1>
 
           {description && (
-            <p class="text-xl text-zinc-400 max-w-2xl mx-auto mb-8 leading-relaxed">
+            <p class="text-xl theme-muted max-w-2xl mx-auto mb-8 leading-relaxed">
               {description}
             </p>
           )}
@@ -75,7 +75,7 @@ const {
                   <Image
                     src={heroImage}
                     alt={title}
-                    class="w-full h-auto object-cover rounded-3xl shadow-2xl border border-zinc-800/50"
+                    class="w-full h-auto object-cover rounded-3xl shadow-2xl border border-[var(--color-border)]"
                     loading="eager"
                     inferSize={true}
                   />
@@ -88,18 +88,16 @@ const {
         }
 
         <!-- Content Area -->
-        <div class="bg-zinc-900/40 backdrop-blur-xl border border-zinc-800/50 p-8 md:p-12 rounded-3xl shadow-xl">
-          <div class="prose prose-zinc prose-invert max-w-none 
+        <div class="theme-panel p-8 md:p-12 rounded-3xl shadow-xl">
+          <div class="prose prose-zinc max-w-none theme-prose 
             prose-headings:scroll-mt-24 prose-h1:hidden
-            prose-h2:text-3xl prose-h2:tracking-tight prose-h2:text-zinc-100 prose-h2:font-bold prose-h2:border-b prose-h2:border-zinc-800/50 prose-h2:pb-2
-            prose-h3:text-2xl prose-h3:tracking-tight prose-h3:text-zinc-200 prose-h3:font-semibold
-            prose-p:text-zinc-400 prose-p:leading-relaxed
-            prose-strong:text-zinc-200
-            prose-li:text-zinc-400
-            prose-blockquote:border-l-indigo-500/60 prose-blockquote:text-zinc-300 prose-blockquote:italic
-            prose-a:text-zinc-200 prose-a:underline-offset-4 prose-a:decoration-zinc-700 hover:prose-a:decoration-zinc-400 transition-all
-            prose-code:text-zinc-200 prose-code:bg-zinc-800/50 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none
-            prose-pre:bg-zinc-950 prose-pre:border prose-pre:border-zinc-800 prose-pre:rounded-2xl
+            prose-h2:text-3xl prose-h2:tracking-tight prose-h2:font-bold prose-h2:border-b prose-h2:pb-2
+            prose-h3:text-2xl prose-h3:tracking-tight prose-h3:font-semibold
+            prose-p:leading-relaxed
+            prose-blockquote:border-l-indigo-500/60 prose-blockquote:italic
+            prose-a:underline-offset-4 transition-all
+            prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none
+            prose-pre:rounded-2xl
             prose-img:rounded-2xl prose-img:shadow-lg">
             <MDXContent>
               <slot />
@@ -111,7 +109,7 @@ const {
         <footer class="mt-12 mb-20 text-center">
           <a
             href={`/${lang}/blog/`}
-            class="inline-flex items-center gap-2 text-zinc-500 hover:text-zinc-200 transition-colors px-4 py-2 rounded-xl hover:bg-zinc-900/50 border border-transparent hover:border-zinc-800"
+            class="inline-flex items-center gap-2 theme-link-muted transition-colors px-4 py-2 rounded-xl hover:bg-[var(--color-overlay)] border border-transparent hover:border-[var(--color-border)]"
           >
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />

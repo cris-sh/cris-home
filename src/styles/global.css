@@ -8,9 +8,47 @@
 
 @theme {
   --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --color-background: oklch(0.98 0 0);
+  --color-foreground: oklch(0.16 0 0);
+  --color-primary: oklch(0.6 0.18 250);
+}
+
+:root {
+  --color-background: oklch(0.98 0 0);
+  --color-foreground: oklch(0.14 0 0);
+  --color-surface: oklch(0.965 0.01 260 / 0.9);
+  --color-surface-strong: oklch(0.94 0.01 260 / 0.97);
+  --color-border: oklch(0.78 0.01 260 / 0.8);
+  --color-muted: oklch(0.4 0.02 260);
+  --color-heading: oklch(0.12 0 0);
+  --color-nav-bg: oklch(0.97 0.01 260 / 0.93);
+  --color-nav-border: oklch(0.76 0.01 260 / 0.8);
+  --color-overlay: oklch(0.91 0.01 260 / 0.72);
+  --color-selection-bg: oklch(0.86 0.03 260);
+  --color-selection-text: oklch(0.2 0 0);
+  --color-accent-text: oklch(0.55 0.19 270);
+  --color-avatar-bg: oklch(1 0 0 / 0.88);
+  --color-avatar-border: oklch(0.72 0.02 260 / 0.5);
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
   --color-background: oklch(0.1 0 0);
   --color-foreground: oklch(0.98 0 0);
-  --color-primary: oklch(0.6 0.18 250);
+  --color-surface: oklch(0.2 0.01 260 / 0.6);
+  --color-surface-strong: oklch(0.24 0.01 260 / 0.85);
+  --color-border: oklch(0.33 0.01 260 / 0.7);
+  --color-muted: oklch(0.72 0.01 260);
+  --color-heading: oklch(0.96 0 0);
+  --color-nav-bg: oklch(0.2 0.01 260 / 0.55);
+  --color-nav-border: oklch(0.35 0.01 260 / 0.7);
+  --color-overlay: oklch(0.15 0.01 260 / 0.5);
+  --color-selection-bg: oklch(0.32 0.01 260);
+  --color-selection-text: oklch(0.95 0 0);
+  --color-accent-text: oklch(0.72 0.16 275);
+  --color-avatar-bg: oklch(0.25 0.01 260 / 0.72);
+  --color-avatar-border: oklch(0.42 0.01 260 / 0.6);
+  color-scheme: dark;
 }
 
 @font-face {
@@ -39,6 +77,11 @@ body {
   overflow-x: hidden;
 }
 
+::selection {
+  background-color: var(--color-selection-bg);
+  color: var(--color-selection-text);
+}
+
 /* Base Ambient Background */
 body::before {
   content: "";
@@ -52,6 +95,131 @@ body::before {
     radial-gradient(circle at 90% 90%, rgba(200, 50, 255, 0.05) 0%, transparent 40%);
   pointer-events: none;
   z-index: -1;
+}
+
+html[data-theme="light"] body::before {
+  background:
+    radial-gradient(circle at 10% 10%, rgba(99, 102, 241, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 90% 90%, rgba(168, 85, 247, 0.06) 0%, transparent 45%);
+}
+
+html[data-theme="dark"] body::before {
+  background:
+    radial-gradient(circle at 10% 10%, rgba(100, 100, 255, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 90% 90%, rgba(200, 50, 255, 0.05) 0%, transparent 40%);
+}
+
+.theme-page {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+.theme-heading {
+  color: var(--color-heading);
+}
+
+.theme-accent {
+  color: var(--color-accent-text);
+}
+
+.theme-muted {
+  color: var(--color-muted);
+}
+
+.theme-panel {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 6px 28px color-mix(in oklab, var(--color-border) 24%, transparent);
+}
+
+.theme-panel-strong {
+  background-color: var(--color-surface-strong);
+  border: 1px solid var(--color-border);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px color-mix(in oklab, var(--color-border) 26%, transparent);
+}
+
+.theme-nav-shell {
+  background-color: var(--color-nav-bg);
+  border: 1px solid var(--color-nav-border);
+}
+
+.theme-overlay {
+  background-color: var(--color-overlay);
+}
+
+.theme-avatar-shell {
+  background-color: var(--color-avatar-bg);
+  border: 1px solid var(--color-avatar-border);
+  box-shadow: 0 10px 24px color-mix(in oklab, var(--color-border) 26%, transparent);
+}
+
+.theme-link-muted {
+  color: var(--color-muted);
+}
+
+.theme-link-muted:hover {
+  color: var(--color-heading);
+}
+
+.theme-input {
+  background-color: var(--color-surface);
+  color: var(--color-foreground);
+  border: 1px solid var(--color-border);
+}
+
+.theme-input::placeholder {
+  color: var(--color-muted);
+}
+
+.theme-input:focus {
+  outline: none;
+  border-color: color-mix(in oklab, var(--color-border) 60%, var(--color-primary));
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--color-primary) 20%, transparent);
+}
+
+.theme-pill {
+  background-color: color-mix(in oklab, var(--color-surface-strong) 90%, transparent);
+  border: 1px solid var(--color-border);
+  color: var(--color-muted);
+}
+
+.theme-prose {
+  color: var(--color-foreground);
+}
+
+.theme-prose :is(h1, h2, h3, h4, h5, h6, strong) {
+  color: var(--color-heading);
+}
+
+.theme-prose p,
+.theme-prose li,
+.theme-prose blockquote {
+  color: color-mix(in oklab, var(--color-foreground) 82%, var(--color-background));
+}
+
+.theme-prose a {
+  color: var(--color-heading);
+  text-decoration-color: color-mix(in oklab, var(--color-border) 70%, transparent);
+}
+
+.theme-prose a:hover {
+  text-decoration-color: color-mix(in oklab, var(--color-heading) 30%, transparent);
+}
+
+.theme-prose code {
+  color: var(--color-heading);
+  background-color: color-mix(in oklab, var(--color-surface-strong) 88%, transparent);
+}
+
+.theme-prose pre {
+  background-color: color-mix(in oklab, var(--color-background) 75%, black 25%);
+  border: 1px solid var(--color-border);
+}
+
+.theme-prose :is(hr, h2) {
+  border-color: var(--color-border);
 }
 
 .container {
@@ -78,7 +246,7 @@ body::before {
 }
 
 main {
-  padding-top: 6rem;
+  padding-top: 8rem;
   padding-bottom: 2rem;
 }
 

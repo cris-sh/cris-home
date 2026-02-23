@@ -37,7 +37,7 @@ const schema = {
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<link rel="icon" type="image/webp" href="/img/avatar/enux.webp" />
+<link rel="icon" type="image/webp" href="/img/avatar/cris-transparent.webp" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link
   rel="alternate"
@@ -90,6 +90,71 @@ const schema = {
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+<script is:inline>
+  (() => {
+    const STORAGE_KEY = "theme-preference";
+    const root = document.documentElement;
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const getStoredPreference = () => {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored === "light" || stored === "dark" || stored === "system") {
+        return stored;
+      }
+      return "system";
+    };
+
+    const resolveTheme = (preference) => {
+      if (preference === "system") {
+        return mediaQuery.matches ? "dark" : "light";
+      }
+      return preference;
+    };
+
+    const applyTheme = (preference, persist = false) => {
+      const resolvedTheme = resolveTheme(preference);
+      root.setAttribute("data-theme", resolvedTheme);
+      root.setAttribute("data-theme-preference", preference);
+      root.style.colorScheme = resolvedTheme;
+
+      if (persist) {
+        localStorage.setItem(STORAGE_KEY, preference);
+      }
+
+      window.dispatchEvent(
+        new CustomEvent("theme:changed", {
+          detail: { preference, resolvedTheme },
+        }),
+      );
+    };
+
+    const setThemePreference = (preference) => {
+      if (!["light", "dark", "system"].includes(preference)) {
+        return;
+      }
+      applyTheme(preference, true);
+    };
+
+    window.__theme = {
+      getPreference: getStoredPreference,
+      setPreference: setThemePreference,
+      applyStoredTheme: () => applyTheme(getStoredPreference(), false),
+    };
+
+    applyTheme(getStoredPreference(), false);
+
+    mediaQuery.addEventListener("change", () => {
+      if (getStoredPreference() === "system") {
+        applyTheme("system", false);
+      }
+    });
+
+    document.addEventListener("astro:after-swap", () => {
+      applyTheme(getStoredPreference(), false);
+    });
+  })();
+</script>
 
 <script>
   function setupImageLightbox() {

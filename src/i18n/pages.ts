@@ -11,6 +11,10 @@ export const ui = {
     "nav.projects": "projects",
     "nav.blog": "blog",
     "nav.twitter": "twitter",
+    "nav.theme.label": "theme",
+    "nav.theme.system": "system",
+    "nav.theme.light": "light",
+    "nav.theme.dark": "dark",
 
     "home.name": "cristian",
     "home.title": "software engineer",
@@ -46,6 +50,10 @@ export const ui = {
     "nav.home": "inicio",
     "nav.projects": "proyectos",
     "nav.blog": "blog",
+    "nav.theme.label": "tema",
+    "nav.theme.system": "sistema",
+    "nav.theme.light": "claro",
+    "nav.theme.dark": "oscuro",
 
     "home.title": "ingeniero de software",
     "home.about": [
