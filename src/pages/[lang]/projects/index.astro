@@ -1,6 +1,6 @@
 ---
 import BaseHead from "../../../components/BaseHead.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../../../consts";
+import { SITE_TITLE } from "../../../consts";
 import { getCollection } from "astro:content";
 import FormattedDate from "../../../components/FormattedDate.astro";
 import NavBar from "../../../components/navigation/NavBar.astro";
@@ -56,7 +56,7 @@ function getTagColor(tag: string) {
 <!doctype html>
 <html lang={lang}>
   <head>
-    <BaseHead title={`${SITE_TITLE} | ${lang === 'es' ? 'Proyectos' : 'Projects'}`} description={SITE_DESCRIPTION} />
+    <BaseHead title={`${SITE_TITLE} | ${lang === 'es' ? 'Proyectos' : 'Projects'}`} lang={lang} />
   </head>
   <body class="theme-page">
     <NavBar />
