@@ -1,0 +1,70 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import NavBar from "../components/navigation/NavBar.astro";
+import Scribble from "../components/creative/Scribble.astro";
+import MarkerHighlight from "../components/creative/MarkerHighlight.astro";
+import { SITE_TITLE } from "../consts";
+
+// Since it's a 404, we don't know the language, defaulting to 'en'
+const lang = "en";
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <BaseHead title={`404: Not Found - ${SITE_TITLE}`} description="Page not found" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap" rel="stylesheet">
+  </head>
+  <body class="theme-page relative min-h-screen flex flex-col items-center justify-center p-4">
+    <NavBar />
+    
+    <main class="text-center relative">
+      <div class="relative inline-block mb-8">
+        <h1 class="text-9xl font-bold theme-heading opacity-10 leading-none">404</h1>
+        <div class="absolute inset-0 flex items-center justify-center">
+            <Scribble type="circle" className="text-indigo-500/40" size="180px" />
+        </div>
+      </div>
+
+      <div class="relative z-10">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 theme-heading">
+          Oops! You've found a <span class="relative">
+            secret path
+            <MarkerHighlight color="#6366f1" className="absolute -bottom-1 left-0 w-full h-2 opacity-50" />
+          </span>
+        </h2>
+        
+        <p class="text-lg theme-muted mb-8 font-['Architects_Daughter']">
+          (but it leads to nowhere...)
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a 
+            href="/en/" 
+            class="px-8 py-3 rounded-2xl theme-panel-strong border border-indigo-500/20 hover:bg-indigo-500/10 transition-all duration-300 font-bold theme-heading group"
+          >
+            Take me Home
+            <span class="inline-block transition-transform group-hover:-translate-x-1 ml-1">←</span>
+          </a>
+          <a 
+            href="/es/" 
+            class="px-8 py-3 rounded-2xl theme-panel border border-emerald-500/20 hover:bg-emerald-500/10 transition-all duration-300 font-bold theme-heading group"
+          >
+            Llévame a Inicio
+            <span class="inline-block transition-transform group-hover:translate-x-1 ml-1">→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Extra scribbles -->
+      <Scribble type="squiggles" className="absolute -top-12 -left-12 theme-muted opacity-20" size="80px" />
+      <Scribble type="plus" className="absolute -bottom-12 -right-12 theme-muted opacity-20" size="40px" />
+    </main>
+
+    <footer class="mt-12 text-sm theme-muted opacity-50 font-mono">
+        HTTP_STATUS_CODE: 404_NOT_FOUND
+    </footer>
+  </body>
+</html>

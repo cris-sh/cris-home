@@ -5,10 +5,14 @@ import sitemap from "@astrojs/sitemap";
 
 import tailwindcss from "@tailwindcss/vite";
 
+import vercel from "@astrojs/vercel";
+
 // https://astro.build/config
 export default defineConfig({
+  output: "server",
   site: "http://localhost:3000",
   prefetch: true,
+
   integrations: [
     mdx({
       syntaxHighlight: "shiki",
@@ -21,6 +25,7 @@ export default defineConfig({
     }),
     sitemap(),
   ],
+
   markdown: {
     shikiConfig: {
       theme: "one-dark-pro",
@@ -43,4 +48,6 @@ export default defineConfig({
       es: "en",
     },
   },
+
+  adapter: vercel(),
 });
