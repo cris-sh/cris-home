@@ -10,7 +10,7 @@ import vercel from "@astrojs/vercel";
 // https://astro.build/config
 export default defineConfig({
   output: "server",
-  site: "http://localhost:3000",
+  site: "https://cris.ac",
   prefetch: true,
 
   integrations: [
@@ -51,7 +51,7 @@ export default defineConfig({
 
   adapter: vercel({
     imagesConfig: {
-      domains: ["cris.ac"],
+      domains: ["cris.ac", "i.imgur.com", "imgur.com"],
       sizes: [64, 128, 256, 384, 512, 640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     },
     imageService: true,
