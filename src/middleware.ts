@@ -36,7 +36,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
   const { url, request } = context;
   const { pathname } = url;
 
-  if (pathname === "/" || pathname === "/404" || isStaticPath(pathname) || isFileExtension(pathname)) {
+  if (pathname === "/404" || isStaticPath(pathname) || isFileExtension(pathname)) {
     return next();
   }
 
