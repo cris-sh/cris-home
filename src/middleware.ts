@@ -33,10 +33,10 @@ function getPreferredLocale(acceptLanguage: string | null): string {
 }
 
 export const onRequest = defineMiddleware(async (context, next) => {
-  const { url, request } = context;
+  const { url, request, locals } = context;
   const { pathname } = url;
 
-  if (pathname === "/404" || isStaticPath(pathname) || isFileExtension(pathname)) {
+  if (isStaticPath(pathname) || isFileExtension(pathname)) {
     return next();
   }
 
@@ -46,6 +46,10 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   const acceptLanguage = request.headers.get("accept-language");
   const locale = getPreferredLocale(acceptLanguage);
+
+  if (pathname === "/") {
+    return context.redirect(`/${locale}/`, 302);
+  }
 
   return context.redirect(`/${locale}${pathname}`, 302);
 });

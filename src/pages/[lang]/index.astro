@@ -14,6 +14,8 @@ import MarkerArrow from "../../components/creative/MarkerArrow.astro";
 import Scribble from "../../components/creative/Scribble.astro";
 import RoughBorder from "../../components/creative/RoughBorder.astro";
 
+export const prerender = true;
+
 export async function getStaticPaths() {
   return Object.keys(languages).map((lang) => ({ params: { lang } }));
 }

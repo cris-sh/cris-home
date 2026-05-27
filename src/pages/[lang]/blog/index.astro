@@ -7,6 +7,8 @@ import NavBar from "../../../components/navigation/NavBar.astro";
 import Footer from "../../../components/Footer.astro";
 import { Image } from "astro:assets";
 import { languages } from "../../../i18n/pages";
+export const prerender = true;
+
 export async function getStaticPaths() {
   return Object.keys(languages).map((lang) => ({ params: { lang } }));
 }
