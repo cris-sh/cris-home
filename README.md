@@ -52,5 +52,5 @@ after making changes to these files, restart the development server to see the u
 
 If you have questions, suggestions, or just want to say hello, feel free to contact me:
 
-- **Email**: [contact@enux.dev](mailto:contact@enux.com)
+- **Discord**: [cr.tkd](https://discord.com/users/1014943324131561492)
 - **GitHub**: [cris-sh](https://github.com/cris-sh)

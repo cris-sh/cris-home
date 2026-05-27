@@ -1,8 +1,6 @@
 ---
+const userLang = Astro.request.headers.get("accept-language") || "";
+const targetLang = userLang.startsWith("es") ? "es" : "en";
+return Astro.redirect(`/${targetLang}/`);
 ---
-<script is:inline>
-  // Simple redirect to default language or browser language
-  const userLang = navigator.language || navigator.userLanguage;
-  const targetLang = userLang.startsWith('es') ? 'es' : 'en';
-  window.location.pathname = `/${targetLang}/`;
-</script>
+

@@ -20,9 +20,18 @@ export async function getStaticPaths() {
   });
 }
 
-type Props = CollectionEntry<"projects">;
+const { lang, slug } = Astro.params;
 
-const project = Astro.props;
+const projects = await getCollection("projects");
+const project = projects.find((p) => {
+  const [pLang, ...pSlugParts] = p.id.split("/");
+  return pLang === lang && pSlugParts.join("/") === slug;
+});
+
+if (!project) {
+  return Astro.redirect(`/${lang}/404`);
+}
+
 const { Content } = await render(project);
 ---
 

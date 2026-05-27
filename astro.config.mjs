@@ -10,9 +10,6 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   site: "https://cris.ac",
   prefetch: true,
-  adapter: vercel({
-    imageService: true,
-  }),
   image: {
     remotePatterns: [{ protocol: "https", hostname: "i.imgur.com" }],
   },
@@ -28,6 +25,7 @@ export default defineConfig({
     }),
     sitemap(),
   ],
+
   markdown: {
     shikiConfig: {
       theme: "one-dark-pro",
@@ -50,4 +48,8 @@ export default defineConfig({
       es: "en",
     },
   },
+
+  adapter: vercel({
+    imageService: true,
+  }),
 });
