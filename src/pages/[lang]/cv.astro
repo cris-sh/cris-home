@@ -198,9 +198,9 @@ const resume = {
       {
         projects.length > 0 && (
           <section class="mb-12">
-            <h2 class="text-sm font-bold uppercase tracking-widest text-zinc-400 mb-6 select-none">Selected Works</h2>
+            <h2 class="text-sm font-bold uppercase tracking-widest text-zinc-400 mb-6 select-none">Featured Work</h2>
             <div class="grid grid-cols-1 gap-4">
-              {projects.slice(0, 4).map((project) => (
+              {projects.slice(0, 1).map((project) => (
                 <div class="group p-4 -mx-4 rounded-xl hover:bg-zinc-50 transition-colors border border-transparent hover:border-zinc-100">
                   <div class="flex justify-between items-start mb-2">
                     <h3 class="font-bold text-zinc-900">
@@ -246,7 +246,8 @@ const resume = {
       </footer>
     </div>
 
-    <script define:vars={{ lang }}>
+    <script is:inline data-lang={lang}>
+      const lang = document.currentScript.dataset.lang;
       function updateTime() {
         const bogotaTime = new Intl.DateTimeFormat(
           lang === "es" ? "es-CO" : "en-US",

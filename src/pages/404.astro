@@ -1,0 +1,38 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+
+const title = "404 - Page Not Found";
+const description = "The page you're looking for doesn't exist.";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead {title} {description} />
+    <meta name="robots" content="noindex" />
+  </head>
+  <body class="theme-page">
+    <main class="flex flex-col items-center justify-center min-h-screen px-6">
+      <div class="text-center max-w-md">
+        <div class="text-8xl font-bold tracking-tighter text-[var(--color-border)] select-none mb-6">
+          404
+        </div>
+        <h1 class="text-2xl font-bold text-[var(--color-heading)] mb-3">
+          Page not found
+        </h1>
+        <p class="text-[var(--color-muted)] mb-8 leading-relaxed">
+          The page you're looking for doesn't exist or has been moved.
+        </p>
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-full theme-panel-strong hover:bg-[var(--color-overlay)] transition-all text-sm font-medium text-[var(--color-heading)]"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Go back home
+        </a>
+      </div>
+    </main>
+  </body>
+</html>

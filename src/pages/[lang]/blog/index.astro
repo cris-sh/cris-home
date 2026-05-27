@@ -4,16 +4,14 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../../../consts";
 import { getCollection } from "astro:content";
 import FormattedDate from "../../../components/FormattedDate.astro";
 import NavBar from "../../../components/navigation/NavBar.astro";
+import Footer from "../../../components/Footer.astro";
 import { Image } from "astro:assets";
 import { languages } from "../../../i18n/pages";
-import { useTranslations } from "../../../i18n/utils";
-
 export async function getStaticPaths() {
   return Object.keys(languages).map((lang) => ({ params: { lang } }));
 }
 
 const { lang } = Astro.params;
-const t = useTranslations(lang as keyof typeof languages);
 
 const posts = (
   await getCollection("blog", (post) => {
@@ -66,7 +64,7 @@ const getSlug = (id: any) => {
           <div class="space-y-12">
             {/* Featured Post */}
             {posts.length > 0 && (
-              <div class="group relative theme-panel rounded-2xl overflow-hidden hover:bg-[var(--color-overlay)] transition-all duration-500">
+              <div class="group relative theme-panel rounded-2xl overflow-hidden hover:bg-[var(--color-overlay)] transition-all duration-500 reveal reveal-delay-1">
                 <a
                   href={`/${lang}/blog/${getSlug(posts[0].id)}/`}
                   class="flex flex-col md:flex-row h-full"
@@ -116,8 +114,8 @@ const getSlug = (id: any) => {
 
             {/* Grid for the rest of posts */}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {posts.slice(1).map((post) => (
-                <div class="group theme-panel rounded-2xl overflow-hidden hover:bg-[var(--color-overlay)] transition-all duration-500">
+              {posts.slice(1).map((post, i) => (
+                <div class={`group theme-panel rounded-2xl overflow-hidden hover:bg-[var(--color-overlay)] transition-all duration-500 reveal reveal-delay-${Math.min(i + 1, 5)}`}>
                   <a href={`/${lang}/blog/${getSlug(post.id)}/`} class="flex flex-col h-full">
                     {
                       post.data.heroImage && (
@@ -159,5 +157,6 @@ const getSlug = (id: any) => {
         )
       }
     </main>
+    <Footer />
   </body>
 </html>

@@ -4,16 +4,14 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../../../consts";
 import { getCollection } from "astro:content";
 import FormattedDate from "../../../components/FormattedDate.astro";
 import NavBar from "../../../components/navigation/NavBar.astro";
+import Footer from "../../../components/Footer.astro";
 import { Image } from "astro:assets";
 import { languages } from "../../../i18n/pages";
-import { useTranslations } from "../../../i18n/utils";
-
 export async function getStaticPaths() {
   return Object.keys(languages).map((lang) => ({ params: { lang } }));
 }
 
 const { lang } = Astro.params;
-const t = useTranslations(lang as keyof typeof languages);
 
 const projects = (
   await getCollection("projects", (project) => {
@@ -103,9 +101,9 @@ function getTagColor(tag: string) {
         id="projects-list"
       >
         {
-          projects.map((project) => (
+          projects.map((project, i) => (
             <div
-              class="project-item group relative theme-panel rounded-3xl overflow-hidden hover:bg-[var(--color-overlay)] transition-all duration-500 flex flex-col"
+              class={`project-item group relative theme-panel rounded-3xl overflow-hidden hover:bg-[var(--color-overlay)] transition-all duration-500 flex flex-col reveal reveal-delay-${Math.min(i + 1, 5)}`}
               data-title={project.data.title.toLowerCase()}
               data-description={project.data.description.toLowerCase()}
               data-tags={project.data.tags.join(", ")}
@@ -154,7 +152,8 @@ function getTagColor(tag: string) {
       </div>
     </main>
 
-    <script define:vars={{ lang }}>
+    <script is:inline data-lang={lang}>
+        const lang = document.currentScript.dataset.lang;
         const searchInput = document.getElementById('project-search');
         const projectsList = document.getElementById('projects-list');
         const projectItems = document.querySelectorAll('.project-item');
@@ -186,5 +185,6 @@ function getTagColor(tag: string) {
             items.forEach(item => projectsList?.appendChild(item));
         });
     </script>
+    <Footer />
   </body>
 </html>
