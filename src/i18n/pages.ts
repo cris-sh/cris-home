@@ -33,7 +33,7 @@ export const ui = {
       {
         company: "Papyrus",
         position: "Software Engineer",
-        period: "2025 - Present",
+        period: "Jan 2025 - Present",
         description:
           "Engineering backend systems with Go/Fiber for monitoring applications and business tools. Designing and implementing APIs, developing frontend solutions with Remix, implementing real-time data processing, and integrating payment systems through Stripe for client subscriptions."
       },
@@ -70,7 +70,7 @@ export const ui = {
       {
         company: "Papyrus",
         position: "Ingeniero de Software",
-        period: "2025 - Presente",
+        period: "Ene 2025 - Presente",
         description:
            "Ingeniería de sistemas backend con Go/Fiber para aplicaciones de monitoreo y herramientas de negocio. Diseño e implementación de APIs, desarrollo de soluciones frontend con Remix, implementación de procesamiento de datos en tiempo real e integración de sistemas de pago mediante Stripe para suscripciones de clientes.",
       },
