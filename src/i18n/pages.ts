@@ -17,22 +17,22 @@ export const ui = {
     "nav.theme.dark": "dark",
 
     "home.name": "cristian",
-    "home.title": "software engineer",
+    "home.title": "software developer",
     "home.about": [
-      "I am a Software Engineer focused on building high-performance applications and scalable systems. My expertise covers the full development lifecycle, from system architecture and backend APIs to intuitive user interfaces.",
+      "I am a Software Developer focused on building high-performance applications and scalable systems. My expertise covers the full development lifecycle, from system architecture and backend APIs to intuitive user interfaces.",
       "I specialize in modern technologies like TypeScript, Go, and React, always striving for technical excellence and efficient problem-solving.",
     ],
     "home.learnMore": "want to learn more?",
 
     "resume.name": "Cristian Duarte",
-    "resume.description": "Software Engineer",
+    "resume.description": "Software Developer",
     "resume.about": [
-      "Pragmatic Software Engineer with a focus on building robust, scalable applications. Expertise in TypeScript, Go, and React, with a strong foundation in system architecture and API design.",
+      "Pragmatic Software Developer with a focus on building robust, scalable applications. Expertise in TypeScript, Go, and React, with a strong foundation in system architecture and API design.",
     ],
     "resume.experience": [
       {
         company: "Papyrus",
-        position: "Software Engineer",
+        position: "Software Developer",
         period: "Jan 2025 - Present",
         description:
           "Engineering backend systems with Go/Fiber for monitoring applications and business tools. Designing and implementing APIs, developing frontend solutions with Remix, implementing real-time data processing, and integrating payment systems through Stripe for client subscriptions."
@@ -55,21 +55,21 @@ export const ui = {
     "nav.theme.light": "claro",
     "nav.theme.dark": "oscuro",
 
-    "home.title": "ingeniero de software",
+    "home.title": "desarrollador de software",
     "home.about": [
-      "Soy Ingeniero de Software enfocado en construir aplicaciones de alto rendimiento y sistemas escalables. Mi experiencia cubre todo el ciclo de desarrollo, desde la arquitectura de sistemas y APIs backend hasta interfaces de usuario intuitivas.",
+      "Soy Desarrollador de Software enfocado en construir aplicaciones de alto rendimiento y sistemas escalables. Mi experiencia cubre todo el ciclo de desarrollo, desde la arquitectura de sistemas y APIs backend hasta interfaces de usuario intuitivas.",
       "Me especializo en tecnologías modernas como TypeScript, Go y React, siempre buscando la excelencia técnica y la resolución eficiente de problemas.",
     ],
     "home.learnMore": "¿quieres saber más?",
 
-    "resume.description": "Ingeniero de Software",
+    "resume.description": "Desarrollador de Software",
     "resume.about": [
-      "Ingeniero de Software pragmático enfocado en construir aplicaciones robustas y escalables. Experto en TypeScript, Go y React, con una sólida base en arquitectura de sistemas y diseño de APIs.",
+      "Desarrollador de Software pragmático enfocado en construir aplicaciones robustas y escalables. Experto en TypeScript, Go y React, con una sólida base en arquitectura de sistemas y diseño de APIs.",
     ],
     "resume.experience": [
       {
         company: "Papyrus",
-        position: "Ingeniero de Software",
+        position: "Desarrollador de Software",
         period: "Ene 2025 - Presente",
         description:
            "Ingeniería de sistemas backend con Go/Fiber para aplicaciones de monitoreo y herramientas de negocio. Diseño e implementación de APIs, desarrollo de soluciones frontend con Remix, implementación de procesamiento de datos en tiempo real e integración de sistemas de pago mediante Stripe para suscripciones de clientes.",
