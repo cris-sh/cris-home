@@ -23,5 +23,5 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
-# vercel build output (committed for Build Output API)
-.vercel/output/server/
+# vercel builds on their servers — don't track output locally
+.vercel/output/
