@@ -4,8 +4,6 @@ import { render } from "astro:content";
 import Projects from "../../../layouts/Projects.astro";
 import { languages } from "../../../i18n/pages";
 
-export const prerender = true;
-
 export async function getStaticPaths() {
   const projects = await getCollection("projects");
   

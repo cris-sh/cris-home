@@ -4,8 +4,6 @@ import BlogPost from "../../../layouts/BlogPost.astro";
 import { render } from "astro:content";
 import { languages } from "../../../i18n/pages";
 
-export const prerender = true;
-
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
   

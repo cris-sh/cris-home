@@ -51,6 +51,5 @@ export default defineConfig({
 
   adapter: vercel({
     imageService: true,
-    middlewareMode: "edge",
   }),
 });

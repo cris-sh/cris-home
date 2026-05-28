@@ -13,11 +13,39 @@
 		},
 		{
 			"src": "^/_server-islands/([^/]+?)/?$",
-			"dest": "_middleware"
+			"dest": "_render"
 		},
 		{
 			"src": "^/_image/?$",
-			"dest": "_middleware"
+			"dest": "_render"
+		},
+		{
+			"src": "^/([^/]+?)/blog/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/([^/]+?)/blog(?:/(.*?))?/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/([^/]+?)/cv/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/([^/]+?)/projects/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/([^/]+?)/projects(?:/(.*?))?/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/([^/]+?)/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^(?:/(.*?))?/?$",
+			"dest": "_render"
 		},
 		{
 			"src": "^/.*$",
