@@ -19,30 +19,30 @@ export const ui = {
     "home.name": "cristian",
     "home.title": "software developer",
     "home.about": [
-      "I am a Software Developer focused on building high-performance applications and scalable systems. My expertise covers the full development lifecycle, from system architecture and backend APIs to intuitive user interfaces.",
-      "I specialize in modern technologies like TypeScript, Go, and React, always striving for technical excellence and efficient problem-solving.",
+      "I'm a Software Developer working across the whole cycle: API design, data modeling, real-time processing, user interfaces, and the infrastructure it all runs on. I've taken projects from initial architecture through to production, including deployment, monitoring, and maintenance.",
+      "I currently work mostly with Go and TypeScript, though the stack changes with the problem. I tend to prefer simple, maintainable solutions over adding complexity.",
     ],
     "home.learnMore": "want to learn more?",
 
     "resume.name": "Cristian Duarte",
     "resume.description": "Software Developer",
     "resume.about": [
-      "Pragmatic Software Developer with a focus on building robust, scalable applications. Expertise in TypeScript, Go, and React, with a strong foundation in system architecture and API design.",
+      "Working across the full stack: API design, data modeling, real-time processing, frontend, and deployment infrastructure.",
     ],
     "resume.experience": [
       {
         company: "Papyrus",
         position: "Software Developer",
-        period: "Jan 2025 - Present",
+        period: "Jan 2025 - Jul 2026",
         description:
-          "Engineering backend systems with Go/Fiber for monitoring applications and business tools. Designing and implementing APIs, developing frontend solutions with Remix, implementing real-time data processing, and integrating payment systems through Stripe for client subscriptions."
+          "Designed and built full-stack architectures end to end, from Go/Fiber APIs and real-time data processing to React, Remix, and Next.js interfaces. Modeled and optimized data layers across MongoDB, PostgreSQL, and Redis, and owned deployments on Dockerized Linux VPS environments behind Nginx and Cloudflare. Integrated Stripe for subscription billing, instrumented monitoring and error tracking with Sentry, and drove delivery through Git and Jira in an agile workflow."
       },
     ],
     "resume.education": [
       {
         institution: "SENA",
         degree: "Associate's Degree in Software Analysis and Development",
-        period: "2024 - 2026",
+        period: "Jun 2024 - Apr 2026",
       },
     ],
   },
@@ -57,29 +57,29 @@ export const ui = {
 
     "home.title": "desarrollador de software",
     "home.about": [
-      "Soy Desarrollador de Software enfocado en construir aplicaciones de alto rendimiento y sistemas escalables. Mi experiencia cubre todo el ciclo de desarrollo, desde la arquitectura de sistemas y APIs backend hasta interfaces de usuario intuitivas.",
-      "Me especializo en tecnologías modernas como TypeScript, Go y React, siempre buscando la excelencia técnica y la resolución eficiente de problemas.",
+      "Soy Desarrollador de Software y trabajo en todo el ciclo: diseño de APIs, modelado de datos, procesamiento en tiempo real, interfaces de usuario y la infraestructura donde todo eso corre. He llevado proyectos desde la arquitectura inicial hasta producción, incluyendo despliegue, monitoreo y mantenimiento.",
+      "Actualmente trabajo principalmente con Go y TypeScript, aunque el stack cambia según el problema. Suelo preferir soluciones simples de mantener antes que agregar complejidad.",
     ],
     "home.learnMore": "¿quieres saber más?",
 
     "resume.description": "Desarrollador de Software",
     "resume.about": [
-      "Desarrollador de Software pragmático enfocado en construir aplicaciones robustas y escalables. Experto en TypeScript, Go y React, con una sólida base en arquitectura de sistemas y diseño de APIs.",
+      "Trabajo en todo el stack: diseño de APIs, modelado de datos, procesamiento en tiempo real, frontend e infraestructura de despliegue.",
     ],
     "resume.experience": [
       {
         company: "Papyrus",
         position: "Desarrollador de Software",
-        period: "Ene 2025 - Presente",
+        period: "Ene 2025 - Jul 2026",
         description:
-           "Ingeniería de sistemas backend con Go/Fiber para aplicaciones de monitoreo y herramientas de negocio. Diseño e implementación de APIs, desarrollo de soluciones frontend con Remix, implementación de procesamiento de datos en tiempo real e integración de sistemas de pago mediante Stripe para suscripciones de clientes.",
+           "Diseño y construcción de arquitecturas full-stack de punta a punta: APIs en Go/Fiber con procesamiento de datos en tiempo real e interfaces en React, Remix y Next.js. Modelado y optimización de capas de datos sobre MongoDB, PostgreSQL y Redis, con responsabilidad sobre los despliegues en servidores VPS Linux con Docker, Nginx y Cloudflare. Integración de Stripe para facturación de suscripciones, monitoreo y seguimiento de errores con Sentry, y gestión de la entrega con Git y Jira en un flujo de trabajo ágil.",
       },
     ],
     "resume.education": [
       {
         institution: "SENA",
         degree: "Tecnologo en Análisis y Desarrollo de Software",
-        period: "2024 - 2026",
+        period: "Jun 2024 - Abr 2026",
       },
     ],
   },
