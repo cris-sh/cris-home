@@ -2,29 +2,30 @@
   "name": "cris-home",
   "type": "module",
   "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "dev": "astro dev",
-    "prebuild": "node -e \"import('node:fs').then((fs) => fs.rmSync('node_modules/.astro', { recursive: true, force: true }))\"",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.9",
-    "@astrojs/mdx": "^5.0.6",
-    "@astrojs/rss": "^4.0.18",
-    "@astrojs/sitemap": "^3.7.3",
-    "@astrojs/vercel": "^10.0.7",
-    "@tailwindcss/vite": "^4.3.0",
-    "astro": "^6.3.8",
-    "sharp": "^0.34.5",
-    "tailwindcss": "^4.3.0",
-    "typescript": "^6.0.3"
+    "@astrojs/sitemap": "^3.7.4",
+    "@astrojs/vercel": "^11.0.13",
+    "astro": "^7.3.8",
+    "motion": "^14.1.0",
+    "pdfkit": "^0.20.2",
+    "sharp": "^0.35.5"
+  },
+  "packageManager": "pnpm@10.0.0+sha512.b8fef5494bd3fe4cbd4edabd0745df2ee5be3e4b0b8b08fa643aa3e4c6702ccc0f00d68fa8a8c9858a735a0032485a44990ed2810526c875e416f001b17df12b",
+  "devDependencies": {
+    "@types/pdfkit": "^0.17.6"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
       "sharp"
     ]
-  },
-  "packageManager": "pnpm@10.0.0+sha512.b8fef5494bd3fe4cbd4edabd0745df2ee5be3e4b0b8b08fa643aa3e4c6702ccc0f00d68fa8a8c9858a735a0032485a44990ed2810526c875e416f001b17df12b"
+  }
 }

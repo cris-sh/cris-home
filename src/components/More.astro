@@ -1,0 +1,24 @@
+---
+import { useTranslations, type Locale } from '../i18n/ui';
+
+// Secondary copy that small screens fold behind a "Read more" button.
+// On wide screens it is simply part of the text and the button doesn't exist.
+interface Props {
+	id: string;
+	locale: Locale;
+}
+
+const { id, locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<div class="more" id={id}>
+	<div class="more-inner"><slot /></div>
+</div>
+<button class="more-toggle" type="button" aria-expanded="false" aria-controls={id} data-more-toggle>
+	<span class="when-closed">{t('more.open')}</span>
+	<span class="when-open">{t('more.close')}</span>
+	<svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+		<path d="m4 6 4 4 4-4"></path>
+	</svg>
+</button>

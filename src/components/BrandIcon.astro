@@ -1,0 +1,21 @@
+---
+import { brands, type BrandName } from './brands';
+
+interface Props {
+	name: BrandName;
+	size?: number;
+}
+
+const { name, size = 16 } = Astro.props;
+const { icon: Icon, slug } = brands[name];
+---
+
+{/* Always decorative: every use sits next to the brand's name in text. */}
+<Icon
+	class:list={['brand', `brand-${slug}`]}
+	width={size}
+	height={size}
+	fill="currentColor"
+	aria-hidden="true"
+	focusable="false"
+/>

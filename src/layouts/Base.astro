@@ -1,0 +1,80 @@
+---
+import { Font } from 'astro:assets';
+import Header from '../components/Header.astro';
+import T from '../components/T.astro';
+import { defaultLocale, locales, type Locale } from '../i18n/ui';
+import { person } from '../data/profile';
+import headScript from '../scripts/head.js?raw';
+import '../styles/global.css';
+
+interface Props {
+	title: Record<Locale, string>;
+	description: Record<Locale, string>;
+	noindex?: boolean;
+}
+
+const { title, description, noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'Person',
+	name: person.name,
+	url: Astro.site,
+	jobTitle: 'Software Developer',
+	email: `mailto:${person.email}`,
+	address: { '@type': 'PostalAddress', addressLocality: 'Bogotá', addressCountry: 'CO' },
+	sameAs: ['https://github.com/cris-sh', 'https://linkedin.com/in/enux'],
+};
+---
+
+<!doctype html>
+<html lang={defaultLocale} data-title-en={title.en} data-title-es={title.es}>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>{title[defaultLocale]}</title>
+		<meta name="description" content={description[defaultLocale]} />
+		<meta name="author" content={person.name} />
+		{noindex && <meta name="robots" content="noindex" />}
+		<link rel="canonical" href={canonical} />
+		<link rel="icon" href="/favicon.ico" sizes="48x48" />
+		<link rel="icon" type="image/png" href="/icon.png" sizes="192x192" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link rel="sitemap" href="/sitemap-index.xml" />
+		<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+		<meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+		<meta name="generator" content={Astro.generator} />
+
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:title" content={title[defaultLocale]} />
+		<meta property="og:description" content={description[defaultLocale]} />
+		<meta property="og:locale" content="en_US" />
+		<meta property="og:locale:alternate" content="es_CO" />
+		<meta name="twitter:card" content="summary" />
+
+		<Font cssVariable="--font-geist" preload />
+
+		{/* Runs before first paint: resolves theme and language so nothing flashes. */}
+		<script is:inline set:html={headScript} />
+
+		<script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+	</head>
+	<body>
+		<a class="skip-link" href="#content"><T k="a11y.skip" /></a>
+		<Header />
+		<main id="content" class="container" tabindex="-1">
+			<slot />
+		</main>
+		<footer class="site-footer">
+			<div class="container">
+				<p>© {new Date().getFullYear()} {person.name}</p>
+			</div>
+		</footer>
+		<slot name="after" />
+		<script>
+			import '../scripts/ui.ts';
+		</script>
+	</body>
+</html>

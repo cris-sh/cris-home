@@ -1,55 +1,79 @@
 // @ts-check
-import { defineConfig } from "astro/config";
-import mdx from "@astrojs/mdx";
-import sitemap from "@astrojs/sitemap";
-import vercel from "@astrojs/vercel";
+import { defineConfig, fontProviders } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
+import vercel from '@astrojs/vercel';
+import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
 
-import tailwindcss from "@tailwindcss/vite";
+// The one hand-inlined script (theme + language, before first paint). Astro hashes
+// its own scripts for the CSP automatically; this one has to be added by hand.
+const headScript = readFileSync(new URL('./src/scripts/head.js', import.meta.url), 'utf8');
+const headScriptHash = `sha256-${createHash('sha256').update(headScript).digest('base64')}`;
 
 // https://astro.build/config
 export default defineConfig({
-  output: "server",
-  site: "https://cris.ac",
-  prefetch: true,
-  image: {
-    remotePatterns: [{ protocol: "https", hostname: "i.imgur.com" }],
-  },
-  integrations: [
-    mdx({
-      syntaxHighlight: "shiki",
-      remarkPlugins: [],
-      rehypePlugins: [],
-      remarkRehype: {
-        allowDangerousHtml: true,
-      },
-      gfm: true,
-    }),
-    sitemap(),
-  ],
+	site: 'https://cris.ac',
+	trailingSlash: 'always',
 
-  markdown: {
-    shikiConfig: {
-      theme: "one-dark-pro",
-      wrap: true,
-    },
-  },
+	// Still a fully static site: the adapter only packages the build the way
+	// Vercel expects. (Old URLs are forwarded by src/pages/[lang]/[...path].astro.)
+	adapter: vercel(),
 
-  vite: {
-    plugins: [tailwindcss()],
-  },
+	fonts: [
+		{
+			provider: fontProviders.fontsource(),
+			name: 'Geist',
+			cssVariable: '--font-geist',
+			weights: ['100 900'],
+			styles: ['normal'],
+			subsets: ['latin'],
+			fallbacks: ['system-ui', 'sans-serif'],
+		},
+	],
 
-  i18n: {
-    defaultLocale: "en",
-    locales: ["en", "es"],
-    routing: {
-      prefixDefaultLocale: true,
-    },
-    fallback: {
-      es: "en",
-    },
-  },
+	image: {
+		layout: 'constrained',
+		responsiveStyles: true,
+	},
 
-  adapter: vercel({
-    imageService: true,
-  }),
+	// The whole stylesheet is ~3 kB gzipped: inlining it saves a render-blocking
+	// request and guarantees the `@view-transition` opt-in is known the moment a
+	// page starts rendering (as an external file it could lose that race).
+	build: {
+		inlineStylesheets: 'always',
+	},
+
+	prefetch: {
+		prefetchAll: true,
+		defaultStrategy: 'hover',
+	},
+
+	// Shiki colours tokens with inline styles, which the CSP below forbids.
+	// The only code block on the site is a plain-text file tree anyway.
+	markdown: {
+		syntaxHighlight: false,
+	},
+
+	security: {
+		csp: {
+			scriptDirective: {
+				hashes: [headScriptHash],
+			},
+		},
+	},
+
+	// pdfkit reads its font metrics from disk next to its own source, so it has to
+	// run from node_modules rather than be bundled. It only runs at build time.
+	vite: {
+		ssr: {
+			external: ['pdfkit'],
+		},
+	},
+
+	integrations: [
+		sitemap({
+			// Leave the forwarding pages for old /en/ and /es/ addresses out of the sitemap.
+			filter: (page) => !['/en/', '/es/'].some((prefix) => new URL(page).pathname.startsWith(prefix)),
+		}),
+	],
 });

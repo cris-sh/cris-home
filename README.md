@@ -1,56 +1,44 @@
-# cris-home 🏚️
+# cris.ac
 
-Welcome to my repository! This project contains the source code for my personal website, designed to showcase information about me, my projects, and more.
+Personal portfolio of Cristian Duarte. A static [Astro](https://astro.build) site deployed on Vercel.
 
-## 🚀 Technologies Used
+## Develop
 
-This project was developed using the following technologies:
+```sh
+pnpm install
+pnpm dev        # http://localhost:4321
+pnpm build      # static build, including the résumé PDFs
+```
 
-- **[Astro](https://astro.build/)**: A modern framework for building fast, optimized websites.
-- **React**: For creating dynamic and resuable UI components.
-- **TailwindCSS**: A utility-first CSS framework for styling.
-- **TypeScript**: A super set of JavaScript that adds static typing for better development experience.
+Requires Node 22.12 or newer.
 
-## 🌟 Features
+## Where things live
 
-- **Optimization and Performance**: Built with Astro for fast loading times.
-- **Responsive**: Fully adaptable to different screen sizes.
-- **Projects Section**: Showcases my highlighted projects.
-- **Blog Section**: Includes a dedicated blog area where I share posts, tutorials, and insights on various topics.
+| What | Where |
+| --- | --- |
+| Experience, education, skills, contact | `src/data/profile.ts` |
+| Projects (one file per language) | `src/content/projects/{en,es}/` |
+| Interface text in both languages | `src/i18n/ui.ts` |
+| Page templates | `src/pages/`, `src/components/` |
+| Styles | `src/styles/global.css` |
 
-## 🛠️ How to Run the Project
+Every page is a single template that renders both languages; the visitor's language is
+chosen in the browser, so there is no `/en/` or `/es/` in the URL. Only project write-ups
+have a file per language.
 
-1. Clone this repository:
+The résumé at `/cv/` and its downloadable PDFs are generated from the same data as the
+home page, so editing `profile.ts` or a project updates all of them.
 
-   ```bash
-   git clone https://github.com/cris-sh/cris-home.git
-   cd cris-home
-   ```
+## Images
 
-2. Install the dependencies:
+Derived images are generated from the originals in `src/assets/source/`:
 
-   ```bash
-   npm install
-   ```
+```sh
+node scripts/make-portrait.mjs   # avatar and favicons from the photo
+node scripts/make-logos.mjs      # company logos for the Experience section
+```
 
-3. Start the development server:
+## Old URLs
 
-   ```bash
-   npm run dev
-   ```
-
-## ⚙️ Configuration
-
-you can configure the project by modifying the following files:
-
-- **`src/i18n/`**: This folder contains files for managing translations and internationalization. you can add or update translations to support multiple languages.
-- **`src/consts.ts`**: this file contains centralized constants used throughout the project. you can update values like site metadata.
-
-after making changes to these files, restart the development server to see the updates.
-
-## 📬 Contact
-
-If you have questions, suggestions, or just want to say hello, feel free to contact me:
-
-- **Discord**: [cr.tkd](https://discord.com/users/1014943324131561492)
-- **GitHub**: [cris-sh](https://github.com/cris-sh)
+The previous version of the site used `/en/…` and `/es/…` addresses.
+`src/pages/[lang]/[...path].astro` keeps those alive as pages that forward to the new ones.

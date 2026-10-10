@@ -1,0 +1,13 @@
+---
+import { locales, ui, type UIKey } from '../i18n/ui';
+
+// Inline translated text for chrome shared by every page (header, footer, viewer).
+// Page bodies don't need this: they are rendered once per locale as a whole.
+interface Props {
+	k: UIKey;
+}
+
+const { k } = Astro.props;
+---
+
+{locales.map((locale) => <span data-locale={locale} lang={locale}>{ui[locale][k]}</span>)}

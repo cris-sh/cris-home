@@ -1,0 +1,43 @@
+---
+import T from './T.astro';
+import { locales, localeNames } from '../i18n/ui';
+import { person } from '../data/profile';
+
+const isHome = Astro.url.pathname === '/';
+const [firstName, ...rest] = person.name.split(' ');
+const surname = rest.join(' ');
+---
+
+<header class="site-header">
+	<div class="container">
+		<a class="site-name" href="/" aria-label={person.name} aria-current={isHome ? 'page' : undefined}>
+			{firstName}<span class="surname">{` ${surname}`}</span>
+		</a>
+
+		<div class="header-controls">
+			<a class="header-link" href="/#contact" data-scroll-to="contact"><T k="section.contact" /></a>
+
+			<div class="lang-switch" role="group" aria-labelledby="lang-label">
+				<span id="lang-label" class="sr-only"><T k="a11y.language" /></span>
+				{
+					locales.map((locale) => (
+						<button type="button" data-set-lang={locale} lang={locale} aria-label={localeNames[locale]} aria-pressed="false">
+							{locale.toUpperCase()}
+						</button>
+					))
+				}
+			</div>
+
+			<button class="theme-toggle" type="button" data-toggle-theme aria-pressed="false">
+				<span class="sr-only"><T k="a11y.darkTheme" /></span>
+				<svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<circle cx="12" cy="12" r="4"></circle>
+					<path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+				</svg>
+				<svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<path d="M20.99 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.78 9.79z"></path>
+				</svg>
+			</button>
+		</div>
+	</div>
+</header>

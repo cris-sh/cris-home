@@ -1,0 +1,119 @@
+---
+import Arrow from './Arrow.astro';
+import { getResume } from '../data/resume';
+import { useTranslations, type Locale } from '../i18n/ui';
+
+interface Props {
+	locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const resume = await getResume(locale);
+---
+
+{/* Deliberately plain markup: one column, real headings and lists, URLs written out. The same structure prints cleanly and parses cleanly. */}
+<article class="cv intro">
+	<a class="back" href="/" data-back>
+		<Arrow direction="back" />
+		{t('cv.back')}
+	</a>
+
+	<header class="cv-head">
+		<h1 class="display">{resume.name}</h1>
+		<p class="cv-role">{resume.title}</p>
+		<ul class="cv-contact">
+			<li>{resume.location}</li>
+			<li><a href={`mailto:${resume.email}`}>{resume.email}</a></li>
+			{resume.links.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
+		</ul>
+
+		<p class="actions cv-actions">
+			<a class="button button-primary" href={`/cv/cristian-duarte-${locale}.pdf`} download={t('cv.fileName')} data-astro-prefetch="false">
+				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<path d="M12 4v11M7 11l5 5 5-5M5 20h14"></path>
+				</svg>
+				{t('cv.download')}
+			</a>
+			<button class="button" type="button" data-print>
+				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<path d="M7 9V4h10v5M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M7 14h10v6H7z"></path>
+				</svg>
+				{t('cv.print')}
+			</button>
+		</p>
+	</header>
+
+	<section class="cv-section">
+		<h2 class="section-label">{resume.headings.summary}</h2>
+		<p>{resume.summary}</p>
+	</section>
+
+	<section class="cv-section">
+		<h2 class="section-label">{resume.headings.experience}</h2>
+		{
+			resume.experience.map((job) => (
+				<div class="cv-entry">
+					<h3 class="entry-title">{job.role}</h3>
+					<p class="entry-sub tabular">
+						{job.company} · {job.location} · {job.dates}
+					</p>
+					<ul class="cv-bullets">
+						{job.bullets.map((bullet) => (
+							<li>{bullet}</li>
+						))}
+					</ul>
+				</div>
+			))
+		}
+	</section>
+
+	{
+		resume.projects.length > 0 && (
+			<section class="cv-section">
+				<h2 class="section-label">{resume.headings.projects}</h2>
+				{resume.projects.map((project) => (
+					<div class="cv-entry">
+						<h3 class="entry-title">{project.note ? `${project.name} (${project.note})` : project.name}</h3>
+						<p>{project.description}</p>
+						<p>
+							<span class="cv-key">{resume.headings.technologies}:</span> {project.technologies.join(', ')}
+						</p>
+						{project.url && (
+							<p>
+								<a href={project.url}>{project.url.replace(/^https?:\/\//, '')}</a>
+							</p>
+						)}
+					</div>
+				))}
+			</section>
+		)
+	}
+
+	<section class="cv-section">
+		<h2 class="section-label">{resume.headings.skills}</h2>
+		<ul class="cv-skills">
+			{
+				resume.skills.map((group) => (
+					<li>
+						<span class="cv-key">{group.label}:</span> {group.items.join(', ')}
+					</li>
+				))
+			}
+		</ul>
+	</section>
+
+	<section class="cv-section">
+		<h2 class="section-label">{resume.headings.education}</h2>
+		{
+			resume.education.map((item) => (
+				<div class="cv-entry">
+					<h3 class="entry-title">{item.degree}</h3>
+					<p class="entry-sub tabular">
+						{item.school} · {item.dates}
+					</p>
+				</div>
+			))
+		}
+	</section>
+</article>

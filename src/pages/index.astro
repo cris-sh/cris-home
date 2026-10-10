@@ -1,0 +1,12 @@
+---
+import Base from '../layouts/Base.astro';
+import Home from '../components/Home.astro';
+import { ui } from '../i18n/ui';
+
+const title = { en: ui.en['meta.title'], es: ui.es['meta.title'] };
+const description = { en: ui.en['meta.description'], es: ui.es['meta.description'] };
+---
+
+<Base title={title} description={description}>
+	<Home />
+</Base>

@@ -1,0 +1,113 @@
+---
+import { getImage, Image } from 'astro:assets';
+import { render, type CollectionEntry } from 'astro:content';
+import Arrow from './Arrow.astro';
+import BrandIcon from './BrandIcon.astro';
+import { isBrand } from './brands';
+import { formatDate, useTranslations, type Locale } from '../i18n/ui';
+
+interface Props {
+	locale: Locale;
+	project: CollectionEntry<'projects'>;
+}
+
+const { locale, project } = Astro.props;
+const { data } = project;
+const t = useTranslations(locale);
+const { Content } = await render(project);
+
+// The viewer loads a larger file than the thumbnail, capped so it stays light.
+const gallery = await Promise.all(
+	data.gallery.map(async (shot) => {
+		const width = Math.min(shot.src.width, 1800);
+		const full = await getImage({ src: shot.src, width, format: 'webp' });
+		return {
+			...shot,
+			full: full.src,
+			width,
+			height: Math.round((shot.src.height / shot.src.width) * width),
+		};
+	}),
+);
+---
+
+<article class="intro">
+	<a class="back" href="/#projects" data-back>
+		<Arrow direction="back" />
+		{t('project.back')}
+	</a>
+
+	<header class="project-head">
+		<h1 class="display project-title">{data.title}</h1>
+		<p class="lede">{data.description}</p>
+		<p class="project-meta">
+			<time class="tabular" datetime={data.date.toISOString().slice(0, 10)}>{formatDate(data.date, locale)}</time>
+			{data.status === 'in-progress' && <span class="badge">{t('project.in-progress')}</span>}
+		</p>
+
+		<ul class="chips">
+			{
+				data.tags.map((tag) => (
+					<li class="chip">
+						{isBrand(tag) && <BrandIcon name={tag} />}
+						{tag}
+					</li>
+				))
+			}
+		</ul>
+
+		{
+			(data.demo || data.repo) && (
+				<p class="actions">
+					{data.demo && (
+						<a class="button button-primary" href={data.demo} target="_blank" rel="noopener noreferrer">
+							{t('project.demo')}
+							<Arrow />
+							<span class="sr-only">({t('a11y.external')})</span>
+						</a>
+					)}
+					{data.repo && (
+						<a class="button" href={data.repo} target="_blank" rel="noopener noreferrer">
+							<BrandIcon name="GitHub" />
+							{t('project.code')}
+							<span class="sr-only">({t('a11y.external')})</span>
+						</a>
+					)}
+				</p>
+			)
+		}
+	</header>
+
+	{
+		gallery.length > 0 && (
+			<section>
+				<h2 class="sr-only">{t('project.screenshots')}</h2>
+				<ul class="gallery">
+					{gallery.map((shot) => (
+						<li>
+							<figure>
+								<button
+									class="shot"
+									type="button"
+									data-lightbox-trigger
+									data-full={shot.full}
+									data-width={shot.width}
+									data-height={shot.height}
+									aria-haspopup="dialog"
+								>
+									<Image src={shot.src} alt={shot.caption} widths={[320, 480, 640, 960]} sizes="(min-width: 40rem) 19rem, calc(100vw - 3rem)" />
+									<span class="sr-only">{t('a11y.zoom')}</span>
+								</button>
+								<figcaption>{shot.caption}</figcaption>
+							</figure>
+						</li>
+					))}
+				</ul>
+			</section>
+		)
+	}
+
+	<div class="prose">
+		<Content />
+	</div>
+</article>

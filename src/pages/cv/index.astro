@@ -1,0 +1,22 @@
+---
+import Base from '../../layouts/Base.astro';
+import Resume from '../../components/Resume.astro';
+import { locales, ui } from '../../i18n/ui';
+import { person } from '../../data/profile';
+
+const title = {
+	en: `${ui.en['cv.title']} — ${person.name}`,
+	es: `${ui.es['cv.title']} — ${person.name}`,
+};
+const description = { en: ui.en['cv.description'], es: ui.es['cv.description'] };
+---
+
+<Base title={title} description={description}>
+	{
+		locales.map((locale) => (
+			<div data-locale={locale} lang={locale}>
+				<Resume locale={locale} />
+			</div>
+		))
+	}
+</Base>

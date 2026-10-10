@@ -5,7 +5,6 @@ dist/
 
 # dependencies
 node_modules/
-pnpm-lock.yaml
 
 # logs
 npm-debug.log*
@@ -23,5 +22,9 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
 # vercel builds on their servers — don't track output locally
-.vercel/output/
+.vercel/
+
+# agent skills are installed from skills-lock.json, not vendored
+.agents/

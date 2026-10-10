@@ -1,0 +1,47 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Lightbox from '../../components/Lightbox.astro';
+import Project from '../../components/Project.astro';
+import { locales, type Locale } from '../../i18n/ui';
+import { person } from '../../data/profile';
+
+type Versions = Record<Locale, CollectionEntry<'projects'>>;
+
+// One page per project, holding every language version of it.
+export async function getStaticPaths() {
+	const entries = await getCollection('projects');
+	const bySlug = new Map<string, Partial<Versions>>();
+	for (const entry of entries) {
+		const [locale, slug] = entry.id.split('/') as [Locale, string];
+		bySlug.set(slug, { ...bySlug.get(slug), [locale]: entry });
+	}
+	return [...bySlug].map(([slug, versions]) => {
+		const missing = locales.filter((locale) => !versions[locale]);
+		if (missing.length) {
+			throw new Error(`Project "${slug}" has no ${missing.join(', ')} version in src/content/projects.`);
+		}
+		return { params: { slug }, props: { versions: versions as Versions } };
+	});
+}
+
+const { versions } = Astro.props;
+
+const title = {
+	en: `${versions.en.data.title} — ${person.name}`,
+	es: `${versions.es.data.title} — ${person.name}`,
+};
+const description = { en: versions.en.data.description, es: versions.es.data.description };
+const hasGallery = locales.some((locale) => versions[locale].data.gallery.length > 0);
+---
+
+<Base title={title} description={description}>
+	{
+		locales.map((locale) => (
+			<div data-locale={locale} lang={locale}>
+				<Project locale={locale} project={versions[locale]} />
+			</div>
+		))
+	}
+	{hasGallery && <Lightbox slot="after" />}
+</Base>

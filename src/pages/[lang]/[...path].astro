@@ -1,0 +1,50 @@
+---
+import { getCollection } from 'astro:content';
+import { locales } from '../../i18n/ui';
+
+// The previous version of this site put the language in the URL (/en/…, /es/…) and
+// had a blog. Those addresses are still linked from elsewhere, so each one is kept
+// alive as a tiny page that forwards to where the content lives now.
+// This is the only place that knows about the old structure.
+export async function getStaticPaths() {
+	const slugs = new Set((await getCollection('projects')).map((project) => project.id.split('/')[1]));
+
+	const moved: Record<string, string> = {
+		'': '/',
+		cv: '/cv/',
+		projects: '/',
+		blog: '/',
+		// Retired project: its old page lands on the home page.
+		'projects/alquipc': '/',
+	};
+	for (const slug of slugs) moved[`projects/${slug}`] = `/projects/${slug}/`;
+
+	return locales.flatMap((lang) =>
+		Object.entries(moved).map(([path, to]) => ({
+			params: { lang, path: path || undefined },
+			props: { to },
+		})),
+	);
+}
+
+const { to } = Astro.props;
+const destination = new URL(to, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Cristian Duarte</title>
+		<meta http-equiv="refresh" content={`0; url=${to}`} />
+		<link rel="canonical" href={destination} />
+		<meta name="robots" content="noindex" />
+	</head>
+	<body>
+		<p>
+			This page has moved. / Esta página se movió.{' '}
+			<a href={to}>{destination.host}{destination.pathname}</a>
+		</p>
+	</body>
+</html>
