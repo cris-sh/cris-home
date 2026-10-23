@@ -8,7 +8,7 @@ type Localized = Record<Locale, string>;
 
 export const person = {
 	name: 'Cristian Duarte',
-	email: 'contact.cris.ac@gmail.com',
+	email: 'crisrduarteh@gmail.com',
 	website: 'https://cris.ac',
 	booking: 'https://cal.com/cris-sh',
 	location: 'Bogotá, Colombia',
